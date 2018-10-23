@@ -3,6 +3,7 @@
 //vertex and fragment shader for vertexlit passes
 #ifndef MK_GLASS_VertexLit
 	#define MK_GLASS_VertexLit
+	
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	// VERTEX SHADER

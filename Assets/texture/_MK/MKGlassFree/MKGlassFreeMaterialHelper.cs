@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace MK.Glass
 {
+    
     public static class MKGlassFreeMaterialHelper
     {
         public static class PropertyNames

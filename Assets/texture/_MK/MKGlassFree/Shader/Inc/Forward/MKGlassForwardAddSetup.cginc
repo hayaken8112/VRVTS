@@ -1,5 +1,6 @@
 ﻿//forward add setup
 #ifndef MK_GLASS_FORWARD_ADD_SETUP
+
 	#define MK_GLASS_FORWARD_ADD_SETUP
 
 	#ifndef MK_GLASS_FWD_ADD_PASS

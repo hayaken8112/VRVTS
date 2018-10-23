@@ -4,6 +4,7 @@
 
 	#ifndef _EMISSION
 		#define _EMISSION 1
+		
 	#endif
 
 	#ifndef MK_GLASS_META_PASS

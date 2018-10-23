@@ -1,6 +1,7 @@
 ﻿//forward base setup
 #ifndef MK_GLASS_FORWARD_BASE_SETUP
 	#define MK_GLASS_FORWARD_BASE_SETUP
+	
 
 	#ifndef MK_GLASS_FWD_BASE_PASS
 		#define MK_GLASS_FWD_BASE_PASS 1

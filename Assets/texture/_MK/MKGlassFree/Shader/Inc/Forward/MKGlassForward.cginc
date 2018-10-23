@@ -3,12 +3,14 @@
 //vertex and fragment shader
 #ifndef MK_GLASS_FORWARD
 	#define MK_GLASS_FORWARD
+	
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	// VERTEX SHADER
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	VertexOutputForward vertfwd (VertexInputForward v)
 	{
+
 		UNITY_SETUP_INSTANCE_ID(v);
 		VertexOutputForward o;
 		UNITY_INITIALIZE_OUTPUT(VertexOutputForward, o);

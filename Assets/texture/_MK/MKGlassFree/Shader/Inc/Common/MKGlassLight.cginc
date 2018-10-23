@@ -3,6 +3,7 @@
 	#define MK_GLASS_LIGHT
 
 	#include "../Common/MKGlassDef.cginc"
+	
 
 	////////////
 	// LIGHT

@@ -7,6 +7,7 @@
 		_MainTex ("Color (RGB)", 2D) = "white" {}
 		_MainTint("Main Tint", Range(0,2)) = 0.0
 		[Toggle] _AlbedoMap ("Color source map", int) = 0
+		
 
 		//Normalmap
 		_BumpMap ("Normalmap", 2D) = "bump" {}

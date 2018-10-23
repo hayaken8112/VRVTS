@@ -7,6 +7,7 @@
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	VertexOutputMeta metavert (VertexInputMeta v)
 	{
+		
 		VertexOutputMeta o;
 		UNITY_INITIALIZE_OUTPUT(VertexOutputMeta, o);
 		//vertexposition

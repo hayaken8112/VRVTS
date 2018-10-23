@@ -3,6 +3,7 @@
 	#define MK_GLASS_SURFACE
 
 	void PreCalcParameters(inout MKGlassSurface mkts)
+	
 	{
 		#if SHADER_TARGET >= 25
 			mkts.Pcp.NdotL = max(0.0 , dot(mkts.Pcp.NormalDirection, mkts.Pcp.LightDirection));

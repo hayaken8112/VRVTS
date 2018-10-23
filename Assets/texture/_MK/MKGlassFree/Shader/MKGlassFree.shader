@@ -252,6 +252,7 @@
 
 			#include "Inc/Meta/MKGlassMetaSetup.cginc"
 			#include "Inc/Meta/MKGlassMeta.cginc"
+			
 			ENDCG
 		}
     }
