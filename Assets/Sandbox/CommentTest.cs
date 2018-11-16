@@ -12,10 +12,10 @@ public class CommentTest : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		GridManager gridManager = GameObject.Find("Grid").GetComponent<GridManager>();
+		GridView gridView = GameObject.Find("Grid").GetComponent<GridView>();
 		var eventTrigger = this.gameObject.AddComponent<ObservableEventTrigger>();
-		eventTrigger.OnPointerEnterAsObservable().Subscribe(_ => gridManager.SelectCells(left_top_x, left_top_y, right_bottom_x,right_bottom_y));
-		eventTrigger.OnPointerExitAsObservable().Subscribe(_ => gridManager.ResetCells());
+		eventTrigger.OnPointerEnterAsObservable().Subscribe(_ => gridView.SelectCells(left_top_x, left_top_y, right_bottom_x,right_bottom_y));
+		eventTrigger.OnPointerExitAsObservable().Subscribe(_ => gridView.ResetCells());
 		
 	}
 	
