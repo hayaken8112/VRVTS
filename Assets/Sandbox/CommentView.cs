@@ -32,7 +32,7 @@ public class CommentView : MonoBehaviour {
 		var to_set_data = list.Take(cell_num).ToList();
 		for (int i = 0; i < cell_num; i++) {
 			if (i < to_set_data.Count) {
-				cellList[i].SetCell(to_set_data[i].id);
+				cellList[i].SetCell(to_set_data[i]);
 			} else {
 				cellList[i].DeleteCell();
 			}

@@ -17,10 +17,12 @@ public class GridView : MonoBehaviour {
 	ReactiveProperty<int> current_cell_x;
 	ReactiveProperty<int> current_cell_y;
 	public ReactiveProperty<bool> isDragging;
+	public Subject<Unit> OnEndDragAsObservable;
 	CommentManagerTest commentManager;
 	[SerializeField]
 	// Use this for initialization
 	void Start () {
+		OnEndDragAsObservable = new Subject<Unit>();
 		gridData = new GridData(0,0,0,0);
 		GridLayoutGroup gridLayout = this.GetComponent<GridLayoutGroup>();
 		RectTransform rectTransform = this.GetComponent<RectTransform>();
@@ -48,6 +50,7 @@ public class GridView : MonoBehaviour {
 				gridData.right_bottom_x = current_cell_x.Value;
 				gridData.right_bottom_y = current_cell_y.Value;
 				SelectCells(gridData.left_top_x, gridData.left_top_y , gridData.right_bottom_x , gridData.right_bottom_y );
+				OnEndDragAsObservable.OnNext(Unit.Default);
 			}
 		});
 		current_cell_x = new ReactiveProperty<int>(0);

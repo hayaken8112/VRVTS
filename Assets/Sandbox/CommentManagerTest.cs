@@ -5,12 +5,16 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UniRx;
 using UniRx.Triggers;
+using UniRx.WebRequest;
 
 public class CommentManagerTest : MonoBehaviour {
 	const string serverUrl = "http://s-tsports.com:8082/";
 	const string key = "ataroutoyama";
 	List<CommentDataTest> dataList;
 	GridView gridView;
+
+	public Subject<Unit> requestSubject;
+	string requestText;
 
 	// Use this for initialization
 	void Start () {
@@ -57,11 +61,29 @@ public class CommentManagerTest : MonoBehaviour {
 		StartCoroutine(PostData(form, "tweet"));
 
 	}
+
+	 public void GetLatest(){
+
+	 }
 	 public void FilterById(int id) {
 		Dictionary<string,string> query = new Dictionary<string, string>();
 		query.Add("id", id.ToString());
-		StartCoroutine(GetData("search", query));
+		// StartCoroutine(GetData("search", query));
 	 }
+	public IObservable<List<ReceiveData>> Search(GridData data){
+		Dictionary<string,string> query = new Dictionary<string, string>();
+		query.Add("id", 10.ToString());
+		query.Add("leftTopX", data.left_top_x.ToString());
+		query.Add("leftTopY", data.left_top_y.ToString());
+		query.Add("rightBottomX", data.right_bottom_x.ToString());
+		query.Add("rightBottomY", data.right_bottom_y.ToString());
+		return GetData("search", query).Select((x,ex) => {
+			List<ReceiveData> datalist;
+			Debug.Log(x);
+			datalist = JsonHelper.ListFromJson<ReceiveData>(x);
+			return datalist;
+		});
+	}
 
 	IEnumerator PostData (WWWForm form, string root) {
 		string url = serverUrl + root + "/" + "?key=" + key;
@@ -81,23 +103,12 @@ public class CommentManagerTest : MonoBehaviour {
 		}
 	}
 	
-	IEnumerator GetData (string root, Dictionary<string,string> query) {
+	IObservable<string> GetData(string root, Dictionary<string,string> query) {
 		string url = serverUrl + root + "/" + "?key=" + key;
 		foreach(KeyValuePair<string,string> item in query) {
 			url += "&" + item.Key + "=" + item.Value;
 		}
-		using(UnityWebRequest www = UnityWebRequest.Get(url))
-		{
-			yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                Debug.Log(www.downloadHandler.text);
-            }
-		}
+		Debug.Log(url);
+		return ObservableWebRequest.Get(url);
 	}
 }

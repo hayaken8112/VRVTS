@@ -972,6 +972,7 @@ GameObject:
   - component: {fileID: 1824445163}
   - component: {fileID: 1824445162}
   - component: {fileID: 1824445166}
+  - component: {fileID: 1824445167}
   m_Layer: 5
   m_Name: CommentBoard
   m_TagString: Untagged
@@ -1008,9 +1009,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f690708d83346a1ac9b4966c2d218d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commentCellPrefab: {fileID: 1508670604838084, guid: aa0f92f6ee77f4aa6b6dec2b729603b7,
-    type: 2}
-  cell_num: 6
 --- !u!114 &1824445163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1080,3 +1078,18 @@ MonoBehaviour:
   commentManager: {fileID: 1824445162}
   gridView: {fileID: 1330560656}
   addButton: {fileID: 1656757040}
+  commentView: {fileID: 1824445167}
+  modeManager: {fileID: 1032207212}
+--- !u!114 &1824445167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1824445160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd1b12a3f16db4357a1855904d5d2bbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  commentCellPrefab: {fileID: 1508670604838084, guid: aa0f92f6ee77f4aa6b6dec2b729603b7,
+    type: 2}

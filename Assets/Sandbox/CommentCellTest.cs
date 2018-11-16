@@ -12,20 +12,20 @@ public class CommentCellTest : MonoBehaviour {
 	Text txt;
 	// Use this for initialization
 	void Start () {
-		CommentManagerTest commentManager = this.GetComponentInParent<CommentManagerTest>();
-		var eventTrigger = this.gameObject.AddComponent<ObservableEventTrigger>();
-		eventTrigger.OnPointerEnterAsObservable().Where(_ => id != -1).Subscribe(_ => commentManager.OnCellEnter(id));
-		eventTrigger.OnPointerExitAsObservable().Where(_ => id != -1).Subscribe(_ => commentManager.OnCellExit());
-		eventTrigger.OnPointerClickAsObservable().Where(_ => id != -1).Subscribe(_ => commentManager.SelectCells(id));
+		// CommentManagerTest commentManager = this.GetComponentInParent<CommentManagerTest>();
+		// var eventTrigger = this.gameObject.AddComponent<ObservableEventTrigger>();
+		// eventTrigger.OnPointerEnterAsObservable().Where(_ => id != -1).Subscribe(_ => commentManager.OnCellEnter(id));
+		// eventTrigger.OnPointerExitAsObservable().Where(_ => id != -1).Subscribe(_ => commentManager.OnCellExit());
+		// eventTrigger.OnPointerClickAsObservable().Where(_ => id != -1).Subscribe(_ => commentManager.SelectCells(id));
 		image = this.GetComponent<Image>();
 		txt = this.GetComponentInChildren<Text>();
 		DeleteCell();
 	}
 
-	public void SetCell(int n) {
-		id = n;
-		image.color = SetColor(n);
-		txt.text = id.ToString();
+	public void SetCell(CommentDataTest data) {
+		id = data.id;
+		image.color = Color.white;
+		txt.text = data.id.ToString() + ":"+ data.comment;
 	}
 
 	public void DeleteCell() {
