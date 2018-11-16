@@ -15,5 +15,8 @@ EditorBuildSettings:
     path: Assets/Oculus/VoiceMod/Scenes/VoiceMod_Demo.unity
     guid: 6b58c6b47668e3b49b538ddc3f3a4c5b
   - enabled: 0
-    path: Assets/Scenes/Main.unity
-    guid: 8885b95f0478e422f89aea7dfe1b9779
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/Scenes/TransDemo.unity
+    guid: 174eb9b3549134804a4f617b7434c4e5
