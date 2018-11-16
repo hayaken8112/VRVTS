@@ -5,17 +5,22 @@ using UnityEngine.UI;
 using UniRx;
 using UniRx.Triggers;
 
-public class Facilitater : MonoBehaviour {
-	int Mode = 0; // 0:comment, 1:view
+public class ModeManager : MonoBehaviour {
+	private int mode = 0; // 0:comment, 1:view
+	public int Mode {
+		get {
+			return mode;
+		}
+	}
 	[SerializeField]
 	Color CommentColor;
 	[SerializeField]
 	Color ViewColor;
+	[SerializeField]
 	GameObject modeButtonObj;
 
 	// Use this for initialization
 	void Start () {
-		modeButtonObj = GameObject.Find("ModeButton");
 		Button modeButton = modeButtonObj.GetComponent<Button>();
 		modeButton.OnClickAsObservable().Subscribe(_ => {
 			SwitchMode();
@@ -26,8 +31,10 @@ public class Facilitater : MonoBehaviour {
 	void SetupComment(){
 		
 	}
+
 	public void SwitchMode() {
-		switch (Mode) {
+		mode = (mode + 1) % 2;
+		switch (mode) {
 			case 0:
 				modeButtonObj.GetComponent<Image>().color = CommentColor;
 				modeButtonObj.GetComponentInChildren<Text>().text = "Comment";
@@ -41,6 +48,5 @@ public class Facilitater : MonoBehaviour {
 				modeButtonObj.GetComponentInChildren<Text>().text = "Comment";
 				break;
 		}
-		Mode = (Mode + 1) % 2;
 	}
 }

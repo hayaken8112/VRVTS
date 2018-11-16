@@ -265,7 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.22352941, g: 0.72156864, b: 0.49411765, a: 1}
+  m_Color: {r: 0.12156863, g: 0.78039217, b: 0.34117648, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -543,6 +543,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CommentColor: {r: 0.120350376, g: 0.7794118, b: 0.34306777, a: 1}
   ViewColor: {r: 0.86764705, g: 0.7418119, b: 0.03827853, a: 1}
+  modeButtonObj: {fileID: 593753215}
 --- !u!1 &1040580582
 GameObject:
   m_ObjectHideFlags: 0
@@ -970,6 +971,7 @@ GameObject:
   - component: {fileID: 1824445164}
   - component: {fileID: 1824445163}
   - component: {fileID: 1824445162}
+  - component: {fileID: 1824445166}
   m_Layer: 5
   m_Name: CommentBoard
   m_TagString: Untagged
@@ -1064,3 +1066,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1824445160}
+--- !u!114 &1824445166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1824445160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c9713b09c5b4c2b84e9383545c8a83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  commentManager: {fileID: 1824445162}
+  gridView: {fileID: 1330560656}
+  addButton: {fileID: 1656757040}

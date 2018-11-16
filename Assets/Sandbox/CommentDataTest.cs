@@ -5,15 +5,30 @@ using UnityEngine;
 
 [Serializable]
 public class CommentDataTest {
-	public CommentDataTest(int left_top_x, int left_top_y, int right_bottom_x, int right_bottom_y){
-		this.left_top_x = left_top_x;
-		this.left_top_y = left_top_y;
-		this.right_bottom_x = right_bottom_x;
-		this.right_bottom_y = right_bottom_y;
+	public CommentDataTest(GridData gridData){
+		this.left_top_x = gridData.left_top_x;
+		this.left_top_y = gridData.left_top_y;
+		this.right_bottom_x = gridData.right_bottom_x;
+		this.right_bottom_y = gridData.right_bottom_y;
 	}
+		public int user_id = 0;
 		public int id;
 		public int left_top_x;
 		public int left_top_y;
 		public int right_bottom_x;
 		public int right_bottom_y;
+		public string comment;
+}
+
+public class GridData {
+	public GridData(int left_top_x, int left_top_y, int right_bottom_x, int right_bottom_y){
+		this.left_top_x = left_top_x;
+		this.left_top_y = left_top_y;
+		this.right_bottom_x = right_bottom_x;
+		this.right_bottom_y = right_bottom_y;
+	}
+	public int left_top_x;
+	public int left_top_y;
+	public int right_bottom_x;
+	public int right_bottom_y;
 }

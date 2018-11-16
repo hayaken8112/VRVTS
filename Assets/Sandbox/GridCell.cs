@@ -17,11 +17,11 @@ public class GridCell : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		img = this.GetComponent<RawImage>();
-		GridManager gridManager = this.GetComponentInParent<GridManager>();
+		GridView gridView = this.GetComponentInParent<GridView>();
 		var eventTrigger = this.gameObject.AddComponent<ObservableEventTrigger>();
 		eventTrigger.OnPointerEnterAsObservable().Subscribe(_ => {
 			TurnCellOn();
-			gridManager.SetCurrentCell(cell_id_x, cell_id_y);
+			gridView.SetCurrentCell(cell_id_x, cell_id_y);
 		});
 		eventTrigger.OnPointerExitAsObservable().Subscribe(_ => {
 			if(isSelected){
@@ -30,8 +30,8 @@ public class GridCell : MonoBehaviour {
 				TurnCellOff();
 			}
 		});
-		eventTrigger.OnPointerDownAsObservable().Subscribe(_ => {gridManager.isDragging.Value = true;});
-		eventTrigger.OnPointerUpAsObservable().Subscribe(_ => {gridManager.isDragging.Value = false;});
+		eventTrigger.OnPointerDownAsObservable().Subscribe(_ => {gridView.isDragging.Value = true;});
+		eventTrigger.OnPointerUpAsObservable().Subscribe(_ => {gridView.isDragging.Value = false;});
 		
 
 	}
