@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using UniRx.Triggers;
 
 public class CommentController : MonoBehaviour {
 	[SerializeField]
@@ -18,24 +19,32 @@ public class CommentController : MonoBehaviour {
 	CommentView commentView;
 	[SerializeField]
 	ModeManager modeManager;
+	public GameObject inputPanel;
+	public InputField inputField;
 
 	// Use this for initialization
 	void Start () {
 		addButton.OnClickAsObservable().Subscribe(_ => {
-			CommentDataTest data = new CommentDataTest(gridView.gridData);
-			data.user_id = 1;
-			data.comment = "from unity";
-			data.id = 10;
-			if (modeManager.Mode == 0) {
+			if (modeManager.Mode.Value == 0) {
+				CommentDataTest data = new CommentDataTest(gridView.gridData);
+				data.user_id = 1;
+				data.comment = inputField.text;
+				data.id = 10;
 				commentManager.Add(data);
+				inputField.text = "";
+				inputPanel.SetActive(false);
 			} 
 		});
 		gridView.OnEndDragAsObservable.Subscribe(_ => {
-				if (modeManager.Mode == 1) {
+				if (modeManager.Mode.Value == 0) {
+					inputPanel.SetActive(true);
+				} else {
 					SearchComment(gridView.gridData);
 				}
 			});
-		
+		modeManager.Mode.Subscribe(mode => {
+			inputPanel.SetActive(false);
+		});
 	}
 	
 	// Update is called once per frame

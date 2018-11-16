@@ -51,7 +51,8 @@ public class BoundingBox : MonoBehaviour {
 			voiceRecorder.StartRecord();
 		});
 		eventTrigger.OnPointerUpAsObservable().Subscribe(_ => {
-			voiceRecorder.FinishRecord();
+			var rec_data = voiceRecorder.FinishRecord();
+			audioRecognizer.SpeechToText(rec_data);
 			audioRecognizer.transcriptSubject.Subscribe(txt => {
 				AddData(txt);
 			});

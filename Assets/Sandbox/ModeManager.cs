@@ -7,11 +7,7 @@ using UniRx.Triggers;
 
 public class ModeManager : MonoBehaviour {
 	private int mode = 0; // 0:comment, 1:view
-	public int Mode {
-		get {
-			return mode;
-		}
-	}
+	public ReactiveProperty<int> Mode;
 	[SerializeField]
 	Color CommentColor;
 	[SerializeField]
@@ -22,8 +18,10 @@ public class ModeManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Button modeButton = modeButtonObj.GetComponent<Button>();
+		Mode = new ReactiveProperty<int>(mode);
 		modeButton.OnClickAsObservable().Subscribe(_ => {
 			SwitchMode();
+			Mode.Value= mode;
 		});
 		
 	}

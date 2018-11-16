@@ -87,6 +87,19 @@ public class GridView : MonoBehaviour {
 			}
 		}
 	}
+	public void SelectCellsWithoutReset(int start_x, int start_y, int end_x, int end_y) {
+		for (int i = 0; i < cell_num_y; i++) {
+			for (int j = 0; j < cell_num_x; j++) {
+				if (start_x <= j && j <= end_x && start_y <= i && i <= end_y){
+					cellList[i][j].SelectCell();
+				} 
+			}
+		}
+	}
+
+	public void ResetWithoutSelected(){
+		SelectCells(gridData.left_top_x, gridData.left_top_y, gridData.right_bottom_x, gridData.right_bottom_y);
+	}
 	public void ResetCells(){
 		for (int i = 0; i < cell_num_y; i++) {
 			for (int j = 0; j < cell_num_x; j++) {

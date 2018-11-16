@@ -2,12 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UniRx;
 
 public class CommentView : MonoBehaviour {
 
 	int cell_num = 6;
 	public GameObject commentCellPrefab;
 	List<CommentCellTest> cellList;
+	public Subject<CommentDataTest> PointerEnterSubject = new Subject<CommentDataTest>();
+
+	public IObservable<CommentDataTest> OnCommentOver
+	{
+		get {return PointerEnterSubject;}
+	}
+	public Subject<Unit> PointerOutSubject = new Subject<Unit>();
+	public IObservable<Unit> OnCommentOut
+	{
+		get {return PointerOutSubject;}
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -17,13 +29,10 @@ public class CommentView : MonoBehaviour {
 			CommentCellTest cell  = cellObj.GetComponent<CommentCellTest>();
 			cellList.Add(cell);
 		}
-		
+
 	}
+
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 	void UpdateView() {
 		
 	}

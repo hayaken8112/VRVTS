@@ -7,30 +7,39 @@ using UniRx.Triggers;
 
 public class CommentCellTest : MonoBehaviour {
 
-	int id = -1;
 	Image image;
 	Text txt;
+	CommentDataTest commentData;
+	CommentView commentView;
 	// Use this for initialization
 	void Start () {
-		// CommentManagerTest commentManager = this.GetComponentInParent<CommentManagerTest>();
-		// var eventTrigger = this.gameObject.AddComponent<ObservableEventTrigger>();
-		// eventTrigger.OnPointerEnterAsObservable().Where(_ => id != -1).Subscribe(_ => commentManager.OnCellEnter(id));
-		// eventTrigger.OnPointerExitAsObservable().Where(_ => id != -1).Subscribe(_ => commentManager.OnCellExit());
+		commentView = this.GetComponentInParent<CommentView>();
+		var eventTrigger = this.gameObject.AddComponent<ObservableEventTrigger>();
 		// eventTrigger.OnPointerClickAsObservable().Where(_ => id != -1).Subscribe(_ => commentManager.SelectCells(id));
 		image = this.GetComponent<Image>();
 		txt = this.GetComponentInChildren<Text>();
+		eventTrigger.OnPointerEnterAsObservable().Subscribe(_ => {
+			if(commentData != null){
+				commentView.PointerEnterSubject.OnNext(commentData);
+			}
+			});
+		eventTrigger.OnPointerExitAsObservable().Subscribe(_ => {
+			if(commentData != null){
+				commentView.PointerOutSubject.OnNext(Unit.Default);
+			}
+			});
 		DeleteCell();
 	}
 
 	public void SetCell(CommentDataTest data) {
-		id = data.id;
+		commentData = data;
 		image.color = Color.white;
 		txt.text = data.id.ToString() + ":"+ data.comment;
 	}
 
 	public void DeleteCell() {
-		id = -1;
 		image.color = Color.gray;
+		commentData = null;
 		txt.text = "";
 	}
 

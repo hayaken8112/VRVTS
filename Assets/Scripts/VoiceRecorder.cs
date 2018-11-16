@@ -16,7 +16,7 @@ public class VoiceRecorder : MonoBehaviour
     const int maxTime_s = 30;
     string enc_data = "";
     public GameObject debugText;
-    public GameObject audioSourceCube;
+    // public GameObject audioSourceCube;
 
 
     // Use this for initialization
@@ -29,7 +29,7 @@ public class VoiceRecorder : MonoBehaviour
             micName = device;
             debugText.GetComponent<Text>().text = device;
         }
-        audioSource = audioSourceCube.GetComponent<AudioSource>();
+        // audioSource = audioSourceCube.GetComponent<AudioSource>();
         debugText.GetComponent<Text>().text = Microphone.devices.Length.ToString();
 
     }
@@ -59,21 +59,21 @@ public class VoiceRecorder : MonoBehaviour
         debugText.GetComponent<Text>().text = audioClip.samples.ToString();
     }
 
-    public void PlayButton()
-    {
-        Debug.Log("play");
-        audioSource.clip = audioClip;
-        audioSource.Play();
-        debugText.GetComponent<Text>().text = "play";
-        byte[] data = WavUtility.FromAudioClip(audioClip);
-        enc_data = Convert.ToBase64String(data);
-        // Debug.Log(enc_data);
-        // StreamWriter sw = new StreamWriter("../TextData.txt",false);// TextData.txtというファイルを新規で用意
-        // sw.WriteLine(enc_data);// ファイルに書き出したあと改行
-        // sw.Flush();// StreamWriterのバッファに書き出し残しがないか確認
-        // sw.Close();// ファイルを閉じる
-        // StartCoroutine(SaveVoice());
-    }
+    // public void PlayButton()
+    // {
+    //     Debug.Log("play");
+    //     audioSource.clip = audioClip;
+    //     audioSource.Play();
+    //     debugText.GetComponent<Text>().text = "play";
+    //     byte[] data = WavUtility.FromAudioClip(audioClip);
+    //     enc_data = Convert.ToBase64String(data);
+    //     // Debug.Log(enc_data);
+    //     // StreamWriter sw = new StreamWriter("../TextData.txt",false);// TextData.txtというファイルを新規で用意
+    //     // sw.WriteLine(enc_data);// ファイルに書き出したあと改行
+    //     // sw.Flush();// StreamWriterのバッファに書き出し残しがないか確認
+    //     // sw.Close();// ファイルを閉じる
+    //     // StartCoroutine(SaveVoice());
+    // }
 
     public void TransButton()
     {
@@ -127,7 +127,7 @@ public class VoiceRecorder : MonoBehaviour
     public void CancesRecord(){
 
     }
-    public void FinishRecord()
+    public string FinishRecord()
     {
         if (Microphone.IsRecording(deviceName: micName) == true)
         {
@@ -142,11 +142,12 @@ public class VoiceRecorder : MonoBehaviour
         }
         Debug.Log(audioClip.samples);
         debugText.GetComponent<Text>().text = audioClip.samples.ToString();
-        audioSource.clip = audioClip;
+        // audioSource.clip = audioClip;
         byte[] data = WavUtility.FromAudioClip(audioClip);
         enc_data = Convert.ToBase64String(data);
-        AudioRecognizer recognizer = this.GetComponent<AudioRecognizer>();
-        recognizer.SpeechToText(enc_data);
+        return enc_data;
+        // AudioRecognizer recognizer = this.GetComponent<AudioRecognizer>();
+        // recognizer.SpeechToText(enc_data);
     }
 
     IEnumerator SaveVoice()
