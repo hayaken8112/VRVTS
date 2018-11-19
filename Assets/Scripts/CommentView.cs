@@ -32,11 +32,6 @@ public class CommentView : MonoBehaviour {
 
 	}
 
-	
-	void UpdateView() {
-		
-	}
-
 	public void SetData(IEnumerable<CommentData> list) {
 		var to_set_data = list.Take(cell_num).ToList();
 		for (int i = 0; i < cell_num; i++) {

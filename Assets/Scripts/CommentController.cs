@@ -14,16 +14,18 @@ public class CommentController : MonoBehaviour {
 	GridView gridView;
 
 	[SerializeField]
-	Button addButton;
-	[SerializeField]
 	CommentView commentView;
 	[SerializeField]
 	ModeManager modeManager;
-	public GameObject inputPanel;
-	public InputField inputField;
+	[SerializeField]
+	InputPanel inputPanel;
+	InputField inputField;
+	Button addButton;
 
 	// Use this for initialization
 	void Start () {
+		inputField = inputPanel.inputField;
+		addButton = inputPanel.addButton;
 		addButton.OnClickAsObservable().Subscribe(_ => {
 			if (modeManager.Mode.Value == 0) {
 				CommentData data = new CommentData(gridView.gridData);
@@ -32,17 +34,17 @@ public class CommentController : MonoBehaviour {
 				data.id = 10;
 				commentManager.Add(data);
 				inputField.text = "";
-				inputPanel.SetActive(false);
+				inputPanel.gameObject.SetActive(false);
 				UpdateComment();
 			} 
 		});
 		modeManager.Mode.Subscribe(mode => {
-			inputPanel.SetActive(false);
+			inputPanel.gameObject.SetActive(false);
 			UpdateComment();
 		});
 		gridView.OnEndDragAsObservable.Subscribe(_ => {
 				if (modeManager.Mode.Value == 0) {
-					inputPanel.SetActive(true);
+					inputPanel.gameObject.SetActive(true);
 				} else {
 					SearchComment(gridView.gridData);
 				}

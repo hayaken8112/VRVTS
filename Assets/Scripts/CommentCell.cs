@@ -46,24 +46,4 @@ public class CommentCell: MonoBehaviour {
 		mainText.text = "";
 		subText.text = "";
 	}
-
-	Color SetColor(int n) {
-		n = n % 3;
-		switch(n)
-		{
-			case 0:
-				return Color.red;
-			case 1:
-				return Color.blue;
-			case 2:
-				return Color.green;
-			default:
-				return Color.white;
-		}
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

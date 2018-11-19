@@ -24,6 +24,42 @@ public class GridView : MonoBehaviour {
 	void Start() {
 		OnEndDragAsObservable = new Subject<Unit>();
 		gridData = new GridData(0,0,0,0);
+		InitGrid();
+		
+		isDragging = new ReactiveProperty<bool>(false);
+		current_cell_x = new ReactiveProperty<int>(0);
+		current_cell_y = new ReactiveProperty<int>(0);
+
+		isDragging.Skip(1).Subscribe(flag => {
+			if(flag){
+				gridData.left_top_x = current_cell_x.Value;
+				gridData.left_top_y = current_cell_y.Value;
+			} else {
+				gridData.right_bottom_x = current_cell_x.Value;
+				gridData.right_bottom_y = current_cell_y.Value;
+				MarkCells(gridData.left_top_x, gridData.left_top_y , gridData.right_bottom_x , gridData.right_bottom_y );
+				OnEndDragAsObservable.OnNext(Unit.Default);
+			}
+		});
+
+		current_cell_x.Subscribe(_ => {
+			if (isDragging.Value) {
+				SelectCells(gridData.left_top_x, gridData.left_top_y , current_cell_x.Value, current_cell_y.Value);
+			}
+			Debug.Log(new Vector2Int(gridData.left_top_x, gridData.left_top_y ).ToString() + new Vector2Int(current_cell_x.Value, current_cell_y.Value).ToString());
+		});
+
+		current_cell_y.Subscribe(_ => {
+			if (isDragging.Value) {
+				SelectCells(gridData.left_top_x, gridData.left_top_y , current_cell_x.Value, current_cell_y.Value);
+			}
+			Debug.Log(new Vector2Int(gridData.left_top_x, gridData.left_top_y ).ToString() + new Vector2Int(current_cell_x.Value, current_cell_y.Value).ToString());
+		});
+
+	}
+
+	public void InitGrid(){
+		DeleteAllCells();
 		GridLayoutGroup gridLayout = this.GetComponent<GridLayoutGroup>();
 		RectTransform rectTransform = this.GetComponent<RectTransform>();
 		gridLayout.cellSize = new Vector2(rectTransform.rect.width*cellrate_x, rectTransform.rect.height*cellrate_y);
@@ -40,34 +76,6 @@ public class GridView : MonoBehaviour {
 			}
 			cellList.Add(cellRow);
 		}
-		
-		isDragging = new ReactiveProperty<bool>(false);
-		isDragging.Skip(1).Subscribe(flag => {
-			if(flag){
-				gridData.left_top_x = current_cell_x.Value;
-				gridData.left_top_y = current_cell_y.Value;
-			} else {
-				gridData.right_bottom_x = current_cell_x.Value;
-				gridData.right_bottom_y = current_cell_y.Value;
-				MarkCells(gridData.left_top_x, gridData.left_top_y , gridData.right_bottom_x , gridData.right_bottom_y );
-				OnEndDragAsObservable.OnNext(Unit.Default);
-			}
-		});
-		current_cell_x = new ReactiveProperty<int>(0);
-		current_cell_y = new ReactiveProperty<int>(0);
-		current_cell_x.Subscribe(_ => {
-			if (isDragging.Value) {
-				SelectCells(gridData.left_top_x, gridData.left_top_y , current_cell_x.Value, current_cell_y.Value);
-			}
-			Debug.Log(new Vector2Int(gridData.left_top_x, gridData.left_top_y ).ToString() + new Vector2Int(current_cell_x.Value, current_cell_y.Value).ToString());
-		});
-		current_cell_y.Subscribe(_ => {
-			if (isDragging.Value) {
-				SelectCells(gridData.left_top_x, gridData.left_top_y , current_cell_x.Value, current_cell_y.Value);
-			}
-			Debug.Log(new Vector2Int(gridData.left_top_x, gridData.left_top_y ).ToString() + new Vector2Int(current_cell_x.Value, current_cell_y.Value).ToString());
-		});
-
 	}
 
 	public void SetCurrentCell(int id_x, int id_y) {
@@ -134,6 +142,13 @@ public class GridView : MonoBehaviour {
 		}
 	}
 
+	void DeleteAllCells(){
+		for (int i = 0; i < cell_num_y; i++) {
+			for (int j = 0; j < cell_num_x; j++) {
+				DestroyImmediate(cellList[i][j].gameObject);
+			}
+		}
+	}
 
 	public void DebugCell(int id) {
 		Debug.Log(id);
