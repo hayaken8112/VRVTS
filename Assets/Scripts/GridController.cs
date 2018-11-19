@@ -10,10 +10,10 @@ public class GridController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		commentView.OnCommentOver.Subscribe(cd => {
-			gridView.SelectCellsWithoutReset(cd.left_top_x,cd.left_top_y,cd.right_bottom_x, cd.right_bottom_y);
+			gridView.HighLightCells(cd.left_top_x,cd.left_top_y,cd.right_bottom_x, cd.right_bottom_y);
 		});
 		commentView.OnCommentOut.Subscribe(_ => {
-			gridView.ResetWithoutSelected();
+			gridView.ResetAllCells();
 		});
 		
 	}

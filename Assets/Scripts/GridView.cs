@@ -49,7 +49,7 @@ public class GridView : MonoBehaviour {
 			} else {
 				gridData.right_bottom_x = current_cell_x.Value;
 				gridData.right_bottom_y = current_cell_y.Value;
-				SelectCells(gridData.left_top_x, gridData.left_top_y , gridData.right_bottom_x , gridData.right_bottom_y );
+				MarkCells(gridData.left_top_x, gridData.left_top_y , gridData.right_bottom_x , gridData.right_bottom_y );
 				OnEndDragAsObservable.OnNext(Unit.Default);
 			}
 		});
@@ -75,6 +75,28 @@ public class GridView : MonoBehaviour {
 		current_cell_y.Value = id_y;
 	}
 	
+	public void MarkCells(int start_x, int start_y, int end_x, int end_y) {
+		for (int i = 0; i < cell_num_y; i++) {
+			for (int j = 0; j < cell_num_x; j++) {
+				if (start_x <= j && j <= end_x && start_y <= i && i <= end_y){
+					cellList[i][j].SetCellState(1);
+				} else {
+					cellList[i][j].SetCellState(0);
+				}
+			}
+		}
+	}
+	public void HighLightCells(int start_x, int start_y, int end_x, int end_y) {
+		for (int i = 0; i < cell_num_y; i++) {
+			for (int j = 0; j < cell_num_x; j++) {
+				if (start_x <= j && j <= end_x && start_y <= i && i <= end_y){
+					cellList[i][j].HighLightCell();
+				} else {
+					cellList[i][j].ResetCell();
+				}
+			}
+		}
+	}
 
 	public void SelectCells(int start_x, int start_y, int end_x, int end_y) {
 		for (int i = 0; i < cell_num_y; i++) {
@@ -82,7 +104,7 @@ public class GridView : MonoBehaviour {
 				if (start_x <= j && j <= end_x && start_y <= i && i <= end_y){
 					cellList[i][j].SelectCell();
 				} else {
-					cellList[i][j].DeSelectCell();
+					cellList[i][j].ResetCell();
 				}
 			}
 		}
@@ -97,13 +119,17 @@ public class GridView : MonoBehaviour {
 		}
 	}
 
-	public void ResetWithoutSelected(){
-		SelectCells(gridData.left_top_x, gridData.left_top_y, gridData.right_bottom_x, gridData.right_bottom_y);
-	}
-	public void ResetCells(){
+	public void ResetAllCells(){
 		for (int i = 0; i < cell_num_y; i++) {
 			for (int j = 0; j < cell_num_x; j++) {
-					cellList[i][j].DeSelectCell();
+					cellList[i][j].ResetCell();
+			}
+		}
+	}
+	public void ResetStateAllCells(){
+		for (int i = 0; i < cell_num_y; i++) {
+			for (int j = 0; j < cell_num_x; j++) {
+					cellList[i][j].ResetCellState();
 			}
 		}
 	}

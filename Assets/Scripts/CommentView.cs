@@ -6,7 +6,7 @@ using UniRx;
 
 public class CommentView : MonoBehaviour {
 
-	int cell_num = 6;
+	public int cell_num = 12;
 	public GameObject commentCellPrefab;
 	List<CommentCell> cellList;
 	public Subject<CommentData> PointerEnterSubject = new Subject<CommentData>();

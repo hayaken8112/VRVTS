@@ -46,9 +46,6 @@ public class CommentManager : MonoBehaviour {
 
 		return data.left_top_x >= left_top_x && data.left_top_y >= left_top_y && data.right_bottom_x <= right_bottom_x && data.right_bottom_y <= right_bottom_y;
 	}
-	public void OnCellExit() {
-		gridView.ResetCells();
-	}
 	public void Add(CommentData data) {
 		WWWForm form = new WWWForm();
 		form.AddField("userId", data.user_id);

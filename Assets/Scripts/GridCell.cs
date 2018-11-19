@@ -12,23 +12,20 @@ public class GridCell : MonoBehaviour {
 	int cell_id_y;
 	const float alphaOn = 0.8f;
 	const float alphaSelect = 0.6f;
+	const float alphaMark = 0.3f;
 	const float alphaOff = 0.1f;
-	bool isSelected = false;
+	int state = 0;
 	// Use this for initialization
 	void Start () {
 		img = this.GetComponent<RawImage>();
 		GridView gridView = this.GetComponentInParent<GridView>();
 		var eventTrigger = this.gameObject.AddComponent<ObservableEventTrigger>();
 		eventTrigger.OnPointerEnterAsObservable().Subscribe(_ => {
-			TurnCellOn();
+			HighLightCell();
 			gridView.SetCurrentCell(cell_id_x, cell_id_y);
 		});
 		eventTrigger.OnPointerExitAsObservable().Subscribe(_ => {
-			if(isSelected){
-				SelectCell();
-			} else {
-				TurnCellOff();
-			}
+			SetCellState(state);
 		});
 		eventTrigger.OnPointerDownAsObservable().Subscribe(_ => {gridView.isDragging.Value = true;});
 		eventTrigger.OnPointerUpAsObservable().Subscribe(_ => {gridView.isDragging.Value = false;});
@@ -39,30 +36,45 @@ public class GridCell : MonoBehaviour {
 		cell_id_x = id_x;
 		cell_id_y = id_y;
 	}
-	public void SetCellState() {
-
+	public void SetCellState(int n_state) {
+		img.color = GetColor(n_state);
+		state = n_state;
+	}
+	public void ResetCellState() {
+		img.color = GetColor(0);
+		state = 0;
+	}
+	public void ResetCell() {
+		img.color = GetColor(state);
 	}
 	public void SelectCell() {
-		Color c = img.color;
-		c.a = alphaSelect;
-		img.color = c;
-		isSelected = true;
+		img.color = GetColor(2);
 	}
 	public void DeSelectCell() {
-		Color c = img.color;
-		c.a = alphaOff;
-		img.color = c;
-		isSelected = false;
+		SetCellState(0);
+	}
+	public void HighLightCell() {
+		img.color = GetColor(3);
 	}
 	
-	public void TurnCellOn() {
+	Color GetColor(int state) {
 		Color c = img.color;
-		c.a = alphaOn;
-		img.color = c;
-	}
-	public void TurnCellOff() {
-		Color c = img.color;
-		c.a = alphaOff;
-		img.color = c;
+		switch(state){
+			case 0:
+				c.a = alphaOff;
+				return c;
+			case 1:
+				c.a = alphaMark;
+				return c;
+			case 2:
+				c.a = alphaSelect;
+				return c;
+			case 3:
+				c.a = alphaOn;
+				return c;
+			default:
+				c.a = alphaOff;
+				return c;
+		}
 	}
 }
