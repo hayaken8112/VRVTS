@@ -15,7 +15,7 @@ public class VoiceRecorder : MonoBehaviour
 
     const int maxTime_s = 30;
     string enc_data = "";
-    public GameObject debugText;
+    public Text debugText;
     // public GameObject audioSourceCube;
 
 
@@ -27,10 +27,9 @@ public class VoiceRecorder : MonoBehaviour
         {
             Debug.Log("Name: " + device);
             micName = device;
-            debugText.GetComponent<Text>().text = device;
         }
         // audioSource = audioSourceCube.GetComponent<AudioSource>();
-        debugText.GetComponent<Text>().text = Microphone.devices.Length.ToString();
+        debugText.text = Microphone.devices.Length.ToString();
 
     }
 
@@ -38,7 +37,7 @@ public class VoiceRecorder : MonoBehaviour
     {
         Debug.Log("record start");
         audioClip = Microphone.Start(deviceName: micName, loop: false, lengthSec: maxTime_s, frequency: samplingFrequency);
-        debugText.GetComponent<Text>().text = "start";
+        debugText.text = "start";
 
     }
 
@@ -47,13 +46,13 @@ public class VoiceRecorder : MonoBehaviour
         if (Microphone.IsRecording(deviceName: micName) == true)
         {
             Debug.Log("recording stoped");
-            debugText.GetComponent<Text>().text = "stop";
+            debugText.text = "stop";
             StopRecord();
         }
         else
         {
             Debug.Log("not recording");
-            debugText.GetComponent<Text>().text = "not recoding";
+            debugText.text = "not recoding";
         }
         Debug.Log(audioClip.samples);
         debugText.GetComponent<Text>().text = audioClip.samples.ToString();
@@ -121,27 +120,24 @@ public class VoiceRecorder : MonoBehaviour
     {
         Debug.Log("record start");
         audioClip = Microphone.Start(deviceName: micName, loop: false, lengthSec: maxTime_s, frequency: samplingFrequency);
-        debugText.GetComponent<Text>().text = "start";
+        debugText.text = "start";
     }
 
-    public void CancesRecord(){
-
-    }
     public string FinishRecord()
     {
         if (Microphone.IsRecording(deviceName: micName) == true)
         {
             Debug.Log("recording stoped");
-            debugText.GetComponent<Text>().text = "stop";
+            debugText.text = "stop";
             StopRecord();
         }
         else
         {
-            Debug.Log("not recording");
-            debugText.GetComponent<Text>().text = "not recoding";
+            Debug.Log("not recorded");
+            debugText.text = "not recoded";
         }
         Debug.Log(audioClip.samples);
-        debugText.GetComponent<Text>().text = audioClip.samples.ToString();
+        // debugText.text = audioClip.samples.ToString();
         // audioSource.clip = audioClip;
         byte[] data = WavUtility.FromAudioClip(audioClip);
         enc_data = Convert.ToBase64String(data);
@@ -155,10 +151,5 @@ public class VoiceRecorder : MonoBehaviour
         string file;
         yield return null;
         WavUtility.FromAudioClip(audioClip, out file, true);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
