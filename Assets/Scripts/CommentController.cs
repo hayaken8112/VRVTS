@@ -31,7 +31,6 @@ public class CommentController : MonoBehaviour {
 				CommentData data = new CommentData(gridView.gridData);
 				data.user_id = 1;
 				data.comment = inputField.text;
-				data.id = 10;
 				commentManager.Add(data);
 				inputField.text = "";
 				inputPanel.gameObject.SetActive(false);
