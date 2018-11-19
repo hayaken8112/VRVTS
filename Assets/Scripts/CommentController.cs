@@ -33,10 +33,12 @@ public class CommentController : MonoBehaviour {
 				commentManager.Add(data);
 				inputField.text = "";
 				inputPanel.SetActive(false);
+				UpdateComment();
 			} 
 		});
 		modeManager.Mode.Subscribe(mode => {
 			inputPanel.SetActive(false);
+			UpdateComment();
 		});
 		gridView.OnEndDragAsObservable.Subscribe(_ => {
 				if (modeManager.Mode.Value == 0) {
@@ -50,6 +52,12 @@ public class CommentController : MonoBehaviour {
 	// Update is called once per frame
 	public void UpdateView(IEnumerable<CommentData> dataList) {
 		commentView.SetData(dataList);
+	}
+	public void UpdateComment(){
+		commentManager.GetLatest(0).Subscribe(x => {
+			var datalist = x.Select(i => i.ToCommentData());
+			UpdateView(datalist);
+		});
 	}
 
 	public void SearchComment(GridData data) {
