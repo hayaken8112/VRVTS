@@ -21,7 +21,7 @@ public class GridView : MonoBehaviour {
 	CommentManager commentManager;
 	[SerializeField]
 	// Use this for initialization
-	void Start () {
+	void Start() {
 		OnEndDragAsObservable = new Subject<Unit>();
 		gridData = new GridData(0,0,0,0);
 		GridLayoutGroup gridLayout = this.GetComponent<GridLayoutGroup>();

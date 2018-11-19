@@ -39,6 +39,9 @@ public class GridCell : MonoBehaviour {
 		cell_id_x = id_x;
 		cell_id_y = id_y;
 	}
+	public void SetCellState() {
+
+	}
 	public void SelectCell() {
 		Color c = img.color;
 		c.a = alphaSelect;

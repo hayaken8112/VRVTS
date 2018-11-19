@@ -876,10 +876,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff8b47ae7084501a731016c7bf57d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundingboxPrefab: {fileID: 1109847041470718, guid: b0ae4b9d8d45746e1a6637160214e0bf,
-    type: 2}
-  canvas: {fileID: 1032207207}
-  currentBB: {fileID: 0}
 --- !u!114 &1648339296 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114559625319797106, guid: 2a79914b4a8444761839995d330d0b5d,

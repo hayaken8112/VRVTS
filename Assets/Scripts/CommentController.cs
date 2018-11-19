@@ -9,8 +9,8 @@ using UniRx.Triggers;
 public class CommentController : MonoBehaviour {
 	[SerializeField]
 	CommentManager commentManager;
-
 	[SerializeField]
+
 	GridView gridView;
 
 	[SerializeField]
@@ -35,6 +35,9 @@ public class CommentController : MonoBehaviour {
 				inputPanel.SetActive(false);
 			} 
 		});
+		modeManager.Mode.Subscribe(mode => {
+			inputPanel.SetActive(false);
+		});
 		gridView.OnEndDragAsObservable.Subscribe(_ => {
 				if (modeManager.Mode.Value == 0) {
 					inputPanel.SetActive(true);
@@ -42,9 +45,6 @@ public class CommentController : MonoBehaviour {
 					SearchComment(gridView.gridData);
 				}
 			});
-		modeManager.Mode.Subscribe(mode => {
-			inputPanel.SetActive(false);
-		});
 	}
 	
 	// Update is called once per frame

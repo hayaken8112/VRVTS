@@ -576,8 +576,8 @@ PlayerSettings:
   additionalIl2CppArgs: 
   scriptingRuntimeVersion: 0
   apiCompatibilityLevelPerPlatform:
-    Android: 3
-    Standalone: 3
+    Android: 1
+    Standalone: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: Oculus Go
@@ -660,7 +660,7 @@ PlayerSettings:
     Hub: 0
     UNet: 1
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 3
+  apiCompatibilityLevel: 2
   cloudProjectId: 07620ce7-cfa2-48c1-abea-27b4a1f9bfe0
   projectName: Oculus Go
   organizationId: hayashi8112
