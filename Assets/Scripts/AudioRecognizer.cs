@@ -29,13 +29,8 @@ public class AudioRecognizer : MonoBehaviour {
 		form.config.sampleRateHertz = 16000;
 		form.config.encoding = "ENCODING_UNSPECIFIED";
 		form.audio = new SpeechData.AudioData();
-		response = new SpeechData.Response();
 	}
 
-	// public string GetText(string data) {
-	// 	StartCoroutine(SpeechToText(data));
-	// 	return responseText;
-	// }
 	public void SpeechToText(string data) {
 		form.audio.content = data;
 		string jsonString = JsonUtility.ToJson(form);
@@ -67,8 +62,9 @@ public class AudioRecognizer : MonoBehaviour {
         else {
             Debug.Log(www.downloadHandler.text);
 			string responseJson = www.downloadHandler.text;
-			response = JsonUtility.FromJson<SpeechData.Response>(responseJson);
-			if (response.results.Length != 0) {
+			if (responseJson != "{}") {
+				var response = JsonUtility.FromJson<SpeechData.Response>(responseJson);
+				Debug.Log(response);
 				responseText = response.results[0].alternatives[0].transcript;
 				transcriptSubject.OnNext(responseText);
 			} else {

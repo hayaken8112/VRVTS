@@ -59,10 +59,9 @@ public class CommentManager : MonoBehaviour {
 
 	}
 
-	 public IObservable<List<ReceiveData>> GetLatest(int num){
+	 public IObservable<List<ReceiveData>> GetLatest(){
 		Dictionary<string,string> query = new Dictionary<string, string>();
 		query.Add("id", 10.ToString());
-		query.Add("tweetId", num.ToString());
 		return GetData("tweet", query).Select((x,ex) => {
 			List<ReceiveData> datalist;
 			Debug.Log(x);

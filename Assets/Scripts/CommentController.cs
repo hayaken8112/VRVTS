@@ -54,7 +54,7 @@ public class CommentController : MonoBehaviour {
 		commentView.SetData(dataList);
 	}
 	public void UpdateComment(){
-		commentManager.GetLatest(0).Subscribe(x => {
+		commentManager.GetLatest().Subscribe(x => {
 			var datalist = x.Select(i => i.ToCommentData());
 			UpdateView(datalist);
 		});

@@ -16,8 +16,6 @@ public class VoiceRecorder : MonoBehaviour
     const int maxTime_s = 30;
     string enc_data = "";
     public Text debugText;
-    // public GameObject audioSourceCube;
-
 
     // Use this for initialization
     void Start()
@@ -29,55 +27,8 @@ public class VoiceRecorder : MonoBehaviour
             micName = device;
         }
         // audioSource = audioSourceCube.GetComponent<AudioSource>();
-        debugText.text = Microphone.devices.Length.ToString();
+        // debugText.text = Microphone.devices.Length.ToString();
 
-    }
-
-    public void StartButton()
-    {
-        Debug.Log("record start");
-        audioClip = Microphone.Start(deviceName: micName, loop: false, lengthSec: maxTime_s, frequency: samplingFrequency);
-        debugText.text = "start";
-
-    }
-
-    public void EndButton()
-    {
-        if (Microphone.IsRecording(deviceName: micName) == true)
-        {
-            Debug.Log("recording stoped");
-            debugText.text = "stop";
-            StopRecord();
-        }
-        else
-        {
-            Debug.Log("not recording");
-            debugText.text = "not recoding";
-        }
-        Debug.Log(audioClip.samples);
-        debugText.GetComponent<Text>().text = audioClip.samples.ToString();
-    }
-
-    // public void PlayButton()
-    // {
-    //     Debug.Log("play");
-    //     audioSource.clip = audioClip;
-    //     audioSource.Play();
-    //     debugText.GetComponent<Text>().text = "play";
-    //     byte[] data = WavUtility.FromAudioClip(audioClip);
-    //     enc_data = Convert.ToBase64String(data);
-    //     // Debug.Log(enc_data);
-    //     // StreamWriter sw = new StreamWriter("../TextData.txt",false);// TextData.txtというファイルを新規で用意
-    //     // sw.WriteLine(enc_data);// ファイルに書き出したあと改行
-    //     // sw.Flush();// StreamWriterのバッファに書き出し残しがないか確認
-    //     // sw.Close();// ファイルを閉じる
-    //     // StartCoroutine(SaveVoice());
-    // }
-
-    public void TransButton()
-    {
-        AudioRecognizer recognizer = this.GetComponent<AudioRecognizer>();
-        recognizer.SpeechToText(enc_data);
     }
 
     public void StopRecord()
@@ -144,12 +95,5 @@ public class VoiceRecorder : MonoBehaviour
         return enc_data;
         // AudioRecognizer recognizer = this.GetComponent<AudioRecognizer>();
         // recognizer.SpeechToText(enc_data);
-    }
-
-    IEnumerator SaveVoice()
-    {
-        string file;
-        yield return null;
-        WavUtility.FromAudioClip(audioClip, out file, true);
     }
 }
