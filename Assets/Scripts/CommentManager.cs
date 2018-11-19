@@ -59,7 +59,16 @@ public class CommentManager : MonoBehaviour {
 
 	}
 
-	 public void GetLatest(){
+	 public IObservable<List<ReceiveData>> GetLatest(int num){
+		Dictionary<string,string> query = new Dictionary<string, string>();
+		query.Add("id", 10.ToString());
+		query.Add("tweetId", num.ToString());
+		return GetData("tweet", query).Select((x,ex) => {
+			List<ReceiveData> datalist;
+			Debug.Log(x);
+			datalist = JsonHelper.ListFromJson<ReceiveData>(x);
+			return datalist;
+		});
 
 	 }
 	 public void FilterById(int id) {
