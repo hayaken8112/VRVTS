@@ -15,8 +15,8 @@ public class ReceiveData {
 		public int rightBottomX;
 		public int rightBottomY;
 		public string opinion;
-		public CommentDataTest ToCommentData() {
-			CommentDataTest data = new CommentDataTest(tweetId, userId, id, leftTopX, leftTopY, rightBottomX, rightBottomY,opinion);
+		public CommentData ToCommentData() {
+			CommentData data = new CommentData(tweetId, userId, id, leftTopX, leftTopY, rightBottomX, rightBottomY,opinion);
 			return data;
 		}
 }

@@ -18,7 +18,7 @@ public class GridView : MonoBehaviour {
 	ReactiveProperty<int> current_cell_y;
 	public ReactiveProperty<bool> isDragging;
 	public Subject<Unit> OnEndDragAsObservable;
-	CommentManagerTest commentManager;
+	CommentManager commentManager;
 	[SerializeField]
 	// Use this for initialization
 	void Start () {

@@ -8,7 +8,7 @@ using UniRx.Triggers;
 
 public class CommentController : MonoBehaviour {
 	[SerializeField]
-	CommentManagerTest commentManager;
+	CommentManager commentManager;
 
 	[SerializeField]
 	GridView gridView;
@@ -26,7 +26,7 @@ public class CommentController : MonoBehaviour {
 	void Start () {
 		addButton.OnClickAsObservable().Subscribe(_ => {
 			if (modeManager.Mode.Value == 0) {
-				CommentDataTest data = new CommentDataTest(gridView.gridData);
+				CommentData data = new CommentData(gridView.gridData);
 				data.user_id = 1;
 				data.comment = inputField.text;
 				data.id = 10;
@@ -48,7 +48,7 @@ public class CommentController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	public void UpdateView(IEnumerable<CommentDataTest> dataList) {
+	public void UpdateView(IEnumerable<CommentData> dataList) {
 		commentView.SetData(dataList);
 	}
 

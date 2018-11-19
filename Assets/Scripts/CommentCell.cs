@@ -5,11 +5,11 @@ using UnityEngine.UI;
 using UniRx;
 using UniRx.Triggers;
 
-public class CommentCellTest : MonoBehaviour {
+public class CommentCell: MonoBehaviour {
 
 	Image image;
 	Text txt;
-	CommentDataTest commentData;
+	CommentData commentData;
 	CommentView commentView;
 	// Use this for initialization
 	void Start () {
@@ -31,7 +31,7 @@ public class CommentCellTest : MonoBehaviour {
 		DeleteCell();
 	}
 
-	public void SetCell(CommentDataTest data) {
+	public void SetCell(CommentData data) {
 		commentData = data;
 		image.color = Color.white;
 		txt.text = data.id.ToString() + ":"+ data.comment;

@@ -61,8 +61,8 @@ public class BoundingBox : MonoBehaviour {
 	}
 	void AddData(string txt){
 		GameObject commentManagerObj = GameObject.Find("CommentManager");
-		CommentManager commentManager = commentManagerObj.GetComponent<CommentManager>();
-		CommentData data = new CommentData(txt, rect.pivot, rect.localPosition, rect.sizeDelta.x, rect.sizeDelta.y);
+		CommentManagerOld commentManager = commentManagerObj.GetComponent<CommentManagerOld>();
+		CommentDataOld data = new CommentDataOld(txt, rect.pivot, rect.localPosition, rect.sizeDelta.x, rect.sizeDelta.y);
 		commentManager.AddCommentData(data);
 		commentManager.UpdateBoard();
 	}
