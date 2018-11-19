@@ -8,7 +8,10 @@ using UniRx.Triggers;
 public class CommentCell: MonoBehaviour {
 
 	Image image;
-	Text txt;
+	[SerializeField]
+	Text mainText;
+	[SerializeField]
+	Text subText;
 	CommentData commentData;
 	CommentView commentView;
 	// Use this for initialization
@@ -17,7 +20,6 @@ public class CommentCell: MonoBehaviour {
 		var eventTrigger = this.gameObject.AddComponent<ObservableEventTrigger>();
 		// eventTrigger.OnPointerClickAsObservable().Where(_ => id != -1).Subscribe(_ => commentManager.SelectCells(id));
 		image = this.GetComponent<Image>();
-		txt = this.GetComponentInChildren<Text>();
 		eventTrigger.OnPointerEnterAsObservable().Subscribe(_ => {
 			if(commentData != null){
 				commentView.PointerEnterSubject.OnNext(commentData);
@@ -34,13 +36,15 @@ public class CommentCell: MonoBehaviour {
 	public void SetCell(CommentData data) {
 		commentData = data;
 		image.color = Color.white;
-		txt.text = data.id.ToString() + ":"+ data.comment;
+		mainText.text = data.comment;
+		subText.text = data.id.ToString();
 	}
 
 	public void DeleteCell() {
 		image.color = Color.gray;
 		commentData = null;
-		txt.text = "";
+		mainText.text = "";
+		subText.text = "";
 	}
 
 	Color SetColor(int n) {
