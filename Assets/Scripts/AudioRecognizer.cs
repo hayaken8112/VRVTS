@@ -14,7 +14,7 @@ public class AudioRecognizer : MonoBehaviour {
 	public string responseText = "";
 
 	// Use this for initialization
-	public GameObject debugText;
+	public Text debugText;
 	public Subject<string> transcriptSubject;
 	void Start () {
 		InitRequestData();
@@ -29,13 +29,8 @@ public class AudioRecognizer : MonoBehaviour {
 		form.config.sampleRateHertz = 16000;
 		form.config.encoding = "ENCODING_UNSPECIFIED";
 		form.audio = new SpeechData.AudioData();
-		response = new SpeechData.Response();
 	}
 
-	// public string GetText(string data) {
-	// 	StartCoroutine(SpeechToText(data));
-	// 	return responseText;
-	// }
 	public void SpeechToText(string data) {
 		form.audio.content = data;
 		string jsonString = JsonUtility.ToJson(form);
@@ -61,15 +56,20 @@ public class AudioRecognizer : MonoBehaviour {
 
         if(www.isNetworkError || www.isHttpError) {
             Debug.Log(www.error);
-			debugText.GetComponent<Text>().text = www.error;
+			debugText.text = www.error;
 			responseText = "Sorry";
         }
         else {
             Debug.Log(www.downloadHandler.text);
 			string responseJson = www.downloadHandler.text;
-			response = JsonUtility.FromJson<SpeechData.Response>(responseJson);
-			responseText = response.results[0].alternatives[0].transcript;
-			transcriptSubject.OnNext(responseText);
+			if (responseJson != "{}") {
+				var response = JsonUtility.FromJson<SpeechData.Response>(responseJson);
+				Debug.Log(response);
+				responseText = response.results[0].alternatives[0].transcript;
+				transcriptSubject.OnNext(responseText);
+			} else {
+				transcriptSubject.OnNext("Please try again.");
+			}
         }
 	}
 

@@ -10,6 +10,7 @@ using UniRx.WebRequest;
 public class CommentManager : MonoBehaviour {
 	const string serverUrl = "http://s-tsports.com:8082/";
 	const string key = "ataroutoyama";
+	public int workId = 10;
 	List<CommentData> dataList;
 	GridView gridView;
 
@@ -22,34 +23,10 @@ public class CommentManager : MonoBehaviour {
 		dataList = new List<CommentData>();
 	}
 
-	public void AddData(CommentData data) {
-		data.id = dataList.Count;
-		dataList.Add(data);
-		// SetData(dataList);
-	}
-	public void SelectCells(int id) {
-		var data = dataList.Where(x => x.id % 3 == id % 3);
-		// SetData(data);
-	}
-	public void SelectCellsByArea(int left_top_x, int left_top_y, int right_bottom_x, int right_bottom_y) {
-		var data = dataList.Where(x => IsInArea(x, left_top_x, left_top_y, right_bottom_x, right_bottom_y));
-		// SetData(data);
-
-	}
-
-	public void OnCellEnter(int id) {
-		CommentData data = dataList[id];
-		gridView.SelectCells(data.left_top_x, data.left_top_y, data.right_bottom_x, data.right_bottom_y);
-
-	}
-	bool IsInArea(CommentData data, int left_top_x, int left_top_y, int right_bottom_x, int right_bottom_y) {
-
-		return data.left_top_x >= left_top_x && data.left_top_y >= left_top_y && data.right_bottom_x <= right_bottom_x && data.right_bottom_y <= right_bottom_y;
-	}
 	public void Add(CommentData data) {
 		WWWForm form = new WWWForm();
 		form.AddField("userId", data.user_id);
-		form.AddField("id", data.id);
+		form.AddField("id", this.workId);
 		form.AddField("leftTopX", data.left_top_x);
 		form.AddField("leftTopY", data.left_top_y);
 		form.AddField("rightBottomX", data.right_bottom_x);
@@ -59,17 +36,21 @@ public class CommentManager : MonoBehaviour {
 
 	}
 
-	 public void GetLatest(){
+	 public IObservable<List<ReceiveData>> GetLatest(){
+		Dictionary<string,string> query = new Dictionary<string, string>();
+		query.Add("id", this.workId.ToString());
+		return GetData("tweet", query).Select((x,ex) => {
+			List<ReceiveData> datalist;
+			Debug.Log(x);
+			datalist = JsonHelper.ListFromJson<ReceiveData>(x);
+			return datalist;
+		});
 
 	 }
-	 public void FilterById(int id) {
-		Dictionary<string,string> query = new Dictionary<string, string>();
-		query.Add("id", id.ToString());
-		// StartCoroutine(GetData("search", query));
-	 }
+
 	public IObservable<List<ReceiveData>> Search(GridData data){
 		Dictionary<string,string> query = new Dictionary<string, string>();
-		query.Add("id", 10.ToString());
+		query.Add("id", this.workId.ToString());
 		query.Add("leftTopX", data.left_top_x.ToString());
 		query.Add("leftTopY", data.left_top_y.ToString());
 		query.Add("rightBottomX", data.right_bottom_x.ToString());

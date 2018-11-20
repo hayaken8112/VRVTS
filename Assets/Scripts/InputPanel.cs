@@ -7,12 +7,15 @@ using UniRx.Triggers;
 
 public class InputPanel : MonoBehaviour {
 	public GameObject recordButton;
-	public VoiceRecorder voiceRecorder;
-	public AudioRecognizer audioRecognizer;
+	public Button addButton;
+	[SerializeField]
+	GameObject voiceManager;
 	public InputField inputField;
 
 	// Use this for initialization
 	void Start () {
+		VoiceRecorder voiceRecorder = voiceManager.GetComponent<VoiceRecorder>();
+		AudioRecognizer audioRecognizer = voiceManager.GetComponent<AudioRecognizer>();
 		var recordTrigger = recordButton.AddComponent<ObservableEventTrigger>();
 		recordTrigger.OnPointerDownAsObservable().Subscribe(_ => {
 			voiceRecorder.StartRecord();
@@ -24,11 +27,6 @@ public class InputPanel : MonoBehaviour {
 				inputField.text = txt;
 			});
 		});
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
 		
 	}
 }
