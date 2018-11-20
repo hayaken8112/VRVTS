@@ -4558,6 +4558,12 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1517747447}
   m_Script: {fileID: 11500000, guid: fd1b12a3f16db4357a1855904d5d2bbd, type: 3}
+--- !u!114 &1517747453 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114928692883715228, guid: 5ffded67dc40a43b3874995875c94c53,
+    type: 2}
+  m_PrefabInternal: {fileID: 1517747447}
+  m_Script: {fileID: 11500000, guid: 05f690708d83346a1ac9b4966c2d218d, type: 3}
 --- !u!1001 &1569845839
 Prefab:
   m_ObjectHideFlags: 0
@@ -5763,7 +5769,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b9272708450a8494fa0be0c8d6299ebc, type: 3}
   - {fileID: 21300000, guid: 137c96bc76a4d4beeb6d68e0ddb81929, type: 3}
   - {fileID: 21300000, guid: 6e4e7c4f6ccd1443f9cbf0665c78bc78, type: 3}
-  commentManager: {fileID: 0}
+  commentManager: {fileID: 1517747453}
 --- !u!43 &2087652686
 Mesh:
   m_ObjectHideFlags: 0
