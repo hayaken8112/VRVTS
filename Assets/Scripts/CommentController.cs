@@ -31,7 +31,6 @@ public class CommentController : MonoBehaviour {
 				CommentData data = new CommentData(gridView.gridData);
 				data.user_id = 1;
 				data.comment = inputField.text;
-				data.id = 10;
 				commentManager.Add(data);
 				inputField.text = "";
 				inputPanel.gameObject.SetActive(false);
@@ -52,9 +51,6 @@ public class CommentController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	public void UpdateView(IEnumerable<CommentData> dataList) {
-		commentView.SetData(dataList);
-	}
 	public void UpdateComment(){
 		commentManager.GetLatest().Subscribe(x => {
 			var datalist = x.Select(i => i.ToCommentData());
@@ -67,5 +63,8 @@ public class CommentController : MonoBehaviour {
 			var datalist = x.Select(i => i.ToCommentData());
 			UpdateView(datalist);
 		});
+	}
+	public void UpdateView(IEnumerable<CommentData> dataList) {
+		commentView.SetData(dataList);
 	}
 }
