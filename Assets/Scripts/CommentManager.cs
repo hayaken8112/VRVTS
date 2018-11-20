@@ -10,7 +10,7 @@ using UniRx.WebRequest;
 public class CommentManager : MonoBehaviour {
 	const string serverUrl = "http://s-tsports.com:8082/";
 	const string key = "ataroutoyama";
-	public int workId = 10;
+	public int workId = 9;
 	List<CommentData> dataList;
 	GridView gridView;
 
@@ -57,7 +57,7 @@ public class CommentManager : MonoBehaviour {
 		query.Add("rightBottomY", data.right_bottom_y.ToString());
 		return GetData("search", query).Select((x,ex) => {
 			List<ReceiveData> datalist;
-			Debug.Log(x);
+			Debug.Log(workId);
 			datalist = JsonHelper.ListFromJson<ReceiveData>(x);
 			return datalist;
 		});
