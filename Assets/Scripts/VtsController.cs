@@ -17,6 +17,8 @@ public class VtsController : MonoBehaviour {
 	public List<ArtworkData> artworks;
 	[SerializeField]
 	CommentManager commentManager;
+	[SerializeField]
+	CommentController commentController;
 	ArtworkData art0 = new ArtworkData(180,250,10);
 	ArtworkData art1 = new ArtworkData(600,400,9);
 	ArtworkData art2 = new ArtworkData(200,300,8);
@@ -34,6 +36,7 @@ public class VtsController : MonoBehaviour {
 			artworkRect.sizeDelta = new Vector2(artworks[imgIndex].width,artworks[imgIndex].height);
 			gridView.InitGrid();
 			commentManager.workId = artworks[imgIndex].id;
+			commentController.UpdateComment();
 		});
 		
 	}

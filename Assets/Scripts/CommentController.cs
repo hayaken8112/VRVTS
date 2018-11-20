@@ -51,9 +51,6 @@ public class CommentController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	public void UpdateView(IEnumerable<CommentData> dataList) {
-		commentView.SetData(dataList);
-	}
 	public void UpdateComment(){
 		commentManager.GetLatest().Subscribe(x => {
 			var datalist = x.Select(i => i.ToCommentData());
@@ -66,5 +63,8 @@ public class CommentController : MonoBehaviour {
 			var datalist = x.Select(i => i.ToCommentData());
 			UpdateView(datalist);
 		});
+	}
+	public void UpdateView(IEnumerable<CommentData> dataList) {
+		commentView.SetData(dataList);
 	}
 }
