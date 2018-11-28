@@ -9,13 +9,15 @@ public class StartPhoton : MonoBehaviour {
 	public Canvas createRoomCanvas;
 	public Canvas checkAllRoomCanvas;
 
+	public Canvas passwordCanvas;
+
 	//ボタンプレハブ
 	public GameObject btnPref;
 
 	//ボタン表示数
 
-	const int BUTTON_COUNT = 10;
-
+	public static string nowRoomName;
+	public InputField passwordIF;
 	public void Awake()
         {
             // ここでPhotonに接続している
@@ -29,6 +31,7 @@ public class StartPhoton : MonoBehaviour {
 		firstCanvas.enabled = true;
 		createRoomCanvas.enabled = false;
 		checkAllRoomCanvas.enabled = false;
+		passwordCanvas.enabled = false;
 		//PhotonNetwork.JoinLobby();
 	}
 
@@ -46,12 +49,14 @@ public class StartPhoton : MonoBehaviour {
 		firstCanvas.enabled = false;
 		createRoomCanvas.enabled = true;
 		checkAllRoomCanvas.enabled = false;
+		passwordCanvas.enabled = false;
 	}
 
 	public void ToCheckRoom() {
 		firstCanvas.enabled = false;
 		createRoomCanvas.enabled = false;
 		checkAllRoomCanvas.enabled = true;
+		passwordCanvas.enabled = false;
 
 		RoomInfo[] rooms = PhotonNetwork.GetRoomList();
         if (rooms.Length == 0) {
@@ -99,13 +104,41 @@ public class StartPhoton : MonoBehaviour {
 
 				btn.transform.GetComponent<Button>().onClick.AddListener(() => OnClick(rooms [i].name));
             }
+			//ボタン生成
+
+			GameObject btns = (GameObject)Instantiate(btnPref);
+
+			//ボタンをContentの子に設定
+
+			btns.transform.SetParent(content, false);
+
+			//ボタンのテキスト変更
+
+			btns.transform.GetComponentInChildren<Text>().text = "Back";
+
+			//ボタンのクリックイベント登録
+
+			btns.transform.GetComponent<Button>().onClick.AddListener(() => BackFirstCanvas());
         }
 	}
 
 	public void OnClick(string roomName) {
-		PhotonNetwork.JoinRoom(roomName);
-		Debug.Log(roomName + "に入室しました");
-		FadeManager.Instance.LoadScene("OculusMain", 4.0f);
+		nowRoomName = roomName;
+		firstCanvas.enabled = false;
+		createRoomCanvas.enabled = false;
+		checkAllRoomCanvas.enabled = false;
+		passwordCanvas.enabled = true;
+	}
+
+	public void JoinPhotonRoom() {
+		if (passwordIF.text != "abc123") {
+			passwordIF.text = "";
+			passwordIF.placeholder.GetComponent<Text>().text = "passwordが間違っています";
+			return;
+		}
+		PhotonNetwork.JoinRoom(nowRoomName);
+		Debug.Log(nowRoomName + "に入室しました");
+		FadeManager.Instance.LoadScene("OculusMain", 1.0f);
 	}
 
 	public void BackFirstCanvas() {

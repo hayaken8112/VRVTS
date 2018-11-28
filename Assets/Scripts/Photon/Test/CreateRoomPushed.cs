@@ -25,7 +25,7 @@ public class CreateRoomPushed : MonoBehaviour {
         roomOptions.customRoomProperties = customProp;
         //ロビーで見えるルーム情報としてカスタムプロパティのuserName,userIdを使いますよという宣言
         roomOptions.customRoomPropertiesForLobby = new string[]{ "userName","roomName"};
-        roomOptions.maxPlayers = 2; //部屋の最大人数
+        roomOptions.maxPlayers = 10; //部屋の最大人数
         roomOptions.isOpen = true; //入室許可する
         roomOptions.isVisible = true; //ロビーから見えるようにする
         //userIdが名前のルームがなければ作って入室、あれば普通に入室する。
@@ -35,7 +35,7 @@ public class CreateRoomPushed : MonoBehaviour {
 
 	void OnJoinedRoom(){
 		Debug.Log("ルームに入室しました");
-		FadeManager.Instance.LoadScene("OculusMain", 4.0f);
+		FadeManager.Instance.LoadScene("OculusMain", 1.0f);
     }
 
 	void OnGUI(){

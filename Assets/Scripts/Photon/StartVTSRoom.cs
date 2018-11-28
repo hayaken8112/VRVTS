@@ -10,7 +10,7 @@ public class StartVTSRoom : MonoBehaviour {
 	void Start () {
 		PhotonNetwork.Instantiate(
 			photonObject.name,
-			new Vector3(9.71f, 0.5f, 12.55f),
+			new Vector3(9.71f, 0f, 12.55f),
 			Quaternion.identity, 0
 		);
 	}
