@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/New Scene.unity
+    guid: 569d83585007541a4b55111bbb9322ad
+  - enabled: 1
     path: Assets/Scenes/OculusMain.unity
     guid: a50bdb674824443608d691f27681e605
   - enabled: 0
@@ -20,6 +23,3 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/TransDemo.unity
     guid: 174eb9b3549134804a4f617b7434c4e5
-  - enabled: 1
-    path: Assets/Scenes/New Scene.unity
-    guid: 569d83585007541a4b55111bbb9322ad

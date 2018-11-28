@@ -58,25 +58,7 @@ public class StartPhoton : MonoBehaviour {
             Debug.Log ("ルームが一つもありません");
 			//Content取得(ボタンを並べる場所)
 
-			RectTransform content = GameObject.Find("CheckAllRoomCanvas/Scroll View/Viewport/Content").GetComponent<RectTransform>();
-
-			//Contentの高さ決定
-
-			//(ボタンの高さ+ボタン同士の間隔)*ボタン数
-
-			float btnSpace = content.GetComponent<VerticalLayoutGroup>().spacing;
-
-			float btnHeight = btnPref.GetComponent<LayoutElement>().preferredHeight;
-
-			content.sizeDelta = new Vector2(0, (btnHeight + btnSpace) * BUTTON_COUNT);
-
-			for (int i = 0; i < BUTTON_COUNT; i++)
-
-			{
-
-			int no = i;
-
-			//ボタン生成
+			RectTransform content = GameObject.Find("CheckAllRoomCanvas").GetComponent<RectTransform>();
 
 			GameObject btn = (GameObject)Instantiate(btnPref);
 
@@ -86,27 +68,16 @@ public class StartPhoton : MonoBehaviour {
 
 			//ボタンのテキスト変更
 
-			btn.transform.GetComponentInChildren<Text>().text = "Btn_"+no.ToString();
+			btn.transform.GetComponentInChildren<Text>().text = "No Room Back";
 
 			//ボタンのクリックイベント登録
 
-			btn.transform.GetComponent<Button>().onClick.AddListener(() => OnClick(no));
+			btn.transform.GetComponent<Button>().onClick.AddListener(() => BackFirstCanvas());
 
-			}
         } else {
 			//Content取得(ボタンを並べる場所)
 
-			RectTransform content = GameObject.Find("CheckAllRoomCanvas/Scroll View/Viewport/Content").GetComponent<RectTransform>();
-
-			//Contentの高さ決定
-
-			//(ボタンの高さ+ボタン同士の間隔)*ボタン数
-
-			float btnSpace = content.GetComponent<VerticalLayoutGroup>().spacing;
-
-			float btnHeight = btnPref.GetComponent<LayoutElement>().preferredHeight;
-
-			content.sizeDelta = new Vector2(0, (btnHeight + btnSpace) * rooms.Length);
+			RectTransform content = GameObject.Find("CheckAllRoomCanvas").GetComponent<RectTransform>();
 
             //ルームが1件以上ある時ループでRoomInfo情報をログ出力
             for (int i = 0; i < rooms.Length; i++) {
@@ -126,13 +97,21 @@ public class StartPhoton : MonoBehaviour {
 
 				//ボタンのクリックイベント登録
 
-				btn.transform.GetComponent<Button>().onClick.AddListener(() => OnClick(no));
+				btn.transform.GetComponent<Button>().onClick.AddListener(() => OnClick(rooms [i].name));
             }
         }
 	}
 
-	public void OnClick(int no) {
-		Debug.Log(no);
+	public void OnClick(string roomName) {
+		PhotonNetwork.JoinRoom(roomName);
+		Debug.Log(roomName + "に入室しました");
+		FadeManager.Instance.LoadScene("OculusMain", 4.0f);
+	}
+
+	public void BackFirstCanvas() {
+		firstCanvas.enabled = true;
+		createRoomCanvas.enabled = false;
+		checkAllRoomCanvas.enabled = false;
 	}
 	
 }

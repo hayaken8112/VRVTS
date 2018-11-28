@@ -18,13 +18,13 @@ public class CreateRoomPushed : MonoBehaviour {
 		//カスタムプロパティ
         ExitGames.Client.Photon.Hashtable customProp = new ExitGames.Client.Photon.Hashtable();
         customProp.Add ("userName", userName); //ユーザ名
-        customProp.Add ("userId", roomName); //ルーム名
+        customProp.Add ("roomName", roomName); //ルーム名
 		PhotonNetwork.SetPlayerCustomProperties(customProp);
 
         RoomOptions roomOptions = new RoomOptions ();
         roomOptions.customRoomProperties = customProp;
         //ロビーで見えるルーム情報としてカスタムプロパティのuserName,userIdを使いますよという宣言
-        roomOptions.customRoomPropertiesForLobby = new string[]{ "userName","userId"};
+        roomOptions.customRoomPropertiesForLobby = new string[]{ "userName","roomName"};
         roomOptions.maxPlayers = 2; //部屋の最大人数
         roomOptions.isOpen = true; //入室許可する
         roomOptions.isVisible = true; //ロビーから見えるようにする
