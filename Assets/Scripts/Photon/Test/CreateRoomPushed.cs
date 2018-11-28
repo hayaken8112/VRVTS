@@ -35,7 +35,7 @@ public class CreateRoomPushed : MonoBehaviour {
 
 	void OnJoinedRoom(){
 		Debug.Log("ルームに入室しました");
-		FadeManager.Instance.LoadScene("Teleport", 4.0f);
+		FadeManager.Instance.LoadScene("OculusMain", 4.0f);
     }
 
 	void OnGUI(){
