@@ -14,7 +14,7 @@ public class StartPhoton : MonoBehaviour {
 	//ボタンプレハブ
 	public GameObject btnPref;
 
-	//ボタン表示数
+	RoomInfo[] rooms;
 
 	public static string nowRoomName;
 	public InputField passwordIF;
@@ -45,6 +45,10 @@ public class StartPhoton : MonoBehaviour {
         //PhotonNetwork.JoinRandomRoom();
     }
 
+	void OnReceivedRoomListUpdate(){
+		rooms = PhotonNetwork.GetRoomList();
+	}
+
 	public void ToCreateRoom() {
 		firstCanvas.enabled = false;
 		createRoomCanvas.enabled = true;
@@ -58,7 +62,6 @@ public class StartPhoton : MonoBehaviour {
 		checkAllRoomCanvas.enabled = true;
 		passwordCanvas.enabled = false;
 
-		RoomInfo[] rooms = PhotonNetwork.GetRoomList();
         if (rooms.Length == 0) {
             Debug.Log ("ルームが一つもありません");
 			//Content取得(ボタンを並べる場所)
@@ -98,27 +101,12 @@ public class StartPhoton : MonoBehaviour {
 
 				//ボタンのテキスト変更
 
-				btn.transform.GetComponentInChildren<Text>().text = "RoomName:"   + rooms [i].name;
+				btn.transform.GetComponentInChildren<Text>().text = rooms [i].name;
 
 				//ボタンのクリックイベント登録
 
 				btn.transform.GetComponent<Button>().onClick.AddListener(() => OnClick(rooms [i].name));
             }
-			//ボタン生成
-
-			GameObject btns = (GameObject)Instantiate(btnPref);
-
-			//ボタンをContentの子に設定
-
-			btns.transform.SetParent(content, false);
-
-			//ボタンのテキスト変更
-
-			btns.transform.GetComponentInChildren<Text>().text = "Back";
-
-			//ボタンのクリックイベント登録
-
-			btns.transform.GetComponent<Button>().onClick.AddListener(() => BackFirstCanvas());
         }
 	}
 
