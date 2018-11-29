@@ -10,6 +10,7 @@ public class OvrAvatarSkinnedMeshPBSV2RenderComponent : OvrAvatarRenderComponent
     bool PreviouslyActive = false;
     bool IsCombinedMaterial = false;
 
+    
     internal void Initialize(
         IntPtr renderPart,
         ovrAvatarRenderPart_SkinnedMeshRenderPBS_V2 skinnedMeshRender,

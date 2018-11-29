@@ -42,9 +42,6 @@ public class PacketRecordSettings
 
 public class OvrAvatar : MonoBehaviour
 {
-    public OvrAvatarMaterialManager DefaultBodyMaterialManager;
-    public OvrAvatarMaterialManager DefaultHandMaterialManager;
-
     public OvrAvatarDriver Driver;
     public OvrAvatarBase Base;
     public OvrAvatarBody Body;
@@ -53,8 +50,6 @@ public class OvrAvatar : MonoBehaviour
     public OvrAvatarHand HandLeft;
     public OvrAvatarHand HandRight;
     public bool RecordPackets;
-    public bool UseSDKPackets = true;
-
     public bool StartWithControllers;
     public AvatarLayer FirstPersonLayer;
     public AvatarLayer ThirdPersonLayer;
@@ -64,40 +59,21 @@ public class OvrAvatar : MonoBehaviour
     public Shader SurfaceShader;
     public Shader SurfaceShaderSelfOccluding;
     public Shader SurfaceShaderPBS;
-    public Shader SurfaceShaderPBSV2Single;
-    public Shader SurfaceShaderPBSV2Combined;
-    public Shader SurfaceShaderPBSV2Simple;
-    public Shader SurfaceShaderPBSV2Loading;
 
     int renderPartCount = 0;
     bool showLeftController;
     bool showRightController;
     List<float[]> voiceUpdates = new List<float[]>();
 
-    public string oculusUserID;
-    internal UInt64 oculusUserIDInternal;
-
-#if UNITY_ANDROID && UNITY_5_5_OR_NEWER && !UNITY_EDITOR
-    bool CombineMeshes = true;
-#else
-    bool CombineMeshes = false;
-#endif
-
-#if UNITY_EDITOR && UNITY_ANDROID
-    bool ForceMobileTextureFormat = true;
-#else
-    bool ForceMobileTextureFormat = false;
-
-#endif
-
-    private bool WaitingForCombinedMesh = false;
+    public UInt64 oculusUserID;
+    public bool CombineMeshes = false;
 
     public IntPtr sdkAvatar = IntPtr.Zero;
     private HashSet<UInt64> assetLoadingIds = new HashSet<UInt64>();
     private Dictionary<string, OvrAvatarComponent> trackedComponents =
         new Dictionary<string, OvrAvatarComponent>();
 
-    private UnityEvent AssetsDoneLoading = new UnityEvent();
+    public UnityEvent AssetsDoneLoading = new UnityEvent();
     bool assetsFinishedLoading = false;
 
     public Transform LeftHandCustomPose;
@@ -109,10 +85,6 @@ public class OvrAvatar : MonoBehaviour
     Transform[] cachedCustomRightHandJoints;
     ovrAvatarTransform[] cachedRightHandTransforms;
 
-
-    private Vector4 clothingAlphaOffset = new Vector4(0f, 0f, 0f, 1f);
-    private UInt64 clothingAlphaTexture = 0;
-
     public class PacketEventArgs : EventArgs
     {
         public readonly OvrAvatarPacket Packet;
@@ -123,8 +95,6 @@ public class OvrAvatar : MonoBehaviour
     }
 
     public PacketRecordSettings PacketSettings = new PacketRecordSettings();
-
-    OvrAvatarPacket CurrentUnityPacket;
 
     public enum HandType
     {
@@ -141,7 +111,7 @@ public class OvrAvatar : MonoBehaviour
         IndexTip,
         ThumbBase,
         ThumbTip,
-
+       
         Max,
     }
 
@@ -163,12 +133,6 @@ public class OvrAvatar : MonoBehaviour
         }
     };
 
-#if UNITY_ANDROID
-    internal ovrAvatarAssetLevelOfDetail LevelOfDetail = ovrAvatarAssetLevelOfDetail.Medium;
-#else
-    internal ovrAvatarAssetLevelOfDetail LevelOfDetail = ovrAvatarAssetLevelOfDetail.Highest;
-#endif
-
     void OnDestroy()
     {
         if (sdkAvatar != IntPtr.Zero)
@@ -184,36 +148,19 @@ public class OvrAvatar : MonoBehaviour
         assetLoadingIds.Remove(asset.assetID);
     }
 
-    public void CombinedMeshLoadedCallback(IntPtr assetPtr)
-    {
-        if (!WaitingForCombinedMesh)
-        {
-            return;
-        }
-
-        var meshIDs = CAPI.ovrAvatarAsset_GetCombinedMeshIDs(assetPtr);
-        foreach (var id in meshIDs)
-        {
-            assetLoadingIds.Remove(id);
-        }
-
-        CAPI.ovrAvatar_GetCombinedMeshAlphaData(sdkAvatar, ref clothingAlphaTexture, ref clothingAlphaOffset);
-
-        WaitingForCombinedMesh = false;
-    }
-
     private void AddAvatarComponent(GameObject componentObject, ovrAvatarComponent component)
     {
         OvrAvatarComponent ovrComponent = componentObject.AddComponent<OvrAvatarComponent>();
         trackedComponents.Add(component.name, ovrComponent);
 
-        if (ovrComponent.name == "body")
-        {
-            ovrComponent.ClothingAlphaOffset = clothingAlphaOffset;
-            ovrComponent.ClothingAlphaTexture = clothingAlphaTexture;
-        }
+        bool combine_meshes = AddRenderParts(ovrComponent, component, componentObject.transform) 
+            && CombineMeshes 
+            && componentObject.name == "body";
 
-        AddRenderParts(ovrComponent, component, componentObject.transform);
+        if (combine_meshes)
+        {
+            ovrComponent.StartMeshCombining(component);
+        }
     }
 
     private OvrAvatarSkinnedMeshRenderComponent AddSkinnedMeshRenderComponent(GameObject gameObject, ovrAvatarRenderPart_SkinnedMeshRender skinnedMeshRender)
@@ -227,26 +174,6 @@ public class OvrAvatar : MonoBehaviour
     {
         OvrAvatarSkinnedMeshRenderPBSComponent skinnedMeshRenderer = gameObject.AddComponent<OvrAvatarSkinnedMeshRenderPBSComponent>();
         skinnedMeshRenderer.Initialize(skinnedMeshRenderPBS, SurfaceShaderPBS, ThirdPersonLayer.layerIndex, FirstPersonLayer.layerIndex, renderPartCount++);
-        return skinnedMeshRenderer;
-    }
-
-    private OvrAvatarSkinnedMeshPBSV2RenderComponent AddSkinnedMeshRenderPBSV2Component(
-        IntPtr renderPart,
-        GameObject gameObject,
-        ovrAvatarRenderPart_SkinnedMeshRenderPBS_V2 skinnedMeshRenderPBSV2,
-        OvrAvatarMaterialManager materialManager)
-    {
-        OvrAvatarSkinnedMeshPBSV2RenderComponent skinnedMeshRenderer = gameObject.AddComponent<OvrAvatarSkinnedMeshPBSV2RenderComponent>();
-        skinnedMeshRenderer.Initialize(
-            renderPart,
-            skinnedMeshRenderPBSV2,
-            materialManager,
-            ThirdPersonLayer.layerIndex,
-            FirstPersonLayer.layerIndex,
-            renderPartCount++,
-            gameObject.name.Contains("body") && CombineMeshes,
-            LevelOfDetail);
-
         return skinnedMeshRenderer;
     }
 
@@ -425,8 +352,6 @@ public class OvrAvatar : MonoBehaviour
         {
             RemoveAvatarComponent(name);
         }
-
-        UpdateVoiceBehavior();
     }
 
     void UpdateCustomPoses()
@@ -528,69 +453,18 @@ public class OvrAvatar : MonoBehaviour
             UInt64 id = CAPI.ovrAvatar_GetReferencedAsset(sdkAvatar, i);
             if (OvrAvatarSDKManager.Instance.GetAsset(id) == null)
             {
-                OvrAvatarSDKManager.Instance.BeginLoadingAsset(
-                    id,
-                    LevelOfDetail,
-                    AssetLoadedCallback);
-
+                OvrAvatarSDKManager.Instance.BeginLoadingAsset(id, this.AssetLoadedCallback);
                 assetLoadingIds.Add(id);
             }
-        }
-
-        if (CombineMeshes)
-        {
-            OvrAvatarSDKManager.Instance.RegisterCombinedMeshCallback(
-                sdkAvatar,
-                CombinedMeshLoadedCallback);
         }
     }
 
     void Start()
     {
-#if !UNITY_ANDROID
-        if (CombineMeshes)
-        {
-            CombineMeshes = false;
-            AvatarLogger.Log("Combine Meshes Currently Only Supported On Android");
-        }
-#endif
-
-#if !UNITY_5_5_OR_NEWER
-        if (CombineMeshes)
-        {
-            CombineMeshes = false;
-            AvatarLogger.LogWarning("Unity Version too old to use Combined Mesh Shader, required 5.5.0+");
-        }
-#endif
-
-        try
-        {
-            oculusUserIDInternal = UInt64.Parse(oculusUserID);
-        }
-        catch (Exception)
-        {
-            oculusUserIDInternal = 0;
-
-            AvatarLogger.LogWarning("Invalid Oculus User ID Format");
-        }
-
-        AvatarLogger.Log("Starting OvrAvatar " + gameObject.name);
-        AvatarLogger.Log(AvatarLogger.Tab + "LOD: " + LevelOfDetail.ToString());
-        AvatarLogger.Log(AvatarLogger.Tab + "Combine Meshes: " + CombineMeshes);
-        AvatarLogger.Log(AvatarLogger.Tab + "Force Mobile Textures: " + ForceMobileTextureFormat);
-        AvatarLogger.Log(AvatarLogger.Tab + "Oculus User ID: " + oculusUserIDInternal);
-
         ShowLeftController(StartWithControllers);
         ShowRightController(StartWithControllers);
         OvrAvatarSDKManager.Instance.RequestAvatarSpecification(
-            oculusUserIDInternal,
-            this.AvatarSpecificationCallback,
-            CombineMeshes,
-            LevelOfDetail,
-            ForceMobileTextureFormat);
-
-        WaitingForCombinedMesh = CombineMeshes;
-        Driver.Mode = UseSDKPackets ? OvrAvatarDriver.PacketMode.SDK : OvrAvatarDriver.PacketMode.Unity;
+            oculusUserID, this.AvatarSpecificationCallback);
     }
 
     void Update()
@@ -677,68 +551,6 @@ public class OvrAvatar : MonoBehaviour
 
     void RecordFrame()
     {
-        if(UseSDKPackets)
-        {
-            RecordSDKFrame();
-        }
-        else
-        {
-            RecordUnityFrame();
-        }
-    }
-
-    // Meant to be used mutually exclusively with RecordSDKFrame to give user more options to optimize or tweak packet data
-    private void RecordUnityFrame()
-    {
-        var deltaSeconds = Time.deltaTime;
-        var frame = Driver.GetCurrentPose();
-        // If this is our first packet, store the pose as the initial frame
-        if (CurrentUnityPacket == null)
-        {
-            CurrentUnityPacket = new OvrAvatarPacket(frame);
-            deltaSeconds = 0;
-        }
-
-        float recordedSeconds = 0;
-        while (recordedSeconds < deltaSeconds)
-        {
-            float remainingSeconds = deltaSeconds - recordedSeconds;
-            float remainingPacketSeconds = PacketSettings.UpdateRate - CurrentUnityPacket.Duration;
-
-            // If we're not going to fill the packet, just add the frame
-            if (remainingSeconds < remainingPacketSeconds)
-            {
-                CurrentUnityPacket.AddFrame(frame, remainingSeconds);
-                recordedSeconds += remainingSeconds;
-            }
-
-            // If we're going to fill the packet, interpolate the pose, send the packet,
-            // and open a new one
-            else
-            {
-                // Interpolate between the packet's last frame and our target pose
-                // to compute a pose at the end of the packet time.
-                OvrAvatarDriver.PoseFrame a = CurrentUnityPacket.FinalFrame;
-                OvrAvatarDriver.PoseFrame b = frame;
-                float t = remainingPacketSeconds / remainingSeconds;
-                OvrAvatarDriver.PoseFrame intermediatePose = OvrAvatarDriver.PoseFrame.Interpolate(a, b, t);
-                CurrentUnityPacket.AddFrame(intermediatePose, remainingPacketSeconds);
-                recordedSeconds += remainingPacketSeconds;
-
-                // Broadcast the recorded packet
-                if (PacketRecorded != null)
-                {
-                    PacketRecorded(this, new PacketEventArgs(CurrentUnityPacket));
-                }
-
-                // Open a new packet
-                CurrentUnityPacket = new OvrAvatarPacket(intermediatePose);
-            }
-        }
-    }
-
-    private void RecordSDKFrame()
-    {
         if (sdkAvatar == IntPtr.Zero)
         {
             return;
@@ -768,11 +580,10 @@ public class OvrAvatar : MonoBehaviour
         }
     }
 
-    private void AddRenderParts(
-        OvrAvatarComponent ovrComponent,
-        ovrAvatarComponent component,
-        Transform parent)
+    private bool AddRenderParts(OvrAvatarComponent ovrComponent, ovrAvatarComponent component, Transform parent)
     {
+        bool combineMeshes = true;
+
         for (UInt32 renderPartIndex = 0; renderPartIndex < component.renderPartCount; renderPartIndex++)
         {
             GameObject renderPartObject = new GameObject();
@@ -790,27 +601,8 @@ public class OvrAvatar : MonoBehaviour
                     ovrRenderPart = AddSkinnedMeshRenderPBSComponent(renderPartObject, CAPI.ovrAvatarRenderPart_GetSkinnedMeshRenderPBS(renderPart));
                     break;
                 case ovrAvatarRenderPartType.ProjectorRender:
+                    combineMeshes = false;
                     ovrRenderPart = AddProjectorRenderComponent(renderPartObject, CAPI.ovrAvatarRenderPart_GetProjectorRender(renderPart));
-                    break;
-                case ovrAvatarRenderPartType.SkinnedMeshRenderPBS_V2:
-                    {
-                        OvrAvatarMaterialManager materialManager = null;
-
-                        if (ovrComponent.name == "body")
-                        {
-                            materialManager = DefaultBodyMaterialManager;
-                        }
-                        else if( ovrComponent.name.Contains("hand"))
-                        {
-                            materialManager = DefaultHandMaterialManager;
-                        }
-
-                        ovrRenderPart = AddSkinnedMeshRenderPBSV2Component(
-                            renderPart,
-                            renderPartObject,
-                            CAPI.ovrAvatarRenderPart_GetSkinnedMeshRenderPBSV2(renderPart),
-                            materialManager);
-                    }
                     break;
                 default:
                     throw new NotImplementedException(string.Format("Unsupported render part type: {0}", type.ToString()));
@@ -818,6 +610,8 @@ public class OvrAvatar : MonoBehaviour
 
             ovrComponent.RenderParts.Add(ovrRenderPart);
         }
+
+        return combineMeshes;
     }
 
     public void RefreshBodyParts()
@@ -896,51 +690,5 @@ public class OvrAvatar : MonoBehaviour
         }
 
         return null;
-    }
-
-    static Vector3 MOUTH_POSITION_OFFSET = new Vector3(0, -0.018f, 0.1051f);
-    static string VOICE_PROPERTY = "_Voice";
-    static string MOUTH_POSITION_PROPERTY = "_MouthPosition";
-    static string MOUTH_DIRECTION_PROPERTY = "_MouthDirection";
-    static string MOUTH_SCALE_PROPERTY = "_MouthEffectScale";
-
-    static float MOUTH_SCALE_GLOBAL = 0.007f;
-    static float MOUTH_MAX_GLOBAL = 0.007f;
-    static string NECK_JONT = "root_JNT/body_JNT/chest_JNT/neckBase_JNT/neck_JNT";
-
-    public float VoiceAmplitude = 0f;
-    public bool EnableMouthVertexAnimation = false;
-
-    private void UpdateVoiceBehavior()
-    {
-        if (!EnableMouthVertexAnimation)
-        {
-            return;
-        }
-
-        OvrAvatarComponent component;
-        if (trackedComponents.TryGetValue("body", out component))
-        {
-            VoiceAmplitude = Mathf.Clamp(VoiceAmplitude, 0f, 1f);
-
-            if (component.RenderParts.Count > 0)
-            {
-                var material = component.RenderParts[0].mesh.sharedMaterial;
-                var neckJoint = component.RenderParts[0].mesh.transform.Find(NECK_JONT);
-                var scaleDiff = neckJoint.TransformPoint(Vector3.up) - neckJoint.position;
-
-                material.SetFloat(MOUTH_SCALE_PROPERTY, scaleDiff.magnitude);
-
-                material.SetFloat(
-                    VOICE_PROPERTY,
-                    Mathf.Min(scaleDiff.magnitude * MOUTH_MAX_GLOBAL, scaleDiff.magnitude * VoiceAmplitude * MOUTH_SCALE_GLOBAL));
-
-                material.SetVector(
-                    MOUTH_POSITION_PROPERTY,
-                    neckJoint.TransformPoint(MOUTH_POSITION_OFFSET));
-
-                material.SetVector(MOUTH_DIRECTION_PROPERTY, neckJoint.up);
-            }
-        }
     }
 }

@@ -6,21 +6,7 @@ using Oculus.Avatar;
 
 public class OvrAvatarLocalDriver : OvrAvatarDriver {
 
-    ControllerPose GetMalibuControllerPose(OVRInput.Controller controller)
-    {
-        ovrAvatarButton buttons = 0;
-        if (OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger, controller)) buttons |= ovrAvatarButton.One;
-
-        return new ControllerPose
-        {
-            buttons = buttons,
-            touches = OVRInput.Get(OVRInput.Touch.PrimaryTouchpad) ? ovrAvatarTouch.One : 0,
-            joystickPosition = OVRInput.Get(OVRInput.Axis2D.PrimaryTouchpad, controller),
-            indexTrigger = 0f,
-            handTrigger = 0f,
-            isActive = (OVRInput.GetActiveController() & controller) != 0,
-        };
-    }
+    private const float mobileBaseHeadHeight = 1.7f;
 
     float voiceAmplitude = 0.0f;
     ControllerPose GetControllerPose(OVRInput.Controller controller)
@@ -51,58 +37,39 @@ public class OvrAvatarLocalDriver : OvrAvatarDriver {
         };
     }
 
-    private void CalculateCurrentPose()
+    private PoseFrame GetCurrentPose()
     {
-#if UNITY_2017_2_OR_NEWER
         Vector3 headPos = UnityEngine.XR.InputTracking.GetLocalPosition(UnityEngine.XR.XRNode.CenterEye);
-#else
-        Vector3 headPos = UnityEngine.VR.InputTracking.GetLocalPosition(UnityEngine.VR.VRNode.CenterEye);
+#if UNITY_ANDROID && !UNITY_EDITOR
+        headPos.y += mobileBaseHeadHeight;
 #endif
 
-        if (GetIsTrackedRemote())
+        return new PoseFrame
         {
-            CurrentPose = new PoseFrame
-            {
-                voiceAmplitude = voiceAmplitude,
-                headPosition = headPos,
-#if UNITY_2017_2_OR_NEWER
-                headRotation = UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode.CenterEye),
-#else
-                headRotation = UnityEngine.VR.InputTracking.GetLocalRotation(UnityEngine.VR.VRNode.CenterEye),
-#endif
-                handLeftPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTrackedRemote),
-                handLeftRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTrackedRemote),
-                handRightPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTrackedRemote),
-                handRightRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTrackedRemote),
-                controllerLeftPose = GetMalibuControllerPose(OVRInput.Controller.LTrackedRemote),
-                controllerRightPose = GetMalibuControllerPose(OVRInput.Controller.RTrackedRemote),
-            };
-        }
-        else
-        {
-            CurrentPose = new PoseFrame
-            {
-                voiceAmplitude = voiceAmplitude,
-                headPosition = headPos,
-#if UNITY_2017_2_OR_NEWER
-                headRotation = UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode.CenterEye),
-#else
-                headRotation = UnityEngine.VR.InputTracking.GetLocalRotation(UnityEngine.VR.VRNode.CenterEye),
-#endif
-                handLeftPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch),
-                handLeftRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch),
-                handRightPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch),
-                handRightRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch),
-                controllerLeftPose = GetControllerPose(OVRInput.Controller.LTouch),
-                controllerRightPose = GetControllerPose(OVRInput.Controller.RTouch),
-            };
-        }
-
+            voiceAmplitude = voiceAmplitude,
+            headPosition = headPos,
+            headRotation = UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode.CenterEye),
+            handLeftPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch),
+            handLeftRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch),
+            handRightPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch),
+            handRightRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch),
+            controllerLeftPose = GetControllerPose(OVRInput.Controller.LTouch),
+            controllerRightPose = GetControllerPose(OVRInput.Controller.RTouch),
+        };
     }
 
     public override void UpdateTransforms(IntPtr sdkAvatar)
     {
-        CalculateCurrentPose();
-        UpdateTransformsFromPose(sdkAvatar);
+        if (sdkAvatar != IntPtr.Zero)
+        {
+            PoseFrame pose = GetCurrentPose();
+
+            ovrAvatarTransform bodyTransform = OvrAvatar.CreateOvrAvatarTransform(pose.headPosition, pose.headRotation);
+            ovrAvatarHandInputState inputStateLeft = OvrAvatar.CreateInputState(OvrAvatar.CreateOvrAvatarTransform(pose.handLeftPosition, pose.handLeftRotation), pose.controllerLeftPose);
+            ovrAvatarHandInputState inputStateRight = OvrAvatar.CreateInputState(OvrAvatar.CreateOvrAvatarTransform(pose.handRightPosition, pose.handRightRotation), pose.controllerRightPose);
+
+            CAPI.ovrAvatarPose_UpdateBody(sdkAvatar, bodyTransform);
+            CAPI.ovrAvatarPose_UpdateHands(sdkAvatar, inputStateLeft, inputStateRight);
+        }
     }
 }

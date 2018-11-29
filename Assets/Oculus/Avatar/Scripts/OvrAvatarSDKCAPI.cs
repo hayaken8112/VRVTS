@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System;
 using System.Runtime.InteropServices;
 using Oculus.Avatar;
@@ -39,8 +40,6 @@ public enum ovrAvatarAssetType {
     Texture,
     Pose,
     Material,
-    CombinedMesh,
-    PBSMaterial,
     Count
 };
 
@@ -53,10 +52,10 @@ public struct ovrAvatarMeshVertex
     public float nx;
     public float ny;
     public float nz;
-    public float tx;
-    public float ty;
-    public float tz;
-    public float tw;
+	public float tx;
+	public float ty;
+	public float tz;
+	public float tw;
     public float u;
     public float v;
 
@@ -66,74 +65,33 @@ public struct ovrAvatarMeshVertex
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
     public float[] blendWeights;     ///< Blend weights for each component in the bind pose
 };
-
-// This needs to be the csharp equivalent of ovrAvatarMeshVertex in OVR_Avatar.h
-public struct ovrAvatarMeshVertexV2
-{
-    public float x;
-    public float y;
-    public float z;
-    public float nx;
-    public float ny;
-    public float nz;
-    public float tx;
-    public float ty;
-    public float tz;
-    public float tw;
-    public float u;
-    public float v;
-    public float r;
-    public float g;
-    public float b;
-    public float a;
-
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-    public byte[] blendIndices;     ///< Indices into the bind pose
-
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-    public float[] blendWeights;     ///< Blend weights for each component in the bind pose
-};
-
 
 // This needs to be the csharp equivalent of ovrAvatarMeshAssetData in OVR_Avatar.h
-public struct ovrAvatarMeshAssetData
-{
-    public UInt32 vertexCount;
-    public IntPtr vertexBuffer; //const ovrAvatarMeshVertex*
-    public UInt32 indexCount;
-    public IntPtr indexBuffer; //const uint16t*
-    public ovrAvatarSkinnedMeshPose skinnedBindPose;
-};
-
-/// Mesh Asset Data V2
-///
-public struct ovrAvatarMeshAssetDataV2
-{
-    public UInt32 vertexCount;
-    public IntPtr vertexBuffer; //const ovrAvatarMeshVertexV2*
-    public UInt32 indexCount;
-    public IntPtr indexBuffer; //const uint16t*
-    public ovrAvatarSkinnedMeshPose skinnedBindPose;
+public struct ovrAvatarMeshAssetData {
+	public UInt32                   vertexCount;
+	public IntPtr                   vertexBuffer; //const ovrAvatarMeshVertex*
+	public UInt32                   indexCount;
+	public IntPtr                   indexBuffer; //const uint16t*
+	public ovrAvatarSkinnedMeshPose skinnedBindPose;
 };
 
 // This needs to be the csharp equivalent of ovrAvatarTextureFormat in OVR_Avatar.h
 public enum ovrAvatarTextureFormat {
-    RGB24,
-    DXT1,
-    DXT5,
-    ASTC_RGB_6x6,
-    ASTC_RGB_6x6_MIPMAPS,
-    Count
+	RGB24,
+	DXT1,
+	DXT5,
+	ASTC_RGB_6x6,
+	Count
 };
 
 // This needs to be the csharp equivalent of ovrAvatarTextureAssetData in OVR_Avatar.h
 public struct ovrAvatarTextureAssetData {
-    public ovrAvatarTextureFormat format;
-    public UInt32 sizeX;
-    public UInt32 sizeY;
-    public UInt32 mipCount;
-    public UInt64 textureDataSize;
-    public IntPtr textureData; // const uint8_t*
+	public ovrAvatarTextureFormat format;
+	public UInt32 sizeX;
+	public UInt32 sizeY;
+	public UInt32 mipCount;
+	public UInt64 textureDataSize;
+	public IntPtr textureData; // const uint8_t*	
 };
 
 // This needs to be the csharp equivalent of ovrAvatarRenderPartType in OVR_Avatar.h
@@ -142,7 +100,6 @@ public enum ovrAvatarRenderPartType
     SkinnedMeshRender,
     SkinnedMeshRenderPBS,
     ProjectorRender,
-    SkinnedMeshRenderPBS_V2,
     Count
 };
 
@@ -181,12 +138,12 @@ public enum ovrAvatarTouch
 public struct ovrAvatarHandInputState
 {
     public ovrAvatarTransform transform;
-    public ovrAvatarButton buttonMask;
-    public ovrAvatarTouch touchMask;
-    public float joystickX;
-    public float joystickY;
-    public float indexTrigger;
-    public float handTrigger;
+	public ovrAvatarButton buttonMask;
+	public ovrAvatarTouch touchMask;
+	public float joystickX;
+	public float joystickY;
+	public float indexTrigger;
+	public float handTrigger;
     [MarshalAs(UnmanagedType.I1)]
     public bool isActive;
 };
@@ -211,10 +168,10 @@ public struct ovrAvatarBaseComponent
 
 // This needs to be the csharp equivalent of ovrAvatarBodyComponent in OVR_Avatar.h
 public struct ovrAvatarBodyComponent {
-    public ovrAvatarTransform  leftEyeTransform;
-    public ovrAvatarTransform  rightEyeTransform;
-    public ovrAvatarTransform  centerEyeTransform;
-    public IntPtr              renderComponent; //const ovrAvatarComponent*
+	public ovrAvatarTransform  leftEyeTransform;
+	public ovrAvatarTransform  rightEyeTransform;
+	public ovrAvatarTransform  centerEyeTransform;
+	public IntPtr              renderComponent; //const ovrAvatarComponent*
 };
 
 // This needs to be the csharp equivalent of ovrAvatarControllerComponent in OVR_Avatar.h
@@ -232,65 +189,41 @@ public struct ovrAvatarHandComponent {
 
 // This needs to be the csharp equivalent of ovrAvatarMaterialLayerBlendMode in OVR_Avatar.h
 public enum ovrAvatarMaterialLayerBlendMode{
-    Add,
-    Multiply,
-    Count
+	Add,
+	Multiply,
+	Count
 };
 
 // This needs to be the csharp equivalent of ovrAvatarMaterialLayerSampleMode in OVR_Avatar.h
 public enum ovrAvatarMaterialLayerSampleMode{
-    Color,
-    Texture,
-    TextureSingleChannel,
-    Parallax,
-    Count
+	Color,
+	Texture,
+	TextureSingleChannel,
+	Parallax,
+	Count
 };
 
 // This needs to be the csharp equivalent of ovrAvatarMaterialLayerMaskType in OVR_Avatar.h
 public enum ovrAvatarMaterialMaskType{
-    None,
-    Positional,
-    ViewReflection,
-    Fresnel,
+	None,
+	Positional,
+	ViewReflection,
+	Fresnel,
     Pulse,
-    Count
-};
-
-// This needs to be the csharp equivalent of Controller Types from OVR_Avatar.h
-public enum ovrAvatarControllerType
-{
-    Touch,
-    Malibu, 
-    Go,
-
-    Count,
-};
-
-public enum ovrAvatarAssetLevelOfDetail
-{
-    Lowest = 1,
-    Medium = 3,
-    Highest = 5,
-};
-
-public enum ovrAvatarLookAndFeelVersion
-{
-    Unknown = -1,
-    One = 0,
-    Two = 1,
+	Count
 };
 
 // This needs to be the csharp equivalent of ovrAvatarMaterialLayerState in OVR_Avatar.h
 public struct ovrAvatarMaterialLayerState{
-    public ovrAvatarMaterialLayerBlendMode  blendMode;
-    public ovrAvatarMaterialLayerSampleMode sampleMode;
-    public ovrAvatarMaterialMaskType        maskType;
-    public Vector4                          layerColor;
-    public Vector4                          sampleParameters;
-    public UInt64                           sampleTexture;
+	public ovrAvatarMaterialLayerBlendMode  blendMode;
+	public ovrAvatarMaterialLayerSampleMode sampleMode;
+	public ovrAvatarMaterialMaskType        maskType;
+	public Vector4                          layerColor;
+	public Vector4                          sampleParameters;
+	public UInt64                           sampleTexture;
     public Vector4                          sampleScaleOffset;
-    public Vector4                          maskParameters;
-    public Vector4                          maskAxis;
+	public Vector4                          maskParameters;
+	public Vector4                          maskAxis;
 
     static bool VectorEquals(Vector4 a, Vector4 b)
     {
@@ -330,25 +263,24 @@ public struct ovrAvatarMaterialLayerState{
 };
 
 // This needs to be the csharp equivalent of ovrAvatarMaterialState in OVR_Avatar.h
-public struct ovrAvatarMaterialState
-{
-    public Vector4 baseColor;
+public struct ovrAvatarMaterialState{
+	public Vector4 baseColor;
     public ovrAvatarMaterialMaskType baseMaskType;
     public Vector4 baseMaskParameters;
     public Vector4 baseMaskAxis;
     public ovrAvatarMaterialLayerSampleMode sampleMode;
-    public UInt64 alphaMaskTextureID;
+	public UInt64 alphaMaskTextureID;
     public Vector4 alphaMaskScaleOffset;
-    public UInt64 normalMapTextureID;
+	public UInt64 normalMapTextureID;
     public Vector4 normalMapScaleOffset;
     public UInt64 parallaxMapTextureID;
     public Vector4 parallaxMapScaleOffset;
-    public UInt64 roughnessMapTextureID;
+	public UInt64 roughnessMapTextureID;
     public Vector4 roughnessMapScaleOffset;
-    public UInt32 layerCount;
+	public UInt32 layerCount;
 
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
-    public ovrAvatarMaterialLayerState[] layers;
+	public ovrAvatarMaterialLayerState[] layers;
 
     static bool VectorEquals(Vector4 a, Vector4 b)
     {
@@ -408,66 +340,6 @@ public struct ovrAvatarMaterialState
     }
 };
 
-public struct ovrAvatarPBSMaterialState
-{
-    public Vector4 baseColor;               ///< Underlying base color for the material
-    public UInt64  albedoTextureID;         ///< Texture id for the albedo map
-    public Vector4 albedoMultiplier;        ///< Multiplier for albedo texture sample
-    public UInt64  metallicnessTextureID;   ///< Texture id for the metal map
-    public float   glossinessScale;         ///< Glossiness factor
-    public UInt64  normalTextureID;         ///< Texture id for the normal map
-    public UInt64  heightTextureID;         ///< Texture id for the height map
-    public UInt64  occlusionTextureID;      ///< Texture id for the occlusion map
-    public UInt64  emissionTextureID;       ///< Texture id for the emission map
-    public Vector4 emissionMultiplier;      ///< Multiplier for emission texture sample
-    public UInt64  detailMaskTextureID;     ///< Texture id for the detail mask map
-    public UInt64  detailAlbedoTextureID;   ///< Texture id for the detail albedo map
-    public UInt64  detailNormalTextureID;   ///< Texture id for the detail normal map
-    static bool VectorEquals(Vector4 a, Vector4 b)
-    {
-        return a.x == b.x && a.y == b.y && a.z == b.z && a.w == b.w;
-    }
-
-    public override bool Equals(object obj)
-    {
-        if (!(obj is ovrAvatarPBSMaterialState))
-        {
-            return false;
-        }
-        ovrAvatarPBSMaterialState other = (ovrAvatarPBSMaterialState)obj;
-        if (!VectorEquals(baseColor, other.baseColor)) return false;
-        if (albedoTextureID != other.albedoTextureID) return false;
-        if (!VectorEquals(albedoMultiplier, other.albedoMultiplier)) return false;
-        if (metallicnessTextureID != other.metallicnessTextureID) return false;
-        if (glossinessScale != other.glossinessScale) return false;
-        if (normalTextureID != other.normalTextureID) return false;
-        if (heightTextureID != other.heightTextureID) return false;
-        if (occlusionTextureID != other.occlusionTextureID) return false;
-        if (emissionTextureID != other.emissionTextureID) return false;
-        if (!VectorEquals(emissionMultiplier, other.emissionMultiplier)) return false;
-        if (detailMaskTextureID != other.detailMaskTextureID) return false;
-        if (detailAlbedoTextureID != other.detailAlbedoTextureID) return false;
-        if (detailNormalTextureID != other.detailNormalTextureID) return false;
-        return true;
-    }
-    public override int GetHashCode()
-    {
-        return baseColor.GetHashCode() ^
-            albedoTextureID.GetHashCode() ^
-            albedoMultiplier.GetHashCode() ^
-            metallicnessTextureID.GetHashCode() ^
-            glossinessScale.GetHashCode() ^
-            normalTextureID.GetHashCode() ^
-            heightTextureID.GetHashCode() ^
-            occlusionTextureID.GetHashCode() ^
-            emissionTextureID.GetHashCode() ^
-            emissionMultiplier.GetHashCode() ^
-            detailMaskTextureID.GetHashCode() ^
-            detailAlbedoTextureID.GetHashCode() ^
-            detailNormalTextureID.GetHashCode();
-    }
-};
-
 public class OvrAvatarAssetMaterial : OvrAvatarAsset
 {
     public OvrAvatarAssetMaterial(UInt64 id, IntPtr mat) 
@@ -509,7 +381,7 @@ public struct ovrAvatarRenderPart_SkinnedMeshRender
     public ovrAvatarVisibilityFlags visibilityMask;
     public UInt64 meshAssetID;
     public ovrAvatarMaterialState materialState;
-    public ovrAvatarSkinnedMeshPose skinnedPose;
+	public ovrAvatarSkinnedMeshPose skinnedPose;
 };
 
 // This needs to be the csharp equivalent of ovrAvatarRenderPart_SkinnedMeshRenderPBS in OVR_Avatar.h
@@ -532,16 +404,6 @@ public struct ovrAvatarRenderPart_ProjectorRender
     public ovrAvatarMaterialState materialState;
 };
 
-// This needs to be the csharp equivalent of ovrAvatarRenderPart_SkinnedMeshRenderPBS_V2 in OVR_Avatar.h
-public struct ovrAvatarRenderPart_SkinnedMeshRenderPBS_V2
-{
-    public ovrAvatarTransform        localTransform;
-    public ovrAvatarVisibilityFlags  visibilityMask;
-    public UInt64                    meshAssetID;
-    public ovrAvatarPBSMaterialState materialState;
-    public ovrAvatarSkinnedMeshPose  skinnedPose;
-};
-
 // This needs to be the csharp equivalent of ovrAvatarHandGesture in OVR_Avatar.h
 public enum ovrAvatarHandGesture {
     Default,
@@ -556,8 +418,7 @@ public enum ovrAvatarBodyPartType
     Clothing,
     Eyewear,
     Hair,
-    Beard,
-    Count
+    Beard
 };
 
 namespace Oculus.Avatar
@@ -613,25 +474,7 @@ namespace Oculus.Avatar
         public static extern void ovrAvatarMessage_Free(IntPtr msg);
 
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr ovrAvatarSpecificationRequest_Create(UInt64 userID);
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ovrAvatarSpecificationRequest_Destroy(IntPtr specificationRequest);
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ovrAvatarSpecificationRequest_SetCombineMeshes(IntPtr specificationRequest, bool useCombinedMesh);
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ovrAvatarSpecificationRequest_SetLookAndFeelVersion(IntPtr specificationRequest, ovrAvatarLookAndFeelVersion version);
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ovrAvatarSpecificationRequest_SetLevelOfDetail(IntPtr specificationRequest, ovrAvatarAssetLevelOfDetail lod);
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
         public static extern void ovrAvatar_RequestAvatarSpecification(UInt64 userID);
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ovrAvatar_RequestAvatarSpecificationFromSpecRequest(IntPtr specificationRequest);
 
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr ovrAvatar_Create(IntPtr avatarSpecification,
@@ -658,33 +501,8 @@ namespace Oculus.Avatar
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
         public static extern void ovrAvatarPose_UpdateHands(
             IntPtr avatar,
-            ovrAvatarHandInputState inputStateLeft,
+	        ovrAvatarHandInputState inputStateLeft,
             ovrAvatarHandInputState inputStateRight);
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ovrAvatarPose_Update3DofHands(
-            IntPtr avatar,
-            IntPtr inputStateLeft,
-            IntPtr inputStateRight,
-            ovrAvatarControllerType type);
-
-        public static void ovrAvatarPose_UpdateSDK3DofHands(
-            IntPtr avatar,
-            ovrAvatarHandInputState inputStateLeft,
-            ovrAvatarHandInputState inputStateRight,
-            ovrAvatarControllerType type)
-        {
-            System.IntPtr leftPtr = Marshal.AllocHGlobal(Marshal.SizeOf(inputStateLeft));
-            System.IntPtr rightPtr = Marshal.AllocHGlobal(Marshal.SizeOf(inputStateRight));
-            Marshal.StructureToPtr(inputStateLeft, leftPtr, false);
-            Marshal.StructureToPtr(inputStateRight, rightPtr, false);
-
-            ovrAvatar_SetLeftControllerVisibility(avatar, true);
-            ovrAvatar_SetRightControllerVisibility(avatar, true);
-            ovrAvatar_SetLeftHandVisibility(avatar, true);
-            ovrAvatar_SetRightHandVisibility(avatar, true);
-            ovrAvatarPose_Update3DofHands(avatar, leftPtr, rightPtr, type);
-        }
 
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
         public static extern void ovrAvatarPose_Finalize(IntPtr avatar, float elapsedSeconds);
@@ -694,12 +512,6 @@ namespace Oculus.Avatar
 
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
         public static extern void ovrAvatar_SetRightControllerVisibility(IntPtr avatar, bool show);
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ovrAvatar_SetLeftHandVisibility(IntPtr avatar, bool show);
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ovrAvatar_SetRightHandVisibility(IntPtr avatar, bool show);
 
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
         public static extern UInt32 ovrAvatarComponent_Count(IntPtr avatar);
@@ -798,9 +610,6 @@ namespace Oculus.Avatar
         public static extern void ovrAvatarAsset_BeginLoading(UInt64 assetID);
 
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool ovrAvatarAsset_BeginLoadingLOD(UInt64 assetId, ovrAvatarAssetLevelOfDetail lod);
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
         public static extern ovrAvatarAssetType ovrAvatarAsset_GetType(IntPtr assetHandle);
 
         public static ovrAvatarMeshAssetData ovrAvatarAsset_GetMeshData(
@@ -810,57 +619,9 @@ namespace Oculus.Avatar
             return (ovrAvatarMeshAssetData)Marshal.PtrToStructure(
                 ptr, typeof(ovrAvatarMeshAssetData));
         }
-
-        public static ovrAvatarMeshAssetDataV2 ovrAvatarAsset_GetCombinedMeshData(
-            IntPtr assetPtr)
-        {
-            IntPtr ptr = ovrAvatarAsset_GetCombinedMeshData_Native(assetPtr);
-            return (ovrAvatarMeshAssetDataV2)Marshal.PtrToStructure(
-                ptr, typeof(ovrAvatarMeshAssetDataV2));
-        }
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ovrAvatarAsset_GetCombinedMeshData")]
-        private static extern IntPtr ovrAvatarAsset_GetCombinedMeshData_Native(IntPtr assetPtr);
-
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ovrAvatarAsset_GetMeshData")]
+        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl, EntryPoint =
+            "ovrAvatarAsset_GetMeshData")]
         private static extern IntPtr ovrAvatarAsset_GetMeshData_Native(IntPtr assetPtr);
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr ovrAvatarAsset_GetAvatar(IntPtr assetHandle);
-
-        public static UInt64[] ovrAvatarAsset_GetCombinedMeshIDs(IntPtr assetHandle)
-        {
-            UInt32 count = 0;
-            System.IntPtr countPtr = Marshal.AllocHGlobal(Marshal.SizeOf(count));
-            IntPtr idBuffer = ovrAvatarAsset_GetCombinedMeshIDs_Native(assetHandle, countPtr);
-            count = (UInt32)Marshal.PtrToStructure(countPtr, typeof(UInt32));
-            UInt64[] meshIDs = new UInt64[count];
-
-            for (int i = 0; i < count; i++)
-            {
-                meshIDs[i] = (UInt64)Marshal.ReadInt64(idBuffer, i * Marshal.SizeOf(typeof(UInt64)));
-            }
-
-            return meshIDs;
-        }
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ovrAvatarAsset_GetCombinedMeshIDs")]
-        public static extern IntPtr ovrAvatarAsset_GetCombinedMeshIDs_Native(IntPtr assetHandle, IntPtr count);
-
-        public static void ovrAvatar_GetCombinedMeshAlphaData(IntPtr avatar, ref UInt64 textureID, ref Vector4 offset)
-        {
-            System.IntPtr textureIDPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(UInt64)));
-            System.IntPtr offsetPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Vector4)));
-
-            ovrAvatar_GetCombinedMeshAlphaData_Native(avatar, textureIDPtr, offsetPtr);
-
-            textureID = (UInt64)Marshal.PtrToStructure(textureIDPtr, typeof(UInt64));
-            offset = (Vector4)Marshal.PtrToStructure(offsetPtr, typeof(Vector4));
-        }
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ovrAvatar_GetCombinedMeshAlphaData")]
-        public static extern IntPtr ovrAvatar_GetCombinedMeshAlphaData_Native(IntPtr avatar, IntPtr textureIDPtr, IntPtr offsetPtr);
 
         public static ovrAvatarTextureAssetData ovrAvatarAsset_GetTextureData(
             IntPtr assetPtr)
@@ -902,29 +663,16 @@ namespace Oculus.Avatar
         public static extern ovrAvatarTransform ovrAvatarSkinnedMeshRenderPBS_GetTransform(IntPtr renderPart);
 
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern ovrAvatarTransform ovrAvatarSkinnedMeshRenderPBSV2_GetTransform(IntPtr renderPart);
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
         public static extern ovrAvatarVisibilityFlags ovrAvatarSkinnedMeshRender_GetVisibilityMask(IntPtr renderPart);
 
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool ovrAvatarSkinnedMeshRender_MaterialStateChanged(IntPtr renderPart);
 
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool ovrAvatarSkinnedMeshRenderPBSV2_MaterialStateChanged(IntPtr renderPart);
-
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
         public static extern ovrAvatarVisibilityFlags ovrAvatarSkinnedMeshRenderPBS_GetVisibilityMask(IntPtr renderPart);
 
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern ovrAvatarVisibilityFlags ovrAvatarSkinnedMeshRenderPBSV2_GetVisibilityMask(IntPtr renderPart);
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
         public static extern ovrAvatarMaterialState ovrAvatarSkinnedMeshRender_GetMaterialState(IntPtr renderPart);
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern ovrAvatarPBSMaterialState ovrAvatarSkinnedMeshRenderPBSV2_GetPBSMaterialState(IntPtr renderPart);
 
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
         public static extern UInt64 ovrAvatarSkinnedMeshRender_GetDirtyJoints(IntPtr renderPart);
@@ -933,16 +681,10 @@ namespace Oculus.Avatar
         public static extern UInt64 ovrAvatarSkinnedMeshRenderPBS_GetDirtyJoints(IntPtr renderPart);
 
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern UInt64 ovrAvatarSkinnedMeshRenderPBSV2_GetDirtyJoints(IntPtr renderPart);
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
         public static extern ovrAvatarTransform ovrAvatarSkinnedMeshRender_GetJointTransform(IntPtr renderPart, UInt32 jointIndex);
 
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
         public static extern ovrAvatarTransform ovrAvatarSkinnedMeshRenderPBS_GetJointTransform(IntPtr renderPart, UInt32 jointIndex);
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern ovrAvatarTransform ovrAvatarSkinnedMeshRenderPBSV2_GetJointTransform(IntPtr renderPart, UInt32 jointIndex);
 
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
         public static extern UInt64 ovrAvatarSkinnedMeshRenderPBS_GetAlbedoTextureAssetID(IntPtr renderPart);
@@ -960,43 +702,12 @@ namespace Oculus.Avatar
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ovrAvatarRenderPart_GetSkinnedMeshRenderPBS")]
         private static extern IntPtr ovrAvatarRenderPart_GetSkinnedMeshRenderPBS_Native(IntPtr renderPart);
 
-        public static ovrAvatarRenderPart_SkinnedMeshRenderPBS_V2 ovrAvatarRenderPart_GetSkinnedMeshRenderPBSV2(IntPtr renderPart)
-        {
-            IntPtr ptr = ovrAvatarRenderPart_GetSkinnedMeshRenderPBSV2_Native(renderPart);
-            return (ovrAvatarRenderPart_SkinnedMeshRenderPBS_V2)Marshal.PtrToStructure(
-                ptr, typeof(ovrAvatarRenderPart_SkinnedMeshRenderPBS_V2));
-        }
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ovrAvatarRenderPart_GetSkinnedMeshRenderPBSV2")]
-        private static extern IntPtr ovrAvatarRenderPart_GetSkinnedMeshRenderPBSV2_Native(IntPtr renderPart);
-
         public static ovrAvatarRenderPart_ProjectorRender ovrAvatarRenderPart_GetProjectorRender(IntPtr renderPart)
         {
             IntPtr ptr = ovrAvatarRenderPart_GetProjectorRender_Native(renderPart);
             return (ovrAvatarRenderPart_ProjectorRender)Marshal.PtrToStructure(
                 ptr, typeof(ovrAvatarRenderPart_ProjectorRender));
         }
-
-        public static ovrAvatarPBSMaterialState[] ovrAvatar_GetBodyPBSMaterialStates(IntPtr renderPart)
-        {
-            System.IntPtr countPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(UInt32)));
-            IntPtr ptrState = ovrAvatar_GetBodyPBSMaterialStates_Native(renderPart, countPtr);
-            UInt32 count = (UInt32)Marshal.ReadInt32(countPtr);
-
-            ovrAvatarPBSMaterialState[] states = new ovrAvatarPBSMaterialState[count];
-
-            for (int i = 0; i < states.Length; i++)
-            {
-                IntPtr nextItem = new IntPtr(ptrState.ToInt64() + i * Marshal.SizeOf(typeof(ovrAvatarPBSMaterialState)));
-                states[i] = (ovrAvatarPBSMaterialState)Marshal.PtrToStructure(nextItem, typeof(ovrAvatarPBSMaterialState));
-            }
-
-            return states;
-        }
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ovrAvatar_GetBodyPBSMaterialStates")]
-        private static extern IntPtr ovrAvatar_GetBodyPBSMaterialStates_Native(IntPtr avatar, IntPtr count);
-
 
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ovrAvatarRenderPart_GetProjectorRender")]
         private static extern IntPtr ovrAvatarRenderPart_GetProjectorRender_Native(IntPtr renderPart);
@@ -1043,17 +754,5 @@ namespace Oculus.Avatar
 
         [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr ovrAvatarPacket_Read(UInt32 bufferSize, [In] byte[] buffer);
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        private static extern void ovrAvatar_SetInternalForceASTCTextures(bool value);
-
-        // Renaming the outward facing method to remove Internal from name
-        public static void ovrAvatar_SetForceASTCTextures(bool value)
-        {
-            ovrAvatar_SetInternalForceASTCTextures(value);
-        }
-
-        [DllImport(LibFile, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ovrAvatarSpecificationRequest_SetFallbackLookAndFeelVersion(IntPtr specificationRequest, ovrAvatarLookAndFeelVersion version);
     }
 }
