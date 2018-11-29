@@ -20,7 +20,6 @@ public class StartPhoton : MonoBehaviour {
 	public InputField passwordIF;
 	public void Awake()
         {
-			PhotonNetwork.OnEventCall += OnEvent;
         }
 
 	// Use this for initialization
@@ -136,40 +135,5 @@ public class StartPhoton : MonoBehaviour {
 		checkAllRoomCanvas.enabled = false;
 	}
 
-	public readonly byte InstantiateVrAvatarEventCode = 123;
-
-    public void OnJoinedRoom()
-    {
-        int viewId = PhotonNetwork.AllocateViewID();
-
-        PhotonNetwork.RaiseEvent(InstantiateVrAvatarEventCode, viewId, true, new RaiseEventOptions() { CachingOption = EventCaching.AddToRoomCache, Receivers = ReceiverGroup.All });
-    }
-
-	private void OnEvent(byte eventcode, object content, int senderid)
-    {
-        if (eventcode == InstantiateVrAvatarEventCode)
-        {
-            GameObject go = null;
-
-            if (PhotonNetwork.player.ID == senderid)
-            {
-                go = Instantiate(Resources.Load("LocalAvatar")) as GameObject;
-            }
-            else
-            {
-                go = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
-            }
-
-            if (go != null)
-            {
-                PhotonView pView = go.GetComponent<PhotonView>();
-
-                if (pView != null)
-                {
-                    pView.viewID = (int)content;
-                }
-            }
-        }
-    }
 	
 }
