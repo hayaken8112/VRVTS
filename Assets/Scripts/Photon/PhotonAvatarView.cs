@@ -92,8 +92,10 @@ public class PhotonAvatarView : MonoBehaviour {
 		}
 	}
 
+	//データを同期する
 	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
 	{
+		//データの送信
 		if (stream.isWriting)
 		{
 			if (packetData.Count == 0)
@@ -111,6 +113,7 @@ public class PhotonAvatarView : MonoBehaviour {
 			packetData.Clear();
 		}
 
+		//データの受信
 		if (stream.isReading)
 		{
 			int num = (int)stream.ReceiveNext();

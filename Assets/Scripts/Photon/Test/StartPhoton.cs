@@ -27,6 +27,7 @@ public class StartPhoton : MonoBehaviour {
 	void Start () {
 		// ここでPhotonに接続している
         PhotonNetwork.ConnectUsingSettings("0.0.1");
+		PhotonNetwork.automaticallySyncScene = true;
 		firstCanvas.enabled = true;
 		createRoomCanvas.enabled = false;
 		checkAllRoomCanvas.enabled = false;
@@ -100,12 +101,12 @@ public class StartPhoton : MonoBehaviour {
 				btn.transform.SetParent(content, false);
 
 				//ボタンのテキスト変更
-				string[] strList = rooms[i].name.Split('_');
+				string[] strList = rooms[no].name.Split('_');
 				btn.transform.GetComponentInChildren<Text>().text = strList[0];
 
 				//ボタンのクリックイベント登録
 
-				btn.transform.GetComponent<Button>().onClick.AddListener(() => OnClick(rooms[i]));
+				btn.transform.GetComponent<Button>().onClick.AddListener(() => OnClick(rooms[no]));
             }
         }
 	}
@@ -118,6 +119,7 @@ public class StartPhoton : MonoBehaviour {
 		passwordCanvas.enabled = true;
 	}
 
+	//TODOシーンの切り替え
 	public void JoinPhotonRoom() {
 		string[] strList = nowRoom.name.Split('_');
 		if (passwordIF.text != strList[1]) {
@@ -129,6 +131,7 @@ public class StartPhoton : MonoBehaviour {
 		PhotonNetwork.JoinRoom(nowRoom.name);
 		Debug.Log(nowRoom.name + "に入室しました");
 		FadeManager.Instance.LoadScene("OculusMain", 1.0f);
+		//PhotonNetwork.LoadLevel(1);
 	}
 
 	public void BackFirstCanvas() {
