@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class StartPhoton : MonoBehaviour {
 
@@ -17,7 +18,7 @@ public class StartPhoton : MonoBehaviour {
 	RoomInfo[] rooms;
 
 	public static RoomInfo nowRoom;
-	public static int nowPlayerCount;
+	//public static int nowPlayerCount;
 	public InputField passwordIF;
 	public void Awake()
         {
@@ -25,6 +26,8 @@ public class StartPhoton : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		// シーンの読み込みコールバックを登録.
+        SceneManager.sceneLoaded += OnLoadedScene;
 		// ここでPhotonに接続している
         PhotonNetwork.ConnectUsingSettings("0.0.1");
 		PhotonNetwork.automaticallySyncScene = true;
@@ -127,11 +130,84 @@ public class StartPhoton : MonoBehaviour {
 			passwordIF.placeholder.GetComponent<Text>().text = "passwordが間違っています";
 			return;
 		}
-		nowPlayerCount = nowRoom.playerCount;
+		//nowPlayerCount = nowRoom.playerCount;
 		PhotonNetwork.JoinRoom(nowRoom.name);
-		Debug.Log(nowRoom.name + "に入室しました");
-		FadeManager.Instance.LoadScene("OculusMain", 1.0f);
 		//PhotonNetwork.LoadLevel(1);
+	}
+
+	void onJoinedRoom() {
+		Debug.Log(nowRoom.name + "に入室しました");
+		//FadeManager.Instance.LoadScene("OculusMain", 1.0f);
+		PhotonNetwork.isMessageQueueRunning = false;
+        SceneManager.LoadScene("OculusMain");
+	}
+
+	private void OnLoadedScene( Scene i_scene, LoadSceneMode i_mode )
+    {
+		PhotonNetwork.isMessageQueueRunning = true;
+        // シーンの遷移が完了したら自分用のオブジェクトを生成.
+        if( i_scene.name == "OculusMain" )
+        {
+            place = new Vector3[] {new Vector3(13f, 1.5f, 14f), new Vector3(12f, 1.5f, 14f), new Vector3(6f, 1.5f, 12.55f)};
+
+			PhotonNetwork.OnEventCall += OnEvent;
+
+			int viewId = PhotonNetwork.AllocateViewID();
+			//string sendContent = viewId + "_" + StartPhoton.nowPlayerCount;
+
+			//oneventのeventcodeに最初の引数が、contentに2番目の引数が、senderidはプレイヤーのidで自動的に決定している
+    		PhotonNetwork.RaiseEvent(InstantiateVrAvatarEventCode, viewId, true, new RaiseEventOptions() { CachingOption = EventCaching.AddToRoomCache, Receivers = ReceiverGroup.All });
+        }
+    }
+
+	public readonly byte InstantiateVrAvatarEventCode = 123;
+	//public GameObject myCamera;
+
+	Vector3[] place;
+
+	//正しいプレハブがインスタンス化されていることを確認する
+	//送信者のIDとローカルクライアントのIDを比較します
+	private void OnEvent(byte eventcode, object content, int senderid)
+	{
+		if (eventcode == InstantiateVrAvatarEventCode)
+		{
+			//demo
+			/* 
+			string str = (string)content;
+			string[] strList = str.Split('_');
+			int photonViewId = int.Parse(strList[0]);
+			int peopleNumber = int.Parse(strList[1]);
+			*/
+			Vector3 pos = place[PhotonNetwork.room.playerCount];
+			Quaternion q = new Quaternion();
+			q= Quaternion.identity;
+			Debug.Log("senderIdは：" + senderid);
+
+			GameObject go = null;
+
+			//ローカルのPhotonPlayer
+			if (PhotonNetwork.player.ID == senderid)
+			{
+				//Resources関数はPathを指定しなければResourcesフォルダ限定らしい
+				//Instantiateは今はVector3を指定していない
+				go = Instantiate(Resources.Load("LocalAvatar"), pos, q) as GameObject;
+				//myCamera.transform.position = pos;
+			}
+			else
+			{
+				go = Instantiate(Resources.Load("RemoteAvatar"), pos, q) as GameObject;
+			}
+
+			if (go != null)
+			{
+				PhotonView pView = go.GetComponent<PhotonView>();
+
+				if (pView != null)
+				{
+					pView.viewID = (int)content;
+				}
+			}
+		}
 	}
 
 	public void BackFirstCanvas() {

@@ -7,7 +7,6 @@ public class StartVTSRoom : MonoBehaviour {
 	//public GameObject photonObject;
 
 	public readonly byte InstantiateVrAvatarEventCode = 123;
-	int playerCount;
 	public GameObject myCamera;
 
 	Vector3[] place;
@@ -19,7 +18,7 @@ public class StartVTSRoom : MonoBehaviour {
 		PhotonNetwork.OnEventCall += OnEvent;
 
 		int viewId = PhotonNetwork.AllocateViewID();
-		string sendContent = viewId + "_" + StartPhoton.nowPlayerCount;
+		//string sendContent = viewId + "_" + StartPhoton.nowPlayerCount;
 
 		//oneventのeventcodeに最初の引数が、contentに2番目の引数が、senderidはプレイヤーのidで自動的に決定している
     	PhotonNetwork.RaiseEvent(InstantiateVrAvatarEventCode, viewId, true, new RaiseEventOptions() { CachingOption = EventCaching.AddToRoomCache, Receivers = ReceiverGroup.All });
@@ -59,11 +58,13 @@ public class StartVTSRoom : MonoBehaviour {
 		if (eventcode == InstantiateVrAvatarEventCode)
 		{
 			//demo
+			/* 
 			string str = (string)content;
 			string[] strList = str.Split('_');
 			int photonViewId = int.Parse(strList[0]);
 			int peopleNumber = int.Parse(strList[1]);
-			Vector3 pos = place[peopleNumber];
+			*/
+			Vector3 pos = place[PhotonNetwork.room.playerCount];
 			Quaternion q = new Quaternion();
 			q= Quaternion.identity;
 			Debug.Log("senderIdは：" + senderid);
@@ -89,7 +90,7 @@ public class StartVTSRoom : MonoBehaviour {
 
 				if (pView != null)
 				{
-					pView.viewID = photonViewId;
+					pView.viewID = (int)content;
 				}
 			}
 		}
