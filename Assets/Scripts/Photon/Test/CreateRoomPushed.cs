@@ -8,29 +8,30 @@ public class CreateRoomPushed : MonoBehaviour {
 
 	public InputField roomField;
 	public static string roomName;
-	public InputField nameField;
-	public static string userName;
+	public InputField passwordField;
 
 	public void Pushed() {
 		roomName = roomField.text;
-		userName = nameField.text;
+		string password = passwordField.text;
 		PhotonNetwork.autoCleanUpPlayerObjects = false;
 		//カスタムプロパティ
         ExitGames.Client.Photon.Hashtable customProp = new ExitGames.Client.Photon.Hashtable();
-        customProp.Add ("userName", userName); //ユーザ名
+        //customProp.Add ("userName", userName); //ユーザ名
         customProp.Add ("roomName", roomName); //ルーム名
 		PhotonNetwork.SetPlayerCustomProperties(customProp);
 
         RoomOptions roomOptions = new RoomOptions ();
         roomOptions.customRoomProperties = customProp;
         //ロビーで見えるルーム情報としてカスタムプロパティのuserName,userIdを使いますよという宣言
-        roomOptions.customRoomPropertiesForLobby = new string[]{ "userName","roomName"};
+        roomOptions.customRoomPropertiesForLobby = new string[]{ "roomName"};
         roomOptions.maxPlayers = 10; //部屋の最大人数
         roomOptions.isOpen = true; //入室許可する
         roomOptions.isVisible = true; //ロビーから見えるようにする
+		Debug.Log("room名:" + roomName);
+		//Photonサーバーに送信するルーム名前はパスワード付き
+		if(!string.IsNullOrEmpty(password)) roomName += "_" + password;
         //userIdが名前のルームがなければ作って入室、あれば普通に入室する。
         PhotonNetwork.JoinOrCreateRoom (roomName, roomOptions, null);
-		Debug.Log("room名:" + roomName + "user名" + userName);
 	}
 
 	void OnJoinedRoom(){

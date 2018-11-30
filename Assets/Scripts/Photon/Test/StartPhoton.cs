@@ -16,7 +16,8 @@ public class StartPhoton : MonoBehaviour {
 
 	RoomInfo[] rooms;
 
-	public static string nowRoomName;
+	public static RoomInfo nowRoom;
+	public static int nowPlayerCount;
 	public InputField passwordIF;
 	public void Awake()
         {
@@ -25,8 +26,6 @@ public class StartPhoton : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		// ここでPhotonに接続している
-        // 0.0.1はゲームのバージョンを指定
-        // （異なるバージョン同士でマッチングしないように？）
         PhotonNetwork.ConnectUsingSettings("0.0.1");
 		firstCanvas.enabled = true;
 		createRoomCanvas.enabled = false;
@@ -45,6 +44,7 @@ public class StartPhoton : MonoBehaviour {
         //PhotonNetwork.JoinRandomRoom();
     }
 
+	//部屋が更新されると呼ばれる
 	void OnReceivedRoomListUpdate(){
 		rooms = PhotonNetwork.GetRoomList();
 	}
@@ -100,18 +100,18 @@ public class StartPhoton : MonoBehaviour {
 				btn.transform.SetParent(content, false);
 
 				//ボタンのテキスト変更
-
-				btn.transform.GetComponentInChildren<Text>().text = rooms [i].name;
+				string[] strList = rooms[i].name.Split('_');
+				btn.transform.GetComponentInChildren<Text>().text = strList[0];
 
 				//ボタンのクリックイベント登録
 
-				btn.transform.GetComponent<Button>().onClick.AddListener(() => OnClick(rooms [i].name));
+				btn.transform.GetComponent<Button>().onClick.AddListener(() => OnClick(rooms[i]));
             }
         }
 	}
 
-	public void OnClick(string roomName) {
-		nowRoomName = roomName;
+	public void OnClick(RoomInfo roomName) {
+		nowRoom = roomName;
 		firstCanvas.enabled = false;
 		createRoomCanvas.enabled = false;
 		checkAllRoomCanvas.enabled = false;
@@ -119,13 +119,15 @@ public class StartPhoton : MonoBehaviour {
 	}
 
 	public void JoinPhotonRoom() {
-		if (passwordIF.text != "abc123") {
+		string[] strList = nowRoom.name.Split('_');
+		if (passwordIF.text != strList[1]) {
 			passwordIF.text = "";
 			passwordIF.placeholder.GetComponent<Text>().text = "passwordが間違っています";
 			return;
 		}
-		PhotonNetwork.JoinRoom(nowRoomName);
-		Debug.Log(nowRoomName + "に入室しました");
+		nowPlayerCount = nowRoom.playerCount;
+		PhotonNetwork.JoinRoom(nowRoom.name);
+		Debug.Log(nowRoom.name + "に入室しました");
 		FadeManager.Instance.LoadScene("OculusMain", 1.0f);
 	}
 

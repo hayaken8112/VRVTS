@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+//同期するものを入れたコード
 public class PhotonAvatarView : MonoBehaviour {
 
 	private PhotonView photonView;
@@ -17,6 +18,7 @@ public class PhotonAvatarView : MonoBehaviour {
 
 		if (photonView.isMine)
 		{
+			//データをネットワーク経由で送信する前にすべてのアバター関連の入力イベントを格納するバイト配列のリストをインスタンス化します
 			ovrAvatar = GetComponent<OvrAvatar>();
 			ovrAvatar.RecordPackets = true;
 			ovrAvatar.PacketRecorded += OnLocalAvatarPacketRecorded;
@@ -50,6 +52,7 @@ public class PhotonAvatarView : MonoBehaviour {
 
 	private int localSequence;
 
+	//パケットはPUNがサポートするバイト配列にシリアル化されます
 	public void OnLocalAvatarPacketRecorded(object sender, OvrAvatar.PacketEventArgs args)
 	{
 		if (!PhotonNetwork.inRoom || (PhotonNetwork.room.PlayerCount < 2))

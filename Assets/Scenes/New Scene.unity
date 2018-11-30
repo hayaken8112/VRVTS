@@ -216,7 +216,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1636656833609986, guid: 0a562d701c2214895a4750c529277f25, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114738677511951186, guid: 0a562d701c2214895a4750c529277f25,
         type: 2}
@@ -1315,7 +1315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomField: {fileID: 956343288}
-  nameField: {fileID: 2050112898}
+  passwordField: {fileID: 2050112898}
 --- !u!1001 &752191512
 Prefab:
   m_ObjectHideFlags: 0
@@ -1548,6 +1548,10 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1636656833609986, guid: 0a562d701c2214895a4750c529277f25, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0a562d701c2214895a4750c529277f25, type: 2}
   m_IsPrefabParent: 0
@@ -1639,7 +1643,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Your Name
+  m_Text: Password
 --- !u!222 &947327596
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2968,7 +2972,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1636656833609986, guid: 0a562d701c2214895a4750c529277f25, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114738677511951186, guid: 0a562d701c2214895a4750c529277f25,
         type: 2}
@@ -3117,7 +3121,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1636656833609986, guid: 0a562d701c2214895a4750c529277f25, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114073582516749108, guid: 0a562d701c2214895a4750c529277f25,
         type: 2}
@@ -3280,7 +3284,7 @@ GameObject:
   - component: {fileID: 2050112899}
   - component: {fileID: 2050112898}
   m_Layer: 5
-  m_Name: UserNameIF
+  m_Name: PasswordIF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
