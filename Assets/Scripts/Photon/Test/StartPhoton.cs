@@ -44,9 +44,9 @@ public class StartPhoton : MonoBehaviour {
 	//今回は、Auto-join Lobbyにチェックを入れているので、ロビーが存在すると自動的に入る
 	//ルームに対する操作（ルーム一覧、作成、入室など）ができる
 	void OnJoinedLobby(){
+		Debug.Log("勝手にロビー入ってます");
 		//現在使われているロビーの、有効なRoomのどれかに入室する。
 		//有効なRoomがなければ失敗する。
-		Debug.Log("ここはおそらく失敗する");
         //PhotonNetwork.JoinRandomRoom();
     }
 
@@ -158,12 +158,7 @@ public class StartPhoton : MonoBehaviour {
 		if (eventcode == InstantiateVrAvatarEventCode)
 		{
 			//demo
-			/* 
-			string str = (string)content;
-			string[] strList = str.Split('_');
-			int photonViewId = int.Parse(strList[0]);
-			int peopleNumber = int.Parse(strList[1]);
-			*/
+			Debug.Log("contentは。。。。。。。。" + content);
 			Vector3 pos = place[PhotonNetwork.room.playerCount];
 			Quaternion q = new Quaternion();
 			q= Quaternion.identity;
