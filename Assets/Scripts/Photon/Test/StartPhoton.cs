@@ -11,6 +11,7 @@ public class StartPhoton : MonoBehaviour {
 	public Canvas checkAllRoomCanvas;
 
 	public Canvas passwordCanvas;
+	public Canvas keyboardCanvas;
 
 	//ボタンプレハブ
 	public GameObject btnPref;
@@ -35,6 +36,7 @@ public class StartPhoton : MonoBehaviour {
 		createRoomCanvas.enabled = false;
 		checkAllRoomCanvas.enabled = false;
 		passwordCanvas.enabled = false;
+		keyboardCanvas.enabled = false;
 		//PhotonNetwork.JoinLobby();
 	}
 
@@ -58,6 +60,7 @@ public class StartPhoton : MonoBehaviour {
 		createRoomCanvas.enabled = true;
 		checkAllRoomCanvas.enabled = false;
 		passwordCanvas.enabled = false;
+		keyboardCanvas.enabled = false;
 	}
 
 	public void ToCheckRoom() {
@@ -65,27 +68,10 @@ public class StartPhoton : MonoBehaviour {
 		createRoomCanvas.enabled = false;
 		checkAllRoomCanvas.enabled = true;
 		passwordCanvas.enabled = false;
+		keyboardCanvas.enabled = false;
 
         if (rooms.Length == 0) {
             Debug.Log ("ルームが一つもありません");
-			//Content取得(ボタンを並べる場所)
-
-			RectTransform content = GameObject.Find("CheckAllRoomCanvas").GetComponent<RectTransform>();
-
-			GameObject btn = (GameObject)Instantiate(btnPref);
-
-			//ボタンをContentの子に設定
-
-			btn.transform.SetParent(content, false);
-
-			//ボタンのテキスト変更
-
-			btn.transform.GetComponentInChildren<Text>().text = "No Room Back";
-
-			//ボタンのクリックイベント登録
-
-			btn.transform.GetComponent<Button>().onClick.AddListener(() => BackFirstCanvas());
-
         } else {
 			//Content取得(ボタンを並べる場所)
 
@@ -120,6 +106,7 @@ public class StartPhoton : MonoBehaviour {
 		createRoomCanvas.enabled = false;
 		checkAllRoomCanvas.enabled = false;
 		passwordCanvas.enabled = true;
+		keyboardCanvas.enabled = false;
 	}
 
 	//TODOシーンの切り替え
@@ -161,7 +148,8 @@ public class StartPhoton : MonoBehaviour {
 	public readonly byte InstantiateVrAvatarEventCode = 123;
 	//public GameObject myCamera;
 
-	Vector3[] place = new Vector3[] {new Vector3(13f, 1.5f, 14f), new Vector3(12f, 1.5f, 14f), new Vector3(6f, 1.5f, 12.55f)};
+	Vector3[] place = new Vector3[] {new Vector3(13f, 1.5f, 14f), new Vector3(10f, 1.5f, 14f), new Vector3(7f, 1.5f, 12.55f)};
+	public static Vector3 myPosition;
 
 	//正しいプレハブがインスタンス化されていることを確認する
 	//送信者のIDとローカルクライアントのIDを比較します
@@ -189,7 +177,9 @@ public class StartPhoton : MonoBehaviour {
 				//Resources関数はPathを指定しなければResourcesフォルダ限定らしい
 				//Instantiateは今はVector3を指定していない
 				go = Instantiate(Resources.Load("LocalAvatar"), pos, q) as GameObject;
-				//myCamera.transform.position = pos;
+				myPosition = pos;
+				Debug.Log("ボボ簿おぼっぼっぼっぼぼ" + myPosition);
+				Instantiate(Resources.Load("OVRCameraRig"), pos, q);
 			}
 			else
 			{
@@ -212,6 +202,8 @@ public class StartPhoton : MonoBehaviour {
 		firstCanvas.enabled = true;
 		createRoomCanvas.enabled = false;
 		checkAllRoomCanvas.enabled = false;
+		passwordCanvas.enabled = false;
+		keyboardCanvas.enabled = false;
 	}
 
 	public InputField roomField;
@@ -246,5 +238,10 @@ public class StartPhoton : MonoBehaviour {
 	void OnGUI(){
         GUILayout.Label(PhotonNetwork.connectionStateDetailed.ToString());
     }
+
+	public void DisableKeyboard() {
+		Debug.Log("キーボードを消します");
+		keyboardCanvas.enabled = false;
+	}
 	
 }
