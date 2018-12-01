@@ -135,8 +135,8 @@ public class StartPhoton : MonoBehaviour {
 		//PhotonNetwork.LoadLevel(1);
 	}
 
-	void onJoinedRoom() {
-		Debug.Log(nowRoom.name + "に入室しました");
+	void OnJoinedRoom() {
+		//Debug.Log(nowRoom.name + "に入室しました");
 		//FadeManager.Instance.LoadScene("OculusMain", 1.0f);
 		PhotonNetwork.isMessageQueueRunning = false;
         SceneManager.LoadScene("OculusMain");
@@ -148,8 +148,6 @@ public class StartPhoton : MonoBehaviour {
         // シーンの遷移が完了したら自分用のオブジェクトを生成.
         if( i_scene.name == "OculusMain" )
         {
-            place = new Vector3[] {new Vector3(13f, 1.5f, 14f), new Vector3(12f, 1.5f, 14f), new Vector3(6f, 1.5f, 12.55f)};
-
 			PhotonNetwork.OnEventCall += OnEvent;
 
 			int viewId = PhotonNetwork.AllocateViewID();
@@ -163,7 +161,7 @@ public class StartPhoton : MonoBehaviour {
 	public readonly byte InstantiateVrAvatarEventCode = 123;
 	//public GameObject myCamera;
 
-	Vector3[] place;
+	Vector3[] place = new Vector3[] {new Vector3(13f, 1.5f, 14f), new Vector3(12f, 1.5f, 14f), new Vector3(6f, 1.5f, 12.55f)};
 
 	//正しいプレハブがインスタンス化されていることを確認する
 	//送信者のIDとローカルクライアントのIDを比較します
@@ -216,5 +214,37 @@ public class StartPhoton : MonoBehaviour {
 		checkAllRoomCanvas.enabled = false;
 	}
 
+	public InputField roomField;
+	public static string roomName;
+	public InputField passwordField;
+
+	public void Pushed() {
+		roomName = roomField.text;
+		string password = passwordField.text;
+		PhotonNetwork.autoCleanUpPlayerObjects = false;
+		//カスタムプロパティ
+        ExitGames.Client.Photon.Hashtable customProp = new ExitGames.Client.Photon.Hashtable();
+        //customProp.Add ("userName", userName); //ユーザ名
+        customProp.Add ("roomName", roomName); //ルーム名
+		PhotonNetwork.SetPlayerCustomProperties(customProp);
+
+        RoomOptions roomOptions = new RoomOptions ();
+        roomOptions.customRoomProperties = customProp;
+        //ロビーで見えるルーム情報としてカスタムプロパティのuserName,userIdを使いますよという宣言
+        roomOptions.customRoomPropertiesForLobby = new string[]{ "roomName"};
+        roomOptions.maxPlayers = 10; //部屋の最大人数
+        roomOptions.isOpen = true; //入室許可する
+        roomOptions.isVisible = true; //ロビーから見えるようにする
+		Debug.Log("room名:" + roomName);
+		//Photonサーバーに送信するルーム名前はパスワード付き
+		if(!string.IsNullOrEmpty(password)) roomName += "_" + password;
+		Debug.Log(roomName);
+        //userIdが名前のルームがなければ作って入室、あれば普通に入室する。
+        PhotonNetwork.JoinOrCreateRoom (roomName, roomOptions, null);
+	}
+
+	void OnGUI(){
+        GUILayout.Label(PhotonNetwork.connectionStateDetailed.ToString());
+    }
 	
 }

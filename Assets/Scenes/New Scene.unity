@@ -548,48 +548,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 314507989}
---- !u!1001 &342635825
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 474238, guid: fd9d58dbfb8f846f58b62a48334a0058, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 474238, guid: fd9d58dbfb8f846f58b62a48334a0058, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 474238, guid: fd9d58dbfb8f846f58b62a48334a0058, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 474238, guid: fd9d58dbfb8f846f58b62a48334a0058, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 474238, guid: fd9d58dbfb8f846f58b62a48334a0058, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 474238, guid: fd9d58dbfb8f846f58b62a48334a0058, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 474238, guid: fd9d58dbfb8f846f58b62a48334a0058, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 474238, guid: fd9d58dbfb8f846f58b62a48334a0058, type: 2}
-      propertyPath: m_RootOrder
-      value: 12
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: fd9d58dbfb8f846f58b62a48334a0058, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &347154862
 GameObject:
   m_ObjectHideFlags: 0
@@ -1252,7 +1210,6 @@ GameObject:
   - component: {fileID: 725147364}
   - component: {fileID: 725147365}
   - component: {fileID: 725147366}
-  - component: {fileID: 725147367}
   m_Layer: 0
   m_Name: SceneObj
   m_TagString: Untagged
@@ -1290,6 +1247,8 @@ MonoBehaviour:
   passwordCanvas: {fileID: 558172534}
   btnPref: {fileID: 1271832582111730, guid: 6aeeb9e4441fd4de6a060a9135d56907, type: 2}
   passwordIF: {fileID: 681107731}
+  roomField: {fileID: 956343288}
+  passwordField: {fileID: 2050112898}
 --- !u!114 &725147366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1303,19 +1262,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyButton: {fileID: 1261839786493136, guid: e6578848cffcb4bb4a4ef202f0964a68, type: 2}
   canvas: {fileID: 808203848}
---- !u!114 &725147367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 725147363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3885663be7e21406d815603b79c3eae3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomField: {fileID: 956343288}
-  passwordField: {fileID: 2050112898}
 --- !u!1001 &752191512
 Prefab:
   m_ObjectHideFlags: 0
@@ -1976,7 +1922,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 725147367}
+      - m_Target: {fileID: 725147365}
         m_MethodName: Pushed
         m_Mode: 1
         m_Arguments:
