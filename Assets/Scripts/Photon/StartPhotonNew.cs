@@ -5,40 +5,26 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
-public class StartPhoton : MonoBehaviour {
-
-	public Canvas firstCanvas;
-	public Canvas createRoomCanvas;
-	public Canvas checkAllRoomCanvas;
-
-	public Canvas passwordCanvas;
-	public Canvas keyboardCanvas;
-
-	//ボタンプレハブ
-	public GameObject btnPref;
+public class StartPhotonNew : MonoBehaviour {
 
 	RoomInfo[] rooms;
-
+	public Text roomnames;
+	public InputField enterPasswordIF;
 	public static RoomInfo nowRoom;
-	//public static int nowPlayerCount;
-	public InputField passwordIF;
-	public void Awake()
-        {
-        }
+
+	public InputField roomNameIF;
+	public static string roomName;
+	public InputField createPasswordIF;
+	public Canvas keyboardCanvas;
 
 	// Use this for initialization
 	void Start () {
 		// シーンの読み込みコールバックを登録.
         SceneManager.sceneLoaded += OnLoadedScene;
+		keyboardCanvas.enabled = false;
 		// ここでPhotonに接続している
         PhotonNetwork.ConnectUsingSettings("0.0.1");
 		PhotonNetwork.automaticallySyncScene = true;
-		firstCanvas.enabled = true;
-		createRoomCanvas.enabled = false;
-		checkAllRoomCanvas.enabled = false;
-		passwordCanvas.enabled = false;
-		keyboardCanvas.enabled = false;
-		//PhotonNetwork.JoinLobby();
 
 		foreach(InputField vrKeyboard in GameObject.FindObjectsOfTypeAll(typeof(InputField))){
 			var trigger = vrKeyboard.gameObject.AddComponent<EventTrigger>();
@@ -48,7 +34,6 @@ public class StartPhoton : MonoBehaviour {
 			trigger.triggers.Add(entry);
 		}
 	}
-
 	//ロビーに入った時に呼ばれるメソッド
 	//今回は、Auto-join Lobbyにチェックを入れているので、ロビーが存在すると自動的に入る
 	//ルームに対する操作（ルーム一覧、作成、入室など）ができる
@@ -62,75 +47,26 @@ public class StartPhoton : MonoBehaviour {
 	//部屋が更新されると呼ばれる
 	void OnReceivedRoomListUpdate(){
 		rooms = PhotonNetwork.GetRoomList();
-	}
-
-	public void ToCreateRoom() {
-		firstCanvas.enabled = false;
-		createRoomCanvas.enabled = true;
-		checkAllRoomCanvas.enabled = false;
-		passwordCanvas.enabled = false;
-		keyboardCanvas.enabled = false;
-	}
-
-	public void ToCheckRoom() {
-		firstCanvas.enabled = false;
-		createRoomCanvas.enabled = false;
-		checkAllRoomCanvas.enabled = true;
-		passwordCanvas.enabled = false;
-		keyboardCanvas.enabled = false;
-
-        if (rooms.Length == 0) {
+		if (rooms.Length == 0) {
             Debug.Log ("ルームが一つもありません");
+			roomnames.text = "No Room Now";
         } else {
-			//Content取得(ボタンを並べる場所)
-
-			RectTransform content = GameObject.Find("Canvas/Tab View/Pages/Container/Page 2/Tab View/Pages/Container/Page 2/").GetComponent<RectTransform>();
-
-            //ルームが1件以上ある時ループでRoomInfo情報をログ出力
-            for (int i = 0; i < rooms.Length; i++) {
-				int no = i;
-
-				//ボタン生成
-
-				GameObject btn = (GameObject)Instantiate(btnPref);
-
-				//ボタンをContentの子に設定
-
-				btn.transform.SetParent(content, false);
-
-				//ボタンのテキスト変更
-				string[] strList = rooms[no].name.Split('_');
-				btn.transform.GetComponentInChildren<Text>().text = strList[0];
-
-				//ボタンのクリックイベント登録
-
-				btn.transform.GetComponent<Button>().onClick.AddListener(() => OnClick(rooms[no]));
-            }
+			roomnames.text = "You";
         }
 	}
 
-	public void OnClick(RoomInfo roomName) {
-		nowRoom = roomName;
-		firstCanvas.enabled = false;
-		createRoomCanvas.enabled = false;
-		checkAllRoomCanvas.enabled = false;
-		passwordCanvas.enabled = true;
-		keyboardCanvas.enabled = false;
-	}
-
-	//TODOシーンの切り替え
 	public void JoinPhotonRoom() {
 		string[] strList = nowRoom.name.Split('_');
-		if (passwordIF.text != strList[1]) {
-			passwordIF.text = "";
-			passwordIF.placeholder.GetComponent<Text>().text = "passwordが間違っています";
+		if (enterPasswordIF.text != strList[1]) {
+			enterPasswordIF.text = "";
+			enterPasswordIF.placeholder.GetComponent<Text>().text = "passwordが間違っています";
 			return;
 		}
 		//nowPlayerCount = nowRoom.playerCount;
 		PhotonNetwork.JoinRoom(nowRoom.name);
 		//PhotonNetwork.LoadLevel(1);
 	}
-
+	
 	void OnJoinedRoom() {
 		//Debug.Log(nowRoom.name + "に入室しました");
 		//FadeManager.Instance.LoadScene("OculusMain", 1.0f);
@@ -202,21 +138,9 @@ public class StartPhoton : MonoBehaviour {
 		}
 	}
 
-	public void BackFirstCanvas() {
-		firstCanvas.enabled = true;
-		createRoomCanvas.enabled = false;
-		checkAllRoomCanvas.enabled = false;
-		passwordCanvas.enabled = false;
-		keyboardCanvas.enabled = false;
-	}
-
-	public InputField roomField;
-	public static string roomName;
-	public InputField passwordField;
-
-	public void Pushed() {
-		roomName = roomField.text;
-		string password = passwordField.text;
+	public void CreatePhotonRoom() {
+		roomName = roomNameIF.text;
+		string password = createPasswordIF.text;
 		PhotonNetwork.autoCleanUpPlayerObjects = false;
 		//カスタムプロパティ
         ExitGames.Client.Photon.Hashtable customProp = new ExitGames.Client.Photon.Hashtable();
@@ -239,18 +163,14 @@ public class StartPhoton : MonoBehaviour {
         PhotonNetwork.JoinOrCreateRoom (roomName, roomOptions, null);
 	}
 
-	void OnGUI(){
-        GUILayout.Label(PhotonNetwork.connectionStateDetailed.ToString());
-    }
-
-	public void DisableKeyboard() {
-		Debug.Log("キーボードを消します");
-		keyboardCanvas.enabled = false;
-	}
-
 	public void EditIF(InputField enterIF){
 		GameObject sceneObj = GameObject.Find("SceneObj");
 		sceneObj.GetComponent<MakeKeyboard>().CreateKeyboard(enterIF);
 	}
 	
+	public void DisableKeyboard() {
+		Debug.Log("キーボードを消します");
+		keyboardCanvas.enabled = false;
+	}
+
 }

@@ -424,6 +424,7 @@ MonoBehaviour:
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &11420822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -488,6 +489,7 @@ MonoBehaviour:
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &11423378
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -514,6 +516,7 @@ MonoBehaviour:
     MoveTowardCenter: 1
     RippleParent: {fileID: 22418038}
     PlaceRippleBehind: 0
+    Shadow: 0
   m_HighlightGraphic: {fileID: 11420822}
   m_HighlightWhen: 2
   m_AutoHighlightColor: 1
@@ -649,6 +652,7 @@ MonoBehaviour:
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &11440572
 MonoBehaviour:
   m_ObjectHideFlags: 1
