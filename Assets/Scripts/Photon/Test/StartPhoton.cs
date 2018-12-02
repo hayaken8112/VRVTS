@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class StartPhoton : MonoBehaviour {
 
@@ -38,6 +39,14 @@ public class StartPhoton : MonoBehaviour {
 		passwordCanvas.enabled = false;
 		keyboardCanvas.enabled = false;
 		//PhotonNetwork.JoinLobby();
+
+		foreach(InputField vrKeyboard in GameObject.FindObjectsOfType(typeof(InputField))){
+			var trigger = vrKeyboard.gameObject.AddComponent<EventTrigger>();
+			EventTrigger.Entry entry = new EventTrigger.Entry();
+			entry.eventID = EventTriggerType.PointerDown;
+			entry.callback.AddListener((eventData) => { EditIF(vrKeyboard); });
+			trigger.triggers.Add(entry);
+		}
 	}
 
 	//ロビーに入った時に呼ばれるメソッド
@@ -237,6 +246,11 @@ public class StartPhoton : MonoBehaviour {
 	public void DisableKeyboard() {
 		Debug.Log("キーボードを消します");
 		keyboardCanvas.enabled = false;
+	}
+
+	public void EditIF(InputField enterIF){
+		GameObject sceneObj = GameObject.Find("SceneObj");
+		sceneObj.GetComponent<MakeKeyboard>().CreateKeyboard(enterIF);
 	}
 	
 }

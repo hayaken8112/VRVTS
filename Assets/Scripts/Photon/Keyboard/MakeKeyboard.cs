@@ -58,11 +58,14 @@ public class MakeKeyboard : MonoBehaviour {
 
 	public void OnClick(char cs) {
 		demoField.text = demoField.text + cs;
+		demoField.ActivateInputField();
+		demoField.selectionColor = Color.clear;
 	}
 
 	public void DeleteChar() {
 		if (demoField.text.Length > 0){
 			demoField.text = demoField.text.Substring(0, demoField.text.Length - 1);
+			demoField.ActivateInputField();
 		}
 	}
 }
