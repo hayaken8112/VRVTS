@@ -51,19 +51,28 @@ public class StartPhotonNew : MonoBehaviour {
             Debug.Log ("ルームが一つもありません");
 			roomnames.text = "No Room Now";
         } else {
-			roomnames.text = "You";
+			for (int i = 0; i < rooms.Length; i++) {
+				int no = i;
+
+				//ボタンのテキスト変更
+				string[] strList = rooms[no].name.Split('_');
+				roomnames.text = strList[0];
+            }
         }
 	}
 
 	public void JoinPhotonRoom() {
-		string[] strList = nowRoom.name.Split('_');
+		if (roomnames.text == "No Room Now"){
+			enterPasswordIF.text = "";
+			return;
+		}
+		string[] strList = rooms[0].name.Split('_');
 		if (enterPasswordIF.text != strList[1]) {
 			enterPasswordIF.text = "";
-			enterPasswordIF.placeholder.GetComponent<Text>().text = "passwordが間違っています";
 			return;
 		}
 		//nowPlayerCount = nowRoom.playerCount;
-		PhotonNetwork.JoinRoom(nowRoom.name);
+		PhotonNetwork.JoinRoom(rooms[0].name);
 		//PhotonNetwork.LoadLevel(1);
 	}
 	
