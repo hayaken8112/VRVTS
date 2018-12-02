@@ -8,7 +8,6 @@ using UnityEngine.EventSystems;
 public class StartPhotonNew : MonoBehaviour {
 
 	RoomInfo[] rooms;
-	public Text roomnames;
 	public InputField enterPasswordIF;
 	public static RoomInfo nowRoom;
 
@@ -17,11 +16,18 @@ public class StartPhotonNew : MonoBehaviour {
 	public InputField createPasswordIF;
 	public Canvas keyboardCanvas;
 
+	//public GameObject roomToggle;
+	public Text roomNameText;
+
+	public Sprite[] images;
+	public GameObject imageBtn;
+
 	// Use this for initialization
 	void Start () {
 		// シーンの読み込みコールバックを登録.
         SceneManager.sceneLoaded += OnLoadedScene;
 		keyboardCanvas.enabled = false;
+		LineUpPictures();
 		// ここでPhotonに接続している
         PhotonNetwork.ConnectUsingSettings("0.0.1");
 		PhotonNetwork.automaticallySyncScene = true;
@@ -34,6 +40,23 @@ public class StartPhotonNew : MonoBehaviour {
 			trigger.triggers.Add(entry);
 		}
 	}
+
+	void LineUpPictures() {
+		RectTransform content = GameObject.Find("Canvas/Tab View/Pages/Container/Use Offline/Scroll View/Viewport/Content").GetComponent<RectTransform>();
+		for (int i = 0; i < images.Length; i++){
+			int no = i;
+			GameObject img = (GameObject)Instantiate(imageBtn);
+			//img.transform.position = new Vector2(0, -475f - 900 * no);
+			img.transform.SetParent(content, false);
+			img.transform.GetComponent<Image>().sprite = images[no];
+			img.transform.GetComponent<Button>().onClick.AddListener(() => EnterWithOffLine(no));
+		}
+	}
+
+	void EnterWithOffLine(int no) {
+
+	}
+
 	//ロビーに入った時に呼ばれるメソッド
 	//今回は、Auto-join Lobbyにチェックを入れているので、ロビーが存在すると自動的に入る
 	//ルームに対する操作（ルーム一覧、作成、入室など）ができる
@@ -49,20 +72,33 @@ public class StartPhotonNew : MonoBehaviour {
 		rooms = PhotonNetwork.GetRoomList();
 		if (rooms.Length == 0) {
             Debug.Log ("ルームが一つもありません");
-			roomnames.text = "No Room Now";
+			//RectTransform content = GameObject.Find("Canvas/Tab View/Pages/Container/Use Online/Tab View/Pages/Container/Page 2/Radio Buttons").GetComponent<RectTransform>();
+			roomNameText.text = "No Room Here Sorry";
+			
         } else {
+			//RectTransform content = GameObject.Find("Canvas/Tab View/Pages/Container/Use Online/Tab View/Pages/Container/Page 2").GetComponent<RectTransform>();
+			roomNameText.text = rooms[0].name;
+			/*
 			for (int i = 0; i < rooms.Length; i++) {
+				
 				int no = i;
+
+				GameObject btn = (GameObject)Instantiate(roomToggle);
+
+				//ボタンをContentの子に設定
+
+				btn.transform.SetParent(content, false);
 
 				//ボタンのテキスト変更
 				string[] strList = rooms[no].name.Split('_');
-				roomnames.text = strList[0];
+				btn.transform.GetComponentInChildren<Text>().text = strList[0];
             }
+			*/
         }
 	}
 
 	public void JoinPhotonRoom() {
-		if (roomnames.text == "No Room Now"){
+		if (rooms.Length == 0){
 			enterPasswordIF.text = "";
 			return;
 		}
