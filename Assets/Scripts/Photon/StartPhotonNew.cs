@@ -14,7 +14,7 @@ public class StartPhotonNew : MonoBehaviour {
 	public InputField roomNameIF;
 	public static string roomName;
 	public InputField createPasswordIF;
-	public Canvas keyboardCanvas;
+	public GameObject keyboardCanvas;
 
 	//public GameObject roomToggle;
 	public Text roomNameText;
@@ -26,7 +26,7 @@ public class StartPhotonNew : MonoBehaviour {
 	void Start () {
 		// シーンの読み込みコールバックを登録.
         SceneManager.sceneLoaded += OnLoadedScene;
-		keyboardCanvas.enabled = false;
+		keyboardCanvas.SetActive(false);
 		LineUpPictures();
 		// ここでPhotonに接続している
         PhotonNetwork.ConnectUsingSettings("0.0.1");
@@ -43,18 +43,29 @@ public class StartPhotonNew : MonoBehaviour {
 
 	void LineUpPictures() {
 		RectTransform content = GameObject.Find("Canvas/Tab View/Pages/Container/Use Offline/Scroll View/Viewport/Content").GetComponent<RectTransform>();
-		for (int i = 0; i < images.Length; i++){
+		for (int i = 0; i < images.Length / 3 + 1; i++){
 			int no = i;
+			int b = 0;
 			GameObject img = (GameObject)Instantiate(imageBtn);
+			foreach(Transform child in img.transform){
+				int artNumber = 3 * no + b;
+				if (artNumber >= images.Length){
+					child.gameObject.SetActive(false);
+					continue;
+				}
+				child.transform.GetComponent<Image>().sprite = images[artNumber];
+				child.transform.GetComponent<Button>().onClick.AddListener(() => EnterWithOffLine(artNumber));
+				b += 1;
+			}
 			//img.transform.position = new Vector2(0, -475f - 900 * no);
 			img.transform.SetParent(content, false);
-			img.transform.GetComponent<Image>().sprite = images[no];
-			img.transform.GetComponent<Button>().onClick.AddListener(() => EnterWithOffLine(no));
 		}
+		
 	}
 
 	void EnterWithOffLine(int no) {
-
+		PhotonNetwork.isMessageQueueRunning = false;
+        SceneManager.LoadScene("mirror");
 	}
 
 	//ロビーに入った時に呼ばれるメソッド
@@ -151,7 +162,7 @@ public class StartPhotonNew : MonoBehaviour {
 			Debug.Log("contentは。。。。。。。。" + content);
 			Vector3 pos = place[PhotonNetwork.room.playerCount];
 			Quaternion q = new Quaternion();
-			q= Quaternion.identity;
+			q= Quaternion.Euler(0, 180, 0);
 			Debug.Log("senderIdは：" + senderid);
 
 			GameObject go = null;
@@ -215,7 +226,8 @@ public class StartPhotonNew : MonoBehaviour {
 	
 	public void DisableKeyboard() {
 		Debug.Log("キーボードを消します");
-		keyboardCanvas.enabled = false;
+		keyboardCanvas.SetActive(false);
+		
 	}
 
 }
