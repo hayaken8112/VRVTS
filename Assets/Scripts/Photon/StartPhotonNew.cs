@@ -172,10 +172,10 @@ public class StartPhotonNew : MonoBehaviour {
 			{
 				//Resources関数はPathを指定しなければResourcesフォルダ限定らしい
 				//Instantiateは今はVector3を指定していない
+				Instantiate(Resources.Load("OVRCameraRig"), pos, q);
 				go = Instantiate(Resources.Load("LocalAvatar"), pos, q) as GameObject;
 				myPosition = pos;
 				Debug.Log("ボボ簿おぼっぼっぼっぼぼ" + myPosition);
-				Instantiate(Resources.Load("OVRCameraRig"), pos, q);
 			}
 			else
 			{
