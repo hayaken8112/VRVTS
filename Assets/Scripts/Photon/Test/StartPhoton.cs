@@ -152,10 +152,11 @@ public class StartPhoton : MonoBehaviour {
 			Debug.Log("contentは。。。。。。。。" + content);
 			Vector3 pos = place[PhotonNetwork.room.playerCount];
 			Quaternion q = new Quaternion();
-			q= Quaternion.Euler(0, 180, 0);
+			q= Quaternion.Euler(0, 4.584f, 0);
 			Debug.Log("senderIdは：" + senderid);
 
 			GameObject go = null;
+			Vector3 demoPos = new Vector3(654f, 279f, -731f);
 
 			//ローカルのPhotonPlayer
 			if (PhotonNetwork.player.ID == senderid)
@@ -163,13 +164,13 @@ public class StartPhoton : MonoBehaviour {
 				//Resources関数はPathを指定しなければResourcesフォルダ限定らしい
 				//Instantiateは今はVector3を指定していない
 				//Instantiate(Resources.Load("OVRCameraRig"), pos, q);
-				go = Instantiate(Resources.Load("LocalAvatar"), pos, q) as GameObject;
+				go = Instantiate(Resources.Load("LocalAvatar"), demoPos, q) as GameObject;
 				myPosition = pos;
 				Debug.Log("ボボ簿おぼっぼっぼっぼぼ" + myPosition);
 			}
 			else
 			{
-				go = Instantiate(Resources.Load("RemoteAvatar"), pos, q) as GameObject;
+				go = Instantiate(Resources.Load("RemoteAvatar"), demoPos, q) as GameObject;
 			}
 
 			if (go != null)
