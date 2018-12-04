@@ -1952,7 +1952,7 @@ MonoBehaviour:
   RightHandCustomPose: {fileID: 0}
   PacketSettings:
     UpdateRate: 0.033333335
-  VoiceAmplitude: 0
+  VoiceAmplitude: 1.1
   EnableMouthVertexAnimation: 0
 --- !u!114 &114981521901980872
 MonoBehaviour:

@@ -802,7 +802,7 @@ MonoBehaviour:
   RightHandCustomPose: {fileID: 0}
   PacketSettings:
     UpdateRate: 0.033333335
-  VoiceAmplitude: 0
+  VoiceAmplitude: 1.14
   EnableMouthVertexAnimation: 0
 --- !u!114 &114926861434205778
 MonoBehaviour:

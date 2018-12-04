@@ -31,15 +31,6 @@ public class PhotonAvatarView : MonoBehaviour {
 		}
 	}
 
-	public void OnEnable()
-    {
-        if (photonView.isMine)
-        {
-            ovrAvatar.RecordPackets = true;
-            ovrAvatar.PacketRecorded += OnLocalAvatarPacketRecorded;
-        }
-    }
-
 	//私たちのジェスチャーを含む記録パケットを開始したり停止したりするために使用する
 	public void OnDisable()
 	{
