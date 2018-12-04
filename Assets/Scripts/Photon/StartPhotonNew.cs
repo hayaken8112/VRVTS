@@ -183,6 +183,7 @@ public class StartPhotonNew : MonoBehaviour {
 			else
 			{
 				go = Instantiate(Resources.Load("RemoteAvatar"), pos, q) as GameObject;
+				Debug.Log("jaoisjfaojfjaojweojfoajweofjaeofjowejfjfaojfaejf");
 			}
 
 			if (go != null)

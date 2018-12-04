@@ -126,7 +126,7 @@ public class StartPhoton : MonoBehaviour {
 	void OnJoinedRoom() {
 		//Debug.Log(nowRoom.name + "に入室しました");
 		//FadeManager.Instance.LoadScene("OculusMain", 1.0f);
-		PhotonNetwork.isMessageQueueRunning = false;
+		//PhotonNetwork.isMessageQueueRunning = false;
         PhotonNetwork.OnEventCall += OnEvent;
 
 		int viewId = PhotonNetwork.AllocateViewID();
@@ -146,6 +146,7 @@ public class StartPhoton : MonoBehaviour {
 	//送信者のIDとローカルクライアントのIDを比較します
 	private void OnEvent(byte eventcode, object content, int senderid)
 	{
+		/*
 		if (eventcode == InstantiateVrAvatarEventCode)
 		{
 			//demo
@@ -181,6 +182,15 @@ public class StartPhoton : MonoBehaviour {
 				{
 					pView.viewID = (int)content;
 				}
+			}
+		}
+		*/
+		GameObject go = null;
+		go = Instantiate(Resources.Load("Cube")) as GameObject;
+		if (go != null){
+			PhotonView pView = go.GetComponent<PhotonView>();
+			if (pView != null){
+				pView.viewID = (int)content;
 			}
 		}
 	}
