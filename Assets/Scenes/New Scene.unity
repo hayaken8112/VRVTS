@@ -2344,7 +2344,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 725147365}
+      - m_Target: {fileID: 725147367}
         m_MethodName: CreatePhotonRoom
         m_Mode: 1
         m_Arguments:
@@ -3389,7 +3389,7 @@ GameObject:
   m_Component:
   - component: {fileID: 725147364}
   - component: {fileID: 725147366}
-  - component: {fileID: 725147365}
+  - component: {fileID: 725147367}
   m_Layer: 0
   m_Name: SceneObj
   m_TagString: Untagged
@@ -3410,45 +3410,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &725147365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 725147363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9d477b88e994465293e0aac5323e712, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enterPasswordIF: {fileID: 439214912}
-  roomNameIF: {fileID: 1426858439}
-  createPasswordIF: {fileID: 1280419614}
-  keyboardCanvas: {fileID: 808203848}
-  roomNameText: {fileID: 1354743754}
-  images:
-  - {fileID: 21300000, guid: 137c96bc76a4d4beeb6d68e0ddb81929, type: 3}
-  - {fileID: 21300000, guid: 4bef84f663dbd4cfd8b405874de67006, type: 3}
-  - {fileID: 21300000, guid: d1ed6d560b4cb4bb6bc44f1ae80bf50e, type: 3}
-  - {fileID: 21300000, guid: b7bfa178d6f384308a9eba8e54f32374, type: 3}
-  - {fileID: 21300000, guid: 9af397fb939cd4790a8e42c6c2a28542, type: 3}
-  - {fileID: 21300000, guid: f4ddd566abc8a4e1eb3503543224de46, type: 3}
-  - {fileID: 21300000, guid: 9af397fb939cd4790a8e42c6c2a28542, type: 3}
-  - {fileID: 21300000, guid: 52a2616db94f54e68b9cce30788d4ffb, type: 3}
-  - {fileID: 21300000, guid: fc6953466304a4e42a026289836d43e4, type: 3}
-  - {fileID: 21300000, guid: 5f41b9e8cba9f436f8cc054da1c8b7d7, type: 3}
-  - {fileID: 21300000, guid: 7cbae0280232a4a7992c9d9c88804106, type: 3}
-  - {fileID: 21300000, guid: 8b58b55ac08d74c8db2140088bfd6c28, type: 3}
-  - {fileID: 21300000, guid: 5e32e3850fed74d3694a113102805210, type: 3}
-  - {fileID: 21300000, guid: fa59a3520524646b3b6bdc9cfeeb2df2, type: 3}
-  - {fileID: 21300000, guid: 1ee6855f82e2e42c0a9aeedf9348e710, type: 3}
-  - {fileID: 21300000, guid: e2822bd2e37224ef584fe51616cca61e, type: 3}
-  - {fileID: 21300000, guid: c016598359a5c44e58914d7afc1b4d75, type: 3}
-  - {fileID: 21300000, guid: 91b46e68cc8e04f66b664440d1a4e9cd, type: 3}
-  - {fileID: 21300000, guid: db61941331c8a48069fc18b0f424a53c, type: 3}
-  - {fileID: 21300000, guid: ee26c9649c0dd47308e577b6c8a35c85, type: 3}
-  - {fileID: 21300000, guid: 7dbbef6f077f043cc8863126fc79c762, type: 3}
-  imageBtn: {fileID: 1375561810431148, guid: 4a9a8b815a3e74bfbbea5a3d9d1704ab, type: 2}
 --- !u!114 &725147366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3462,6 +3423,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyButton: {fileID: 1261839786493136, guid: e6578848cffcb4bb4a4ef202f0964a68, type: 2}
   canvas: {fileID: 808203848}
+--- !u!114 &725147367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 725147363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2a2d0873ca7e4b0dad9412c225a3893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enterPasswordIF: {fileID: 439214912}
+  roomNameIF: {fileID: 1426858439}
+  createPasswordIF: {fileID: 1280419614}
+  keyboardCanvas: {fileID: 808203848}
+  roomNameText: {fileID: 1354743754}
+  images:
+  - {fileID: 21300000, guid: ee26c9649c0dd47308e577b6c8a35c85, type: 3}
+  imageBtn: {fileID: 1375561810431148, guid: 4a9a8b815a3e74bfbbea5a3d9d1704ab, type: 2}
 --- !u!1 &739873245
 GameObject:
   m_ObjectHideFlags: 0
@@ -3773,7 +3753,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 808203848}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aee672c7b0743724ea7d0d722d5e6aa2, type: 3}
   m_Name: 
@@ -3790,7 +3770,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 808203848}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -5931,7 +5911,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 725147365}
+      - m_Target: {fileID: 0}
         m_MethodName: JoinPhotonRoom
         m_Mode: 1
         m_Arguments:
@@ -7803,7 +7783,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1674322382}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4a9c50de96f6d04386957f4741ac65c, type: 3}
   m_Name: 
@@ -7831,7 +7811,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1674322382}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -9289,7 +9269,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2021242674}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -9365,7 +9345,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2021242674}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aee672c7b0743724ea7d0d722d5e6aa2, type: 3}
   m_Name: 
@@ -9791,7 +9771,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 725147365}
+      - m_Target: {fileID: 0}
         m_MethodName: DisableKeyboard
         m_Mode: 1
         m_Arguments:

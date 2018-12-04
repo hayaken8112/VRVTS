@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 222895976793261512}
   - component: {fileID: 114856780450900382}
   - component: {fileID: 114559625319797106}
+  - component: {fileID: 114214075441824440}
   m_Layer: 5
   m_Name: InputField
   m_TagString: Untagged
@@ -237,9 +238,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recordButton: {fileID: 1295526256551002}
-  voiceRecorder: {fileID: 0}
-  audioRecognizer: {fileID: 0}
+  addButton: {fileID: 0}
+  voiceManager: {fileID: 0}
   inputField: {fileID: 114559625319797106}
+--- !u!114 &114214075441824440
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1888120641148804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!114 &114261368765259886
 MonoBehaviour:
   m_ObjectHideFlags: 1
