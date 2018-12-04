@@ -953,7 +953,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!120 &909295826
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1260,7 +1260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1006777962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3176,11 +3176,6 @@ Camera:
   m_PrefabParentObject: {fileID: 20324246220764756, guid: e965cea0c1be5415b8af1f26d4691c68,
     type: 2}
   m_PrefabInternal: {fileID: 1569845839}
---- !u!1 &1569845844 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1962560566872748, guid: e965cea0c1be5415b8af1f26d4691c68,
-    type: 2}
-  m_PrefabInternal: {fileID: 1569845839}
 --- !u!43 &1670437872
 Mesh:
   m_ObjectHideFlags: 0
@@ -3468,7 +3463,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70520144df9414bee996a40e64f60570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCamera: {fileID: 1569845844}
 --- !u!4 &1813563380
 Transform:
   m_ObjectHideFlags: 0

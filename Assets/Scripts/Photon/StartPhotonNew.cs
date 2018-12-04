@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using Oculus.Avatar;
+using Oculus.Platform;
+using Oculus.Platform.Models;
 
 public class StartPhotonNew : MonoBehaviour {
 
@@ -149,7 +152,7 @@ public class StartPhotonNew : MonoBehaviour {
 	public readonly byte InstantiateVrAvatarEventCode = 123;
 	//public GameObject myCamera;
 
-	Vector3[] place = new Vector3[] {new Vector3(13f, 1.5f, 14f), new Vector3(10f, 1.5f, 14f), new Vector3(7f, 1.5f, 12.55f)};
+	Vector3[] place = new Vector3[] {new Vector3(13f, 1.7f, 14f), new Vector3(10f, 1.7f, 14f), new Vector3(7f, 1.7f, 12.55f)};
 	public static Vector3 myPosition;
 
 	//正しいプレハブがインスタンス化されていることを確認する
