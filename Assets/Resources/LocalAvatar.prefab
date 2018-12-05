@@ -775,7 +775,7 @@ MonoBehaviour:
   ControllerRight: {fileID: 114803654979015050}
   HandLeft: {fileID: 114289262017386076}
   HandRight: {fileID: 114412461318575110}
-  RecordPackets: 0
+  RecordPackets: 1
   UseSDKPackets: 1
   StartWithControllers: 0
   FirstPersonLayer:

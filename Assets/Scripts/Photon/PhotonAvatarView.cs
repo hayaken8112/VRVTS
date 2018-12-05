@@ -27,6 +27,7 @@ public class PhotonAvatarView : MonoBehaviour {
 		}
 		else
 		{
+			Debug.Log("photonavatarviewのremoteDriverが初期化されている");
 			remoteDriver = GetComponent<OvrAvatarRemoteDriver>();
 		}
 	}
@@ -48,8 +49,10 @@ public class PhotonAvatarView : MonoBehaviour {
 	{
 		if (!PhotonNetwork.inRoom || (PhotonNetwork.room.PlayerCount < 2))
 		{
+			//Debug.Log("最初のプレイヤーはこの条件式に当てはまる");
 			return;
 		}
+		//Debug.Log("二人目のプレイヤーはここがよく呼ばれるのか！？");
 
 		using (MemoryStream outputStream = new MemoryStream())
 		{

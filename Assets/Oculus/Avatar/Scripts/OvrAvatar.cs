@@ -6,9 +6,9 @@ using Oculus.Avatar;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using UnityEngine.Events;
-//using Oculus.Platform;
-//using Oculus.Platform.Models;
-//using CAPI = Oculus.Avatar.CAPI;
+using Oculus.Platform;
+using Oculus.Platform.Models;
+using CAPI = Oculus.Avatar.CAPI;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -549,7 +549,7 @@ public class OvrAvatar : MonoBehaviour
     }
 
     //Customize
-    /*
+    
     void Awake(){
         Oculus.Platform.Core.Initialize();
         Oculus.Platform.Users.GetLoggedInUser().OnComplete(GetLoggedInUserCallback);
@@ -561,7 +561,7 @@ public class OvrAvatar : MonoBehaviour
             oculusUserID = message.Data.ID.ToString();
         }
     }
-    */
+    
     //End
 
     void Start()

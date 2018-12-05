@@ -25,6 +25,13 @@ public class StartPhotonNew : MonoBehaviour {
 	public Sprite[] images;
 	public GameObject imageBtn;
 
+	/*
+	public void OnEnable()
+	{
+		PhotonNetwork.OnEventCall += OnEvent;
+	}
+	*/
+
 	// Use this for initialization
 	void Start () {
 		// シーンの読み込みコールバックを登録.
@@ -176,14 +183,14 @@ public class StartPhotonNew : MonoBehaviour {
 				//Resources関数はPathを指定しなければResourcesフォルダ限定らしい
 				//Instantiateは今はVector3を指定していない
 				//Instantiate(Resources.Load("OVRCameraRig"), pos, q);
-				go = Instantiate(Resources.Load("LocalAvatar"), pos, q) as GameObject;
+				go = Instantiate(Resources.Load("LocalAvatar")) as GameObject;
 				myPosition = pos;
-				Debug.Log("ボボ簿おぼっぼっぼっぼぼ" + myPosition);
+				Debug.Log("アバターのpositionは；" + go.transform.position);
 			}
 			else
 			{
 				go = Instantiate(Resources.Load("RemoteAvatar"), pos, q) as GameObject;
-				Debug.Log("jaoisjfaojfjaojweojfoajweofjaeofjowejfjfaojfaejf");
+				Debug.Log("他人アバターのpositionは；" + go.transform.position);
 			}
 
 			if (go != null)
