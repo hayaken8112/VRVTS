@@ -21,6 +21,7 @@ public class CommentController : MonoBehaviour {
 	InputPanel inputPanel;
 	InputField inputField;
 	Button addButton;
+	public CommentTransition commentTransition;
 
 	// Use this for initialization
 	void Start () {
@@ -39,6 +40,11 @@ public class CommentController : MonoBehaviour {
 		});
 		modeManager.Mode.Subscribe(mode => {
 			UpdateComment();
+			if (mode == 2) {
+				commentTransition.TurnOn();
+			} else {
+				commentTransition.TurnOff();
+			}
 		});
 		gridView.OnEndDragAsObservable.Subscribe(_ => {
 				if (modeManager.Mode.Value == 2) {

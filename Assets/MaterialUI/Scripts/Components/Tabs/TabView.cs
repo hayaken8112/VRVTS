@@ -311,7 +311,7 @@ namespace MaterialUI
             float combinedWidth = m_TabWidth * m_Pages.Length;
 
             m_TabsContainer.GetComponent<HorizontalLayoutGroup>().childForceExpandWidth = true;
-            m_TabItemTemplate.GetComponent<LayoutElement>().minWidth = 72;
+            m_TabItemTemplate.GetComponent<LayoutElement>().minWidth = 10;
 
             if (Screen.width > Screen.height && !m_ForceStretchTabsOnLanscape)
             {
