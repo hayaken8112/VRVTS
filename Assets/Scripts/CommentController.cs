@@ -27,7 +27,7 @@ public class CommentController : MonoBehaviour {
 		inputField = inputPanel.inputField;
 		addButton = inputPanel.addButton;
 		addButton.OnClickAsObservable().Subscribe(_ => {
-			if (modeManager.Mode.Value == 0) {
+			if (modeManager.Mode.Value == 1) {
 				CommentData data = new CommentData(gridView.gridData);
 				data.user_id = 1;
 				data.comment = inputField.text;
@@ -38,14 +38,12 @@ public class CommentController : MonoBehaviour {
 			} 
 		});
 		modeManager.Mode.Subscribe(mode => {
-			inputPanel.gameObject.SetActive(false);
 			UpdateComment();
 		});
 		gridView.OnEndDragAsObservable.Subscribe(_ => {
-				if (modeManager.Mode.Value == 0) {
-					inputPanel.gameObject.SetActive(true);
-				} else {
+				if (modeManager.Mode.Value == 2) {
 					SearchComment(gridView.gridData);
+				} else {
 				}
 			});
 	}
