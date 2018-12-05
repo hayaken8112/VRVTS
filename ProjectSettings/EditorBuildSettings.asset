@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/New Scene.unity
     guid: 569d83585007541a4b55111bbb9322ad
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/OculusMain.unity
     guid: a50bdb674824443608d691f27681e605
   - enabled: 0
@@ -23,6 +23,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/TransDemo.unity
     guid: 174eb9b3549134804a4f617b7434c4e5
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/mirror.unity
     guid: bfb8b2a04dfdf4eb280c053749ef79b8
+  - enabled: 0
+    path: Assets/Scenes/AvatarTest.unity
+    guid: f02782b2a2bbd4ae996fd687241c97f8
+  - enabled: 1
+    path: Assets/Oculus/Avatar/Samples/LocalAvatar/LocalAvatar.unity
+    guid: c65ef87480e70eb43931036c9c66d08d
