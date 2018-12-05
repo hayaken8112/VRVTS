@@ -548,6 +548,7 @@ public class OvrAvatar : MonoBehaviour
         }
     }
 
+    /*
     //Customize
     
     void Awake(){
@@ -563,6 +564,7 @@ public class OvrAvatar : MonoBehaviour
     }
     
     //End
+    */
 
     void Start()
     {

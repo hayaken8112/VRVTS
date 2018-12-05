@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class StartVTSRoom : MonoBehaviour {
 
-	
-
+	Vector3[] place = new Vector3[] {new Vector3(9.41f, 1.7f, 14.301f), new Vector3(13f, 1.7f, 14.301f), new Vector3(6f, 1.7f, 14.301f)};
 	public readonly byte InstantiateVrAvatarEventCode = 123;
 
 	public void OnEnable()
@@ -33,6 +32,8 @@ public class StartVTSRoom : MonoBehaviour {
 
 			if (PhotonNetwork.player.ID == senderid)
 			{
+				//GameObject camera = GameObject.Find("OVRCameraRig");
+				//camera.transform.position = place[PhotonNetwork.room.PlayerCount];
 				go = Instantiate(Resources.Load("LocalAvatar"), new Vector3(9.41f, 1.7f, 14.301f), q) as GameObject;
 				Debug.Log("アバターのpositionは；" + go.transform.position);
 			}
