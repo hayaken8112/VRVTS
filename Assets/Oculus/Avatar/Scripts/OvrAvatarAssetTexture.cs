@@ -50,8 +50,7 @@ public class OvrAvatarAssetTexture : OvrAvatarAsset {
         }
         texture = new Texture2D(
             (int)textureAssetData.sizeX, (int)textureAssetData.sizeY,
-            format, textureAssetData.mipCount > 1,
-            QualitySettings.activeColorSpace == ColorSpace.Gamma ? false : true);
+            format, textureAssetData.mipCount > 1, false);
         texture.LoadRawTextureData(textureData, textureDataSize);
         texture.Apply(true, false);
     }
