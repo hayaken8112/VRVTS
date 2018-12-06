@@ -878,7 +878,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 10.78, y: 11.79}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 34, y: 34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &182588870
 CanvasGroup:
@@ -1246,7 +1246,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &256480392
 MonoBehaviour:
@@ -1268,7 +1268,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: a0a40789b9baa45a68c6d593e02f648a, type: 3}
+    m_Font: {fileID: 12800000, guid: ee2f40e9d207847ff9b189e5f8616602, type: 3}
     m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
@@ -1280,16 +1280,16 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: \ue029
+  m_Text: \uf26e
   m_Size: 24
   m_ScaledSize: 24
   m_SizeMode: 3
   m_MaterialUiScaler: {fileID: 418719565}
   m_VectorImageData:
     m_Glyph:
-      m_Name: mic
-      m_Unicode: \ue029
-    m_Font: {fileID: 12800000, guid: a0a40789b9baa45a68c6d593e02f648a, type: 3}
+      m_Name: 500px
+      m_Unicode: \uf26e
+    m_Font: {fileID: 12800000, guid: ee2f40e9d207847ff9b189e5f8616602, type: 3}
 --- !u!222 &256480393
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1809,7 +1809,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -11, y: 13.62}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 34, y: 34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &320744824
 CanvasGroup:
@@ -2111,7 +2111,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &333979204
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2179,8 +2179,8 @@ MonoBehaviour:
     m_Sprite: {fileID: 0}
     m_VectorImageData:
       m_Glyph:
-        m_Name: directions_transit
-        m_Unicode: \ue535
+        m_Name: send
+        m_Unicode: \ue163
       m_Font: {fileID: 12800000, guid: a0a40789b9baa45a68c6d593e02f648a, type: 3}
 --- !u!222 &333979207
 CanvasRenderer:
@@ -2270,7 +2270,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 5, y: 0}
-  m_SizeDelta: {x: 200, y: 0}
+  m_SizeDelta: {x: 200, y: 59}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &340937058
 MonoBehaviour:
@@ -2691,7 +2691,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 42.5, y: 42.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &414107694
 MonoBehaviour:
@@ -2817,9 +2817,9 @@ MonoBehaviour:
     m_Sprite: {fileID: 0}
     m_VectorImageData:
       m_Glyph:
-        m_Name: directions_car
-        m_Unicode: \ue531
-      m_Font: {fileID: 12800000, guid: a0a40789b9baa45a68c6d593e02f648a, type: 3}
+        m_Name: "\rface"
+        m_Unicode: \uf643
+      m_Font: {fileID: 12800000, guid: 61dd3180b7acd44128f57f837bd573bf, type: 3}
 --- !u!222 &416505596
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4899,7 +4899,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -10, y: -28}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!225 &907161594
 CanvasGroup:
@@ -5045,7 +5045,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &939483607
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5113,8 +5113,8 @@ MonoBehaviour:
     m_Sprite: {fileID: 0}
     m_VectorImageData:
       m_Glyph:
-        m_Name: airplanemode_active
-        m_Unicode: \ue195
+        m_Name: more_horiz
+        m_Unicode: \ue5d3
       m_Font: {fileID: 12800000, guid: a0a40789b9baa45a68c6d593e02f648a, type: 3}
 --- !u!222 &939483610
 CanvasRenderer:
@@ -8009,7 +8009,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1551268737
 MonoBehaviour:
@@ -8093,7 +8093,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 99, y: 46.666668}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1599415728
 MonoBehaviour:
@@ -8756,7 +8756,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1727291650
 MonoBehaviour:
@@ -10828,8 +10828,8 @@ MonoBehaviour:
     m_Sprite: {fileID: 0}
     m_VectorImageData:
       m_Glyph:
-        m_Name: airplanemode_active
-        m_Unicode: \ue195
+        m_Name: hearing
+        m_Unicode: \ue023
       m_Font: {fileID: 12800000, guid: a0a40789b9baa45a68c6d593e02f648a, type: 3}
 --- !u!222 &2141436639
 CanvasRenderer:
