@@ -7,11 +7,15 @@ using UniRx.Triggers;
 
 public class InputPanel : MonoBehaviour {
 	public Button recordButton;
+	public MaterialUI.MaterialButton materialButton;
 	public Button addButton;
 	[SerializeField]
 	GameObject voiceManager;
 	public InputField inputField;
 	bool isRecording = false;
+	public MaterialUI.VectorImageData startIcon;
+	public MaterialUI.VectorImageData stopIcon;
+	public CommentController commentController;
 
 	// Use this for initialization
 	void Start () {
@@ -20,7 +24,9 @@ public class InputPanel : MonoBehaviour {
 		recordButton.OnClickAsObservable().Subscribe(_ => {
 			if (!isRecording) {
 				voiceRecorder.StartRecord();
+				materialButton.iconVectorImageData = stopIcon;
 			} else {
+				materialButton.iconVectorImageData = startIcon;
 				var rec_data = voiceRecorder.FinishRecord();
 				audioRecognizer.SpeechToText(rec_data);
 				audioRecognizer.transcriptSubject.Subscribe(txt => {
@@ -28,6 +34,12 @@ public class InputPanel : MonoBehaviour {
 				});
 			}
 			isRecording = !isRecording;
+		});
+		addButton.OnClickAsObservable().Subscribe(_ => {
+			if (inputField.text != "") {
+				commentController.AddComment(inputField.text);
+				inputField.text = "";
+			}
 		});
 	}
 }

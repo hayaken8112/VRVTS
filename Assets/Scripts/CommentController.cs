@@ -18,26 +18,10 @@ public class CommentController : MonoBehaviour {
 	[SerializeField]
 	ModeManager modeManager;
 	[SerializeField]
-	InputPanel inputPanel;
-	InputField inputField;
-	Button addButton;
 	public CommentTransition commentTransition;
 
 	// Use this for initialization
 	void Start () {
-		inputField = inputPanel.inputField;
-		addButton = inputPanel.addButton;
-		addButton.OnClickAsObservable().Subscribe(_ => {
-			if (modeManager.Mode.Value == 1) {
-				CommentData data = new CommentData(gridView.gridData);
-				data.user_id = 1;
-				data.comment = inputField.text;
-				commentManager.Add(data);
-				inputField.text = "";
-				inputPanel.gameObject.SetActive(false);
-				UpdateComment();
-			} 
-		});
 		modeManager.Mode.Subscribe(mode => {
 			UpdateComment();
 			if (mode == 2) {
@@ -55,6 +39,13 @@ public class CommentController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
+	public void AddComment(string comment) {
+		CommentData data = new CommentData(gridView.gridData);
+		data.user_id = 1;
+		data.comment = comment;
+		commentManager.Add(data);
+		UpdateComment();
+	}
 	public void UpdateComment(){
 		commentManager.GetLatest().Subscribe(x => {
 			var datalist = x.Select(i => i.ToCommentData());
