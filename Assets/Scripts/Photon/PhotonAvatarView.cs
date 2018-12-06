@@ -18,6 +18,7 @@ public class PhotonAvatarView : MonoBehaviour {
 
 		if (photonView.isMine)
 		{
+			Debug.Log("ovravatarをgetcomponent");
 			//データをネットワーク経由で送信する前にすべてのアバター関連の入力イベントを格納するバイト配列のリストをインスタンス化します
 			ovrAvatar = GetComponent<OvrAvatar>();
 			ovrAvatar.RecordPackets = true;

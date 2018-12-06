@@ -32,3 +32,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Oculus/Avatar/Samples/LocalAvatar/LocalAvatar.unity
     guid: c65ef87480e70eb43931036c9c66d08d
+  - enabled: 0
+    path: Assets/Oculus/Avatar/Samples/RemoteLoopback/RemoteLoopback.unity
+    guid: aa35ff5ba76fb384d839383c84209da9

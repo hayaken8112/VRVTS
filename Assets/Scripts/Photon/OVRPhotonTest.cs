@@ -98,6 +98,7 @@ public class OVRPhotonTest : MonoBehaviour {
             string[] strList = contentString.Split('_');
             int viewId = int.Parse(strList[0]);
             int numberList = int.Parse(strList[1]);
+			Debug.Log("viewIdは：" + viewId + "   numberListは：" + numberList);
 			GameObject go = null;
 			Quaternion q = new Quaternion();
 			q= Quaternion.Euler(0, 180, 0);
