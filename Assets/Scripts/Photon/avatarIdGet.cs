@@ -16,6 +16,7 @@ public class avatarIdGet : MonoBehaviour {
         if (!message.IsError) {
             OvrAvatar[] avatars = FindObjectsOfType(typeof(OvrAvatar)) as OvrAvatar[];
             foreach (OvrAvatar avatar in avatars) {
+                Debug.Log("detaIdは：" + message.Data.ID);
                 avatar.oculusUserID = message.Data.ID.ToString();
             }
         }
