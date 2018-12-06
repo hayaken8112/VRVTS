@@ -15,7 +15,6 @@ public class VoiceRecorder : MonoBehaviour
 
     const int maxTime_s = 30;
     string enc_data = "";
-    public Text debugText;
 
     // Use this for initialization
     void Start()
@@ -71,7 +70,6 @@ public class VoiceRecorder : MonoBehaviour
     {
         Debug.Log("record start");
         audioClip = Microphone.Start(deviceName: micName, loop: false, lengthSec: maxTime_s, frequency: samplingFrequency);
-        debugText.text = "start";
     }
 
     public string FinishRecord()
@@ -79,13 +77,11 @@ public class VoiceRecorder : MonoBehaviour
         if (Microphone.IsRecording(deviceName: micName) == true)
         {
             Debug.Log("recording stoped");
-            debugText.text = "stop";
             StopRecord();
         }
         else
         {
             Debug.Log("not recorded");
-            debugText.text = "not recoded";
         }
         Debug.Log(audioClip.samples);
         // debugText.text = audioClip.samples.ToString();
