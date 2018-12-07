@@ -45,7 +45,7 @@ public class StartPhoton : MonoBehaviour {
 	}
 
 	void LineUpPictures() {
-		RectTransform content = GameObject.Find("Canvas/Tab View/Pages/Container/Use Offline/Scroll View/Viewport/Content").GetComponent<RectTransform>();
+		RectTransform content = GameObject.Find("Canvas/Tab View/Pages/Container/Offline/Scroll View/Viewport/Content").GetComponent<RectTransform>();
 		for (int i = 0; i < images.Length / 3 + 1; i++){
 			int no = i;
 			int b = 0;
