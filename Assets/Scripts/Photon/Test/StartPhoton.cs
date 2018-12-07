@@ -35,14 +35,68 @@ public class StartPhoton : MonoBehaviour {
         PhotonNetwork.ConnectUsingSettings("0.0.1");
 		PhotonNetwork.automaticallySyncScene = true;
 
-		foreach(InputField vrKeyboard in GameObject.FindObjectsOfTypeAll(typeof(InputField))){
+		
+		foreach(InputField vrKeyboard in Resources.FindObjectsOfTypeAll(typeof(InputField))){
 			var trigger = vrKeyboard.gameObject.AddComponent<EventTrigger>();
 			EventTrigger.Entry entry = new EventTrigger.Entry();
 			entry.eventID = EventTriggerType.PointerDown;
 			entry.callback.AddListener((eventData) => { EditIF(vrKeyboard); });
 			trigger.triggers.Add(entry);
 		}
+		
 	}
+
+	public void CanvasTapped(){
+		//Debug.Log("ここは押してるんやで");
+		PointerEventData pointer = new PointerEventData(EventSystem.current);
+        pointer.position = Input.mousePosition;
+        List<RaycastResult> result = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointer, result);
+
+		DisableKeyboard();
+
+		/*
+
+        foreach (RaycastResult raycastResult in result)
+        {
+            if(raycastResult.gameObject.GetComponent<InputField>()){
+				Debug.Log("それはinputfieldや");
+			}else{
+				Debug.Log("それはちゃうなぁ");
+			}
+        }
+
+		*/
+	}
+
+	void Update()
+    {
+		/*
+        if (Input.GetMouseButtonDown(0))
+        {
+			Debug.Log("ボタンが押されてる！");
+            Ray ray = new Ray();
+            RaycastHit hit = new RaycastHit();
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            //マウスクリックした場所からRayを飛ばし、オブジェクトがあればtrue 
+            if (Physics.Raycast(ray, out hit))
+            {
+                if(hit.collider.gameObject.GetComponent<InputField>())
+                {
+					Debug.Log("keyboardがタップされた");
+					InputField vrIF = hit.collider.gameObject.GetComponent<InputField>();
+					EditIF(vrIF);
+                }
+				else
+				{
+					Debug.Log("それはkeyboardじゃないよ");
+					DisableKeyboard();
+				}
+            }
+        }
+		*/
+    }
 
 	void LineUpPictures() {
 		RectTransform content = GameObject.Find("Canvas/Tab View/Pages/Container/Offline/Scroll View/Viewport/Content").GetComponent<RectTransform>();
@@ -175,7 +229,7 @@ public class StartPhoton : MonoBehaviour {
 	}
 	
 	public void DisableKeyboard() {
-		Debug.Log("キーボードを消します");
+		//Debug.Log("キーボードを消します");
 		keyboardCanvas.SetActive(false);
 		
 	}

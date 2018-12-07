@@ -13,7 +13,7 @@ public class MakeKeyboard : MonoBehaviour {
 	public GameObject canvas;
 
 	public void CreateKeyboard(InputField selectedIF) {
-		Debug.Log("押された！！！！！！！");
+		//Debug.Log("押された！！！！！！！");
 
 		demoField = selectedIF;
 		Vector3 pos = selectedIF.transform.position;
