@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class CheckDatabase: MonoBehaviour
 {
+	/*
 	[RuntimeInitializeOnLoadMethod()]
 	static void Init()
 	{
@@ -24,4 +25,5 @@ public class CheckDatabase: MonoBehaviour
 		}
 		
 	}
+	*/
 }

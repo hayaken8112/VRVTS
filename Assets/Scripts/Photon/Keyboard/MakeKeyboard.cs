@@ -26,31 +26,32 @@ public class MakeKeyboard : MonoBehaviour {
 
 		for (int i = 0; i < c.Length; i++) {
 			char cs = c[i];
-			GameObject btn = (GameObject)Instantiate(keyButton);
+			GameObject btnparent = (GameObject)Instantiate(keyButton);
+			GameObject btn = btnparent.transform.GetChild(0).gameObject;
 			btn.transform.GetComponentInChildren<Text>().text = c[i].ToString();
 			if (0 <= i && i < 10) {
 				//content.sizeDelta = new Vector2(-300 + i * 55, 100);
-				btn.transform.position = new Vector2(-275 + i * 55, 85);
-				btn.transform.SetParent(content, false);
+				btnparent.transform.position = new Vector2(-275 + i * 55, 85);
+				btnparent.transform.SetParent(content, false);
 				btn.transform.GetComponent<Button>().onClick.AddListener(() => OnClick(cs));
 			}else if (i == 10) {
-				btn.transform.position = new Vector2(-275 + i * 55, 85);
-				btn.transform.SetParent(content, false);
+				btnparent.transform.position = new Vector2(-275 + i * 55, 85);
+				btnparent.transform.SetParent(content, false);
 				btn.transform.GetComponent<Button>().onClick.AddListener(() => DeleteChar());
 			} else if (11 <= i && i < 21) {
 				//content.sizeDelta = new Vector2(-275 + i * 55, 40);
-				btn.transform.position = new Vector2(-855 + i * 55, 25);
-				btn.transform.SetParent(content, false);
+				btnparent.transform.position = new Vector2(-855 + i * 55, 25);
+				btnparent.transform.SetParent(content, false);
 				btn.transform.GetComponent<Button>().onClick.AddListener(() => OnClick(cs));
 			} else if (21 <= i && i < 30) {
 				//ontent.sizeDelta = new Vector2(-250 + i * 55, -20);
-				btn.transform.position = new Vector2(-1380 + i * 55, -35);
-				btn.transform.SetParent(content, false);
+				btnparent.transform.position = new Vector2(-1380 + i * 55, -35);
+				btnparent.transform.SetParent(content, false);
 				btn.transform.GetComponent<Button>().onClick.AddListener(() => OnClick(cs));
 			} else {
 				//content.sizeDelta = new Vector2(-225 + i * 55, -80);
-				btn.transform.position = new Vector2(-1825 + i * 55, -115);
-				btn.transform.SetParent(content, false);
+				btnparent.transform.position = new Vector2(-1825 + i * 55, -115);
+				btnparent.transform.SetParent(content, false);
 				btn.transform.GetComponent<Button>().onClick.AddListener(() => OnClick(cs));
 			}
 		}
