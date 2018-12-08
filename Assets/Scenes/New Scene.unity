@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: efd1c33efd2d58340b88804268e6833f, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 85cf0b004bc4a654b9e501efcce47902, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.6901137, g: 0.77768165, b: 0.8607678, a: 1}
+  m_IndirectSpecularColor: {r: 0.48581493, g: 0.6295237, b: 0.7183434, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -716,7 +716,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -674
+      value: -842
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 2}
       propertyPath: m_LocalRotation.x
@@ -3002,6 +3002,26 @@ MonoBehaviour:
   roomNameText: {fileID: 460530545}
   images:
   - {fileID: 21300000, guid: 137c96bc76a4d4beeb6d68e0ddb81929, type: 3}
+  - {fileID: 21300000, guid: 4bef84f663dbd4cfd8b405874de67006, type: 3}
+  - {fileID: 21300000, guid: d1ed6d560b4cb4bb6bc44f1ae80bf50e, type: 3}
+  - {fileID: 21300000, guid: b7bfa178d6f384308a9eba8e54f32374, type: 3}
+  - {fileID: 21300000, guid: f4ddd566abc8a4e1eb3503543224de46, type: 3}
+  - {fileID: 21300000, guid: 9af397fb939cd4790a8e42c6c2a28542, type: 3}
+  - {fileID: 21300000, guid: 52a2616db94f54e68b9cce30788d4ffb, type: 3}
+  - {fileID: 21300000, guid: fc6953466304a4e42a026289836d43e4, type: 3}
+  - {fileID: 21300000, guid: 889727a72dd114ef782af0f0752c26c6, type: 3}
+  - {fileID: 21300000, guid: 5f41b9e8cba9f436f8cc054da1c8b7d7, type: 3}
+  - {fileID: 21300000, guid: 7cbae0280232a4a7992c9d9c88804106, type: 3}
+  - {fileID: 21300000, guid: 8b58b55ac08d74c8db2140088bfd6c28, type: 3}
+  - {fileID: 21300000, guid: 5e32e3850fed74d3694a113102805210, type: 3}
+  - {fileID: 21300000, guid: fa59a3520524646b3b6bdc9cfeeb2df2, type: 3}
+  - {fileID: 21300000, guid: 1ee6855f82e2e42c0a9aeedf9348e710, type: 3}
+  - {fileID: 21300000, guid: e2822bd2e37224ef584fe51616cca61e, type: 3}
+  - {fileID: 21300000, guid: c016598359a5c44e58914d7afc1b4d75, type: 3}
+  - {fileID: 21300000, guid: 91b46e68cc8e04f66b664440d1a4e9cd, type: 3}
+  - {fileID: 21300000, guid: db61941331c8a48069fc18b0f424a53c, type: 3}
+  - {fileID: 21300000, guid: ee26c9649c0dd47308e577b6c8a35c85, type: 3}
+  - {fileID: 21300000, guid: 7dbbef6f077f043cc8863126fc79c762, type: 3}
   imageBtn: {fileID: 1375561810431148, guid: 4a9a8b815a3e74bfbbea5a3d9d1704ab, type: 2}
 --- !u!114 &725147366
 MonoBehaviour:
@@ -3345,7 +3365,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 808203848}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aee672c7b0743724ea7d0d722d5e6aa2, type: 3}
   m_Name: 
@@ -3362,7 +3382,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 808203848}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -3845,7 +3865,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 725147365}
+        m_MethodName: CreatePhotonRoom
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &986529234
@@ -4949,6 +4980,7 @@ GameObject:
   - component: {fileID: 1204508435}
   - component: {fileID: 1204508434}
   - component: {fileID: 1204508439}
+  - component: {fileID: 1204508440}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -4991,7 +5023,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1204508433}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -5091,6 +5123,22 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!114 &1204508440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1204508433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aee672c7b0743724ea7d0d722d5e6aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &1223659460
 GameObject:
   m_ObjectHideFlags: 0
@@ -7103,7 +7151,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1674322382}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4a9c50de96f6d04386957f4741ac65c, type: 3}
   m_Name: 
@@ -7131,7 +7179,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1674322382}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
