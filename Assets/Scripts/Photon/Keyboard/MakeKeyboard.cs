@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 public class MakeKeyboard : MonoBehaviour {
 
@@ -20,9 +21,13 @@ public class MakeKeyboard : MonoBehaviour {
 		pos.y = pos.y - 350f;
 
 		c = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '←', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M'};
-		canvas.transform.position = pos;
+		//canvas.transform.position = pos;
 		canvas.SetActive(true);
 		RectTransform content = canvas.GetComponent<RectTransform>();
+		content.DOMove(
+			pos,
+			0.7f
+		);
 
 		for (int i = 0; i < c.Length; i++) {
 			char cs = c[i];

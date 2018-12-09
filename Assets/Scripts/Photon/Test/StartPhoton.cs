@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 using Oculus.Avatar;
 using Oculus.Platform;
 using Oculus.Platform.Models;
+using DG.Tweening;
 
 public class StartPhoton : MonoBehaviour {
 
@@ -122,7 +123,7 @@ public class StartPhoton : MonoBehaviour {
 
 	void EnterWithOffLine(int no) {
 		//PhotonNetwork.isMessageQueueRunning = false;
-        SceneManager.LoadScene("mirror");
+        SceneManager.LoadScene("Offline");
 	}
 
 	//ロビーに入った時に呼ばれるメソッド
@@ -184,14 +185,14 @@ public class StartPhoton : MonoBehaviour {
 		//Debug.Log(nowRoom.name + "に入室しました");
 		//FadeManager.Instance.LoadScene("OculusMain", 1.0f);
 		//PhotonNetwork.isMessageQueueRunning = false;
-        SceneManager.LoadScene("OculusMain");
+        SceneManager.LoadScene("PhotonRoom");
 	}
 
 	private void OnLoadedScene( Scene i_scene, LoadSceneMode i_mode )
     {
 		//PhotonNetwork.isMessageQueueRunning = true;
         // シーンの遷移が完了したら自分用のオブジェクトを生成.
-        if( i_scene.name == "OculusMain" )
+        if( i_scene.name == "PhotonRoom" )
         {
 			Debug.Log("OnLoadedSceneが呼ばれました");
         }
@@ -230,6 +231,11 @@ public class StartPhoton : MonoBehaviour {
 	
 	public void DisableKeyboard() {
 		//Debug.Log("キーボードを消します");
+		RectTransform content = keyboardCanvas.GetComponent<RectTransform>();
+		content.DOMove(
+			new Vector3(53, -889, 0),
+			0.2f
+		);
 		keyboardCanvas.SetActive(false);
 		
 	}

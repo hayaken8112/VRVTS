@@ -8,8 +8,8 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/RegisterUser.unity
     guid: 75afb59a0eb9944b2ba8f6de73cd5070
-  - enabled: 0
-    path: Assets/Scenes/New Scene.unity
+  - enabled: 1
+    path: Assets/Scenes/PhotonRoom.unity
     guid: 569d83585007541a4b55111bbb9322ad
   - enabled: 0
     path: Assets/Scenes/OculusMain.unity
@@ -23,7 +23,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TransDemo.unity
     guid: 174eb9b3549134804a4f617b7434c4e5
   - enabled: 0

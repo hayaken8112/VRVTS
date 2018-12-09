@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
+using DG.Tweening;
 
 public class RegisterUser : MonoBehaviour {
 
@@ -55,6 +56,11 @@ public class RegisterUser : MonoBehaviour {
 
 	public void DisableKeyboard() {
 		//Debug.Log("キーボードを消します");
+		RectTransform content = keyboardCanvas.GetComponent<RectTransform>();
+		content.DOMove(
+			new Vector3(53, -889, 0),
+			0.2f
+		);
 		keyboardCanvas.SetActive(false);
 		
 	}
