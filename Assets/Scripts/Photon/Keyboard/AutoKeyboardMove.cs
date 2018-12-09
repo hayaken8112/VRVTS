@@ -10,7 +10,7 @@ public class AutoKeyboardMove : MonoBehaviour {
 		GameObject btn = parentObj.transform.GetChild(0).gameObject;
 		RectTransform rect = btn.GetComponent<RectTransform>();
 		rect.DOScale(
-			new Vector3(1.3f, 1.3f, 1.3f),
+			new Vector3(1.2f, 1.2f, 1.2f),
 			0.05f
 		);
 	}
