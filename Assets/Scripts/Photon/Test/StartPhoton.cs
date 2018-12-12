@@ -185,14 +185,14 @@ public class StartPhoton : MonoBehaviour {
 		//Debug.Log(nowRoom.name + "に入室しました");
 		//FadeManager.Instance.LoadScene("OculusMain", 1.0f);
 		//PhotonNetwork.isMessageQueueRunning = false;
-        SceneManager.LoadScene("PhotonRoom");
+        SceneManager.LoadScene("OculusMain");
 	}
 
 	private void OnLoadedScene( Scene i_scene, LoadSceneMode i_mode )
     {
 		//PhotonNetwork.isMessageQueueRunning = true;
         // シーンの遷移が完了したら自分用のオブジェクトを生成.
-        if( i_scene.name == "PhotonRoom" )
+        if( i_scene.name == "OculusMain" )
         {
 			Debug.Log("OnLoadedSceneが呼ばれました");
         }

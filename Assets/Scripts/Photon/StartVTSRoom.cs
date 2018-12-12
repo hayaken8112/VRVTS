@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Oculus.Platform;
 
 public class StartVTSRoom : MonoBehaviour {
 
@@ -32,14 +33,33 @@ public class StartVTSRoom : MonoBehaviour {
 
 			if (PhotonNetwork.player.ID == senderid)
 			{
-				//GameObject camera = GameObject.Find("OVRCameraRig");
-				//camera.transform.position = place[PhotonNetwork.room.PlayerCount];
-				go = Instantiate(Resources.Load("LocalAvatar"), new Vector3(9.41f, 1.7f, 14.301f), q) as GameObject;
+				Core.Initialize();
+
+				Users.GetLoggedInUser().OnComplete(msg => {
+					var avatarObject = Instantiate(Resources.Load("LocalAvatar"), new Vector3(9.41f, 1.7f, 14.301f), q) as GameObject;
+					var avatar = avatarObject.GetComponent<OvrAvatar>();
+					if (avatar != null) {
+						avatar.ShowThirdPerson = true;
+						avatar.ShowFirstPerson = false;
+						avatar.oculusUserID = msg.GetUser().ID.ToString();
+					}
+				});
 				Debug.Log("アバターのpositionは；" + go.transform.position);
 			}
 			else
 			{
-				go = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
+				Core.Initialize();
+
+				Users.GetLoggedInUser().OnComplete(msg => {
+					var avatarObject = Instantiate(Resources.Load("RemoteAvatar"), new Vector3(9.41f, 1.7f, 14.301f), q) as GameObject;
+					var avatar = avatarObject.GetComponent<OvrAvatar>();
+					if (avatar != null) {
+						avatar.ShowThirdPerson = true;
+						avatar.ShowFirstPerson = false;
+						avatar.oculusUserID = msg.GetUser().ID.ToString();
+					}
+				});
+				Debug.Log("アバターのpositionは；" + go.transform.position);
 			}
 
 			if (go != null)

@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/RegisterUser.unity
     guid: 75afb59a0eb9944b2ba8f6de73cd5070
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PhotonRoom.unity
     guid: 569d83585007541a4b55111bbb9322ad
   - enabled: 0
@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/Scenes/TransDemo.unity
+    path: Assets/Scenes/Tutorial.unity
     guid: 174eb9b3549134804a4f617b7434c4e5
   - enabled: 0
     path: Assets/Scenes/mirror.unity
@@ -32,3 +32,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Offline.unity
     guid: 7981ff36b7f8f4acfa304644578c08b6
+  - enabled: 1
+    path: Assets/Oculus/Avatar/Samples/LocalAvatar/LocalAvatar.unity
+    guid: c65ef87480e70eb43931036c9c66d08d
+  - enabled: 0
+    path: Assets/Oculus/Spatializer/scenes/RedBallGreenBall.unity
+    guid: 305999d68a83b7d438df1bb704b6bc06

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class RegisterUser : MonoBehaviour {
 
@@ -115,13 +116,16 @@ public class RegisterUser : MonoBehaviour {
 				int userIdInt = int.Parse(userId);
 				
 				SqliteDatabase sqlDB = new SqliteDatabase("config.db");
-				string query = "create table user(userId ingeger, name string)";
+				string query = "drop table user";
+				sqlDB.ExecuteNonQuery(query);
+				query = "create table user(userId ingeger, name string)";
 				sqlDB.ExecuteNonQuery(query);
 				string querysecond = "insert into user values(" + userIdInt + ", '" + userName + "')";
         		sqlDB.ExecuteNonQuery(querysecond);
 				
 				//Debug.Log(data);
                 Debug.Log("Form upload complete!");
+				SceneManager.LoadScene("PhotonRoom");
             }
 		}
 	}
